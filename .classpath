@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="D:/College Year 3 Semester 2/Team Project/JxBrowser/lib/jxbrowser-mac-6.12.jar"/>
 	<classpathentry kind="lib" path="D:/College Year 3 Semester 2/Team Project/JxBrowser/lib/jxbrowser-win-6.12.jar"/>
 	<classpathentry kind="lib" path="D:/College Year 3 Semester 2/Team Project/JxBrowser/lib/license.jar"/>
+	<classpathentry kind="lib" path="D:/College Year 3 Semester 2/Team Project/Database/mysql-connector-java-5.1.40-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
