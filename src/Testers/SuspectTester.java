@@ -36,6 +36,9 @@ public class SuspectTester {
 		System.out.println("Suspect Description: " + c2.getSuspectDescription());
 		System.out.println("Prior Convictions: " + c2.getSuspectPriors());
 		System.out.println("Status: " + c2.getSuspectStatus());
+		
+		//c2.addToDatabase();
+		//c2.deleteFromDatabase("2");
 
 	}
 

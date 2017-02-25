@@ -1,11 +1,15 @@
 package TeamProjectApplication;
 
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-public class Suspect extends Person {
+public class Suspect extends Person implements DatabaseFunctionality{
 	
-	private int CRIMINALID = 1;
+	private int SuspectId = 1;
 	private String suspectPPS, suspectName, suspectAddress, description, priorConvictions;
 	private String[] status = {"Suspect", "Fugitive", "Arrested", "Processed"};
 	private String currentStatus;
@@ -17,7 +21,7 @@ public class Suspect extends Person {
 		super("Unkown", "Unknown", "Unkown");
 		this.description = "Unkown";
 		this.priorConvictions = "Unkown";
-		CRIMINALID++;
+		SuspectId++;
 		currentStatus = (String) JOptionPane.showInputDialog(null, "What is the current status of the suspect?", "Suspect Status", JOptionPane.QUESTION_MESSAGE, null, status, status[0]);
 	
 	}
@@ -25,40 +29,10 @@ public class Suspect extends Person {
 	public Suspect(String suspectPPS, String suspectName, String suspectAddress, String description, String priorConvictions)
 	{
 		super(suspectPPS, suspectName, suspectAddress);
-		CRIMINALID++;	
+		SuspectId++;	
 		this.description = description;
 		this.priorConvictions = priorConvictions;
 		currentStatus = (String)JOptionPane.showInputDialog(null, "What is the current status of the suspect?", "Suspect Status", JOptionPane.QUESTION_MESSAGE, null, status, status[0]);
-	}
-	
-	/**
-	 * Setter for PPS number, in the case that the PPS number is unknown until later
-	 * @param suspectPPS
-	 */
-	@Override
-	public void setPPS(String suspectPPS)
-	{
-		this.ppsNumber = suspectPPS;
-	}
-	
-	/**
-	 * Setter for the name, in the case that the Name is unknown until later
-	 * @param suspectName
-	 */
-	@Override
-	public void setName(String suspectName)
-	{
-		this.name = suspectName;
-	}
-	
-	/**
-	 * Setter for the address, in the case that the Address is unknown until later
-	 * @param suspectAddress
-	 */
-	@Override
-	public void setAddress(String suspectAddress)
-	{
-		this.address = suspectAddress;
 	}
 	
 	/**
@@ -93,7 +67,7 @@ public class Suspect extends Person {
 	 */
 	public int getSuspectID()
 	{
-		return this.CRIMINALID;
+		return this.SuspectId;
 	}
 	
 	/**
@@ -103,24 +77,6 @@ public class Suspect extends Person {
 	public String getPPS()
 	{
 		return this.ppsNumber;
-	}
-	
-	/**
-	 * Getter for the name, mostly used to confirm changes
-	 */
-	@Override
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	/**
-	 * Getter for the address, mostly used to confirm changes
-	 */
-	@Override
-	public String getAddress()
-	{
-		return this.address;
 	}
 	
 	/**
@@ -147,5 +103,60 @@ public class Suspect extends Person {
 	public String getSuspectStatus()
 	{
 		return this.currentStatus;
+	}
+
+	@Override
+	public void addToDatabase() {
+		Statement st;
+		ResultSet rs;
+		String sql;
+		
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			st = con.createStatement();
+			rs = st.executeQuery("select * from garda.suspect");
+			
+			sql = "INSERT INTO garda.suspect values(" + "'" + this.SuspectId + "', '" + this.ppsNumber + "', '" + this.name + "', '"
+					+ this.address +  "', '" + this.description + "', '"+ this.priorConvictions + "', '" + this.currentStatus+ "');";
+			
+			st.execute(sql);
+			
+			rs.close();
+			con.close();
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error: " + e.getMessage());
+		}
+	}
+
+	@Override
+	public void deleteFromDatabase(String identifier) {
+		
+		Statement st;
+		ResultSet rs;
+		String sql;
+		
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			st = con.createStatement();
+			rs = st.executeQuery("select * from garda.suspect");	
+			
+			sql = "DELETE FROM garda.suspect " + "WHERE suspectID = '" + this.SuspectId +"';";
+			st.execute(sql);
+			
+			rs.close();
+			con.close();
+		}
+		catch(Exception e)
+		{
+		System.out.println("Error: " + e.getMessage());
+		}
+		
 	}
 }
