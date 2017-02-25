@@ -28,14 +28,12 @@ public class Connection {
 	        System.out.println("Inserted records into the table...");
 	        //caseID++;*/
 		      
-		    /*con.createStatement();
-		    sql = "UPDATE activecase" + "SET location = 'Ballybofey' WHERE caseID = 0";
+		    /*sql = "UPDATE activecase SET address = 'Ballybofey' WHERE caseID = 2";
 		    st.execute(sql);*/
 		    
-	        sql = "DELETE FROM activecase " + "WHERE caseID = 0";
-		    st.executeUpdate(sql);
-
-		      
+	        /*sql = "DELETE FROM activecase " + "WHERE caseID = 0";
+		    st.executeUpdate(sql);*/
+			
 			while(rs.next()){
 				System.out.println("ID: " + rs.getInt(1));
 				System.out.println("CrimeCode: " + rs.getInt(2));
