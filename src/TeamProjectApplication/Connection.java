@@ -28,28 +28,24 @@ public class Connection {
 //		    sql = "INSERT INTO activecase(caseID, crimeCode, date, address, status, eirCode)" + "VALUES (4, 102, '2016-02-23 23:30:00', 'Letterkenny', 'Active', 'F93 LKLK')";
 //		    st.executeUpdate(sql);
 
-		    //update row tester  
-//		    con.createStatement();
-//		    sql = "UPDATE activecase" + " SET address = 'Ballybofey' WHERE caseID = 4";
-//		    st.execute(sql);
-		    
-		   
-		   //Delete row tester
-//	       sql = "DELETE FROM activecase " + "WHERE caseID = 4";
-//		   st.executeUpdate(sql);
-
+	        System.out.println("Inserted records into the table...");
+	        //caseID++;*/
 		      
-			//print out value tester
-//			while(rs.next()){
-//				System.out.println("ID: " + rs.getInt(1));
-//				System.out.println("CrimeCode: " + rs.getInt(2));
-//				System.out.println("Date and Time: " + rs.getString(3));
-//				System.out.println("Location: " + rs.getString(4));
-//				System.out.println("Status: " + rs.getString(5));
-//				System.out.println("Eircode: " + rs.getString(6));
-//				System.out.println();
-//			}
+		    /*sql = "UPDATE activecase SET address = 'Ballybofey' WHERE caseID = 2";
+		    st.execute(sql);*/
+		    
+	        /*sql = "DELETE FROM activecase " + "WHERE caseID = 0";
+		    st.executeUpdate(sql);*/
 			
+			while(rs.next()){
+				System.out.println("ID: " + rs.getInt(1));
+				System.out.println("CrimeCode: " + rs.getInt(2));
+				System.out.println("Date and Time: " + rs.getString(3));
+				System.out.println("Location: " + rs.getString(4));
+				System.out.println("Status: " + rs.getString(5));
+				System.out.println("Eircode: " + rs.getString(6));
+				System.out.println();
+			}
 		}
 		catch(Exception e){
 			System.out.println("Error: " + e.getMessage());
