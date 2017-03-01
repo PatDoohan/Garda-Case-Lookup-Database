@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class GardaMenu extends JPanel implements ActionListener{
 	
-	protected JButton caseLookup, witnessLookup, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics;
+	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics;
 	protected JLabel gardaLogo, pageTitle;
 	protected JPanel buttons, header, container;
 	
@@ -26,23 +26,15 @@ public class GardaMenu extends JPanel implements ActionListener{
 		header.add(pageTitle);
 		
 		buttons = new JPanel();
-		buttons.setLayout(new GridLayout (2,3, 20, 20));
+		buttons.setLayout(new GridLayout (1,4, 20, 20));
 		
 		caseLookup = new JButton("Case Menu");
 		caseLookup.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(caseLookup);
 		
-		witnessLookup = new JButton("Witness Menu");
-		witnessLookup.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(witnessLookup);
-		
-		suspectLookup = new JButton("Suspect Menu");
-		suspectLookup.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(suspectLookup);
-		
-		vehicleLookup = new JButton("Vehicle Menu");
-		vehicleLookup.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(vehicleLookup);
+		EvidenceMenu = new JButton("Evidence Menu");
+		EvidenceMenu.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(EvidenceMenu);
 		
 		mapLookup = new JButton("Map Menu");
 		mapLookup.setFont(new Font("Sans-Serif", 0, 25));
