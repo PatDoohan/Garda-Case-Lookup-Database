@@ -14,6 +14,6 @@ public class GoogleMapsSample {
         frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        browser.loadURL("http://maps.google.com/");
+        browser.loadURL("http://maps.google.ie/place/Gweedore");
     }
 }
