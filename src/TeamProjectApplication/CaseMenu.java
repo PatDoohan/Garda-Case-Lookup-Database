@@ -80,7 +80,6 @@ public class CaseMenu extends JPanel implements ActionListener{
 				
 				String caseToUpdate = JOptionPane.showInputDialog("Please enter the id of the case you want to delete");
 				caseInput.deleteFromDatabase(caseToUpdate);
-				
 			}
 			
 		});		

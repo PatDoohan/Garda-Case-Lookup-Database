@@ -133,7 +133,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement
@@ -170,7 +170,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement
@@ -207,7 +207,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement, gets the highest value from all the case numbers
@@ -243,7 +243,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement, statement returns the row that is identified by the caseID entered by the user
@@ -252,20 +252,18 @@ public class ActiveCase implements DatabaseFunctionality{
 			//assigns the values from the result set to the class variables
 			while(rs.next()){
 				this.caseID = rs.getInt(1);
-				this.crimeCode = rs.getInt(2);
-				this.dateTime = rs.getString(3);
-				this.address = rs.getString(4);
-				this.activeStatus = rs.getString(5);
-				this.eirCode = rs.getString(6);
+				this.dateTime = rs.getString(2);
+				this.address = rs.getString(3);
+				this.activeStatus = rs.getString(4);
+				this.eirCode = rs.getString(5);
 			}
 			
 			//menu string for displaying in a joptionpane
 			String Menu = "Please choose what you want to edit: " + "\n"
-			+ "1: CrimeCode" + "\n"
-			+ "2: Date and Time" + "\n"
-			+ "3: Address" + "\n"
-			+ "4: Status" + "\n"
-			+ "5: Eircode" + "\n";
+			+ "1: Date and Time" + "\n"
+			+ "2: Address" + "\n"
+			+ "3: Status" + "\n"
+			+ "4: Eircode" + "\n";
 			
 			//boolean for quitting, used in case user wants to edit more than one field
 			boolean quit = false;
@@ -276,12 +274,9 @@ public class ActiveCase implements DatabaseFunctionality{
 				//prints menu to screen
 				int menuChoice = Integer.valueOf(JOptionPane.showInputDialog(Menu));
 				//lets user edit crime code, code must exist in crimeCode table as it is a foreign key
-				if (menuChoice == 1)
-				{
-					this.setCrimeCode(Integer.valueOf(JOptionPane.showInputDialog("Please enter the updated Crime Code")));
-				}
+
 				//lets user edit the date and time, must be done serpately as SQL requires specific formate for datetime
-				else if (menuChoice == 2)
+				if (menuChoice == 1)
 				{
 					String date, time;
 					date = JOptionPane.showInputDialog("Please enter the updated date the crime took place in the format yyyy-mm-dd");
@@ -290,17 +285,17 @@ public class ActiveCase implements DatabaseFunctionality{
 					this.setDateTime(date);
 				}
 				//lets the user edit the address
-				else if(menuChoice == 3)
+				else if(menuChoice == 2)
 				{
 					this.setAddress(JOptionPane.showInputDialog("Please enter the Address of the area the crime took place"));
 				}
 				//lets the user edit the status, uses the status array at the top for options to chose from.
-				else if(menuChoice == 4)
+				else if(menuChoice == 3)
 				{
 					this.setActiveStatus(String.valueOf(JOptionPane.showInputDialog(null,null, "Please Select the updated status of the case", JOptionPane.QUESTION_MESSAGE,null,status, status[0])));
 				}
 				//lets the user edit the eircode.
-				else if(menuChoice == 5)
+				else if(menuChoice == 4)
 				{
 					this.setEirCode(JOptionPane.showInputDialog("Please enter the updated Eircode of the area the crime took place"));
 				}
@@ -322,12 +317,11 @@ public class ActiveCase implements DatabaseFunctionality{
 			
 			//sql statement that updates selected row with new values
 			sql = "UPDATE garda.activecase SET " +
-			"crimeCode = " + this.crimeCode +
-			",date = '" + this.dateTime +
+			"dateAndTime = '" + this.dateTime +
 			"',address = '" + this.address + 
 			"',status = '" + this.activeStatus +
-			"',eirCode = '" + this.eirCode + "' WHERE caseID = '" + identifier + "'";
-			
+			"',eirCode = '" + this.eirCode + "' WHERE caseID = '" + identifier + "';";
+
 			//executes the above sql statement
 			st.execute(sql);
 			

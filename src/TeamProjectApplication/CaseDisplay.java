@@ -48,7 +48,7 @@ public class CaseDisplay extends JPanel{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement
@@ -130,7 +130,7 @@ public class CaseDisplay extends JPanel{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement
@@ -235,7 +235,7 @@ public class CaseDisplay extends JPanel{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement
@@ -283,7 +283,7 @@ public class CaseDisplay extends JPanel{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement
