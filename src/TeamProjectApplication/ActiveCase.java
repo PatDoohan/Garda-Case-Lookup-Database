@@ -140,7 +140,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			rs = st.executeQuery("select * from garda.activecase");
 			
 			//create a statement to be used in the statement object
-			sql = "INSERT INTO garda.activecase values(" + "'" + this.caseID + "', '" + this.crimeCode + "', '" + this.dateTime  +  "', '" + this.address + "', '" + this.activeStatus + "', '" + this.eirCode + "');";
+			sql = "INSERT INTO garda.activecase values(" + "'" + this.caseID + "', '"  + this.dateTime  +  "', '" + this.address + "', '" + this.activeStatus + "', '" + this.eirCode + "');";
 			
 			//uses sql string to execute the statement
 			st.execute(sql);

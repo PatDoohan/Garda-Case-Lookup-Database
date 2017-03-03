@@ -20,7 +20,9 @@ public class CaseMenu extends JPanel implements ActionListener{
 	
 	public CaseMenu()
 	{
+	
 		header = new JPanel();
+		header.setBorder(new EmptyBorder(0,0,120,0));
 		gardaLogo = new JLabel(new ImageIcon("Images/gardaLogo.png"));
 		gardaLogo.setAlignmentY(LEFT_ALIGNMENT);
 		pageTitle = new JLabel("Garda Case Tracking Database");
@@ -41,12 +43,11 @@ public class CaseMenu extends JPanel implements ActionListener{
 				ActiveCase caseInput = new ActiveCase();
 				
 				caseInput.assignID();
-				caseInput.setCrimeCode(Integer.valueOf(JOptionPane.showInputDialog("Please Enter the Crime Code (A list of Crime codes can be found in the Crime Menu)")));
 				date = JOptionPane.showInputDialog("Please enter the date the crime took place in the format yyyy-mm-dd");
 				time = JOptionPane.showInputDialog("Please enter the time the crime took place in the 24 hour format hh:mm");
 				date = date + " " + time;
 				caseInput.setDateTime(date);
-				caseInput.setAddress("Port Road");
+				caseInput.setAddress(JOptionPane.showInputDialog("Please enter the address that the crime took place in"));
 				caseInput.setEirCode(JOptionPane.showInputDialog("Please enter the Eircode of the area the crime took place (if any)"));
 				caseInput.addToDatabase();
 			}

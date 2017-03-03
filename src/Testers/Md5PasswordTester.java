@@ -19,7 +19,7 @@ public class Md5PasswordTester {
 			
 			Class.forName("com.mysql.jdbc.Driver");
 			//depending on what computer you are on the password may be either Password, password or blank. If you set a custom password it will also be here.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			st = con.createStatement();
 			rs = st.executeQuery("select * from activecase");
 			

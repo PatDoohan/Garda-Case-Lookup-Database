@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class GardaMenu extends JPanel implements ActionListener{
 	
-	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics;
+	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics, Logout;
 	protected JLabel gardaLogo, pageTitle;
 	protected JPanel buttons, header, container;
 	
@@ -16,7 +16,7 @@ public class GardaMenu extends JPanel implements ActionListener{
 	public GardaMenu()
 	{
 		header = new JPanel();
-		header.setBorder(new EmptyBorder(0,0,80,0));
+		header.setBorder(new EmptyBorder(0,0,120,0));
 		gardaLogo = new JLabel(new ImageIcon("Images/gardaLogo.png"));
 		gardaLogo.setAlignmentY(LEFT_ALIGNMENT);
 		pageTitle = new JLabel("Garda Case Tracking Database");
@@ -26,7 +26,7 @@ public class GardaMenu extends JPanel implements ActionListener{
 		header.add(pageTitle);
 		
 		buttons = new JPanel();
-		buttons.setLayout(new GridLayout (1,4, 20, 20));
+		buttons.setLayout(new GridLayout (0,1, 20, 20));
 		
 		caseLookup = new JButton("Case Menu");
 		caseLookup.setFont(new Font("Sans-Serif", 0, 25));
@@ -44,14 +44,18 @@ public class GardaMenu extends JPanel implements ActionListener{
 		CrimeStatistics.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(CrimeStatistics);
 		
+		Logout = new JButton("Logout");
+		Logout.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(Logout);
+		
 		container = new JPanel();
 		container.setLayout(new BorderLayout());
 		container.setBorder(new EmptyBorder(20,20,20,20));
 		
-		container.add(header, BorderLayout.NORTH);
-		container.add(buttons, BorderLayout.CENTER);
+		container.add(header, BorderLayout.CENTER);
+		container.add(buttons, BorderLayout.SOUTH);
 		
-		add(container);
+		add(container,BorderLayout.CENTER);
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
