@@ -36,23 +36,6 @@ public class CaseMenu extends JPanel implements ActionListener{
 		
 		createCase  = new JButton("Create a new case");
 		createCase.setFont(new Font("Sans-Serif", 0, 25));
-		createCase.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				ActiveCase caseInput = new ActiveCase();
-				
-				caseInput.assignID();
-				date = JOptionPane.showInputDialog("Please enter the date the crime took place in the format yyyy-mm-dd");
-				time = JOptionPane.showInputDialog("Please enter the time the crime took place in the 24 hour format hh:mm");
-				date = date + " " + time;
-				caseInput.setDateTime(date);
-				caseInput.setAddress(JOptionPane.showInputDialog("Please enter the address that the crime took place in"));
-				caseInput.setEirCode(JOptionPane.showInputDialog("Please enter the Eircode of the area the crime took place (if any)"));
-				caseInput.addToDatabase();
-			}
-			
-		});		
 		buttons.add(createCase);
 		
 		updateCase = new JButton("Update an existing case");

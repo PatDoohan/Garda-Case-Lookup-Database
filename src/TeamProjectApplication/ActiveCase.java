@@ -11,7 +11,7 @@ public class ActiveCase implements DatabaseFunctionality{
 	//Instance Varibales for use in methods
 	private int caseID;
 	private int crimeCode;
-	private String dateTime, address, eirCode, activeStatus;;
+	private String dateTime, address, eirCode, activeStatus;
 	private String[] status = {"Open", "Active", "In Court", "Closed"};
 
 	/**
@@ -22,15 +22,6 @@ public class ActiveCase implements DatabaseFunctionality{
 		activeStatus = status[0];
 	}
 
-	/**
-	 * Setter method for crimeCode
-	 * @param crimeCode
-	 */
-	public void setCrimeCode(int crimeCode)
-	{
-		this.crimeCode = crimeCode;
-	}
-	
 	/**
 	 * setter method for date and time
 	 * @param dateTime
@@ -60,11 +51,11 @@ public class ActiveCase implements DatabaseFunctionality{
 
 	/**
 	 * setter for active status
-	 * @param status
+	 * @param object
 	 */
-	public void setActiveStatus(String status)
+	public void setActiveStatus(Object object)
 	{
-		this.activeStatus = status;
+		this.activeStatus = (String) object;
 	}
 
 	/**
@@ -74,15 +65,6 @@ public class ActiveCase implements DatabaseFunctionality{
 	public int getCaseID()
 	{
 		return this.caseID;
-	}
-	
-	/**
-	 * Getter for CrimeCode()
-	 * @return
-	 */
-	public int getCrimeCode()
-	{
-		return this.crimeCode;
 	}
 	
 	/**
