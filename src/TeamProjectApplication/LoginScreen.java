@@ -52,6 +52,7 @@ public class LoginScreen extends JPanel{
 		
 		login = new JButton("Login");
 		login.setPreferredSize(new Dimension(100,35));
+		login.setMnemonic('L');	
 		
 		buttonPane = new JPanel();
 		buttonPane.add(login);
