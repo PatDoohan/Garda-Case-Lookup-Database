@@ -200,8 +200,45 @@ public class ActiveCase implements DatabaseFunctionality{
 			{
 				caseID = rs.getInt(1)+1;
 			}
-			
+	
 			//closes result set and connection
+			rs.close();
+			con.close();
+			
+		}
+		//catches errors thrown by database
+		catch(Exception f)
+		{
+			System.out.println("Error: " + f.getMessage());
+		}
+		
+	}
+	
+	public void GetCase(String identifier)
+	{
+		//instance variables for use with SQL connection
+		Statement st;
+		ResultSet rs;
+		String sql;
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			//create result set from statement, statement returns the row that is identified by the caseID entered by the user
+			rs = st.executeQuery("SELECT * FROM garda.activeCase WHERE caseID = " + "'" + identifier +"'");
+			
+			//assigns the values from the result set to the class variables
+			while(rs.next()){
+				this.caseID = rs.getInt(1);
+				this.dateTime = rs.getString(2);
+				this.address = rs.getString(3);
+				this.activeStatus = rs.getString(4);
+				this.eirCode = rs.getString(5);
+			}
 			rs.close();
 			con.close();
 			
@@ -228,90 +265,22 @@ public class ActiveCase implements DatabaseFunctionality{
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
-			//create result set from statement, statement returns the row that is identified by the caseID entered by the user
-			rs = st.executeQuery("SELECT * FROM garda.activeCase WHERE caseID = " + "'" + identifier +"'");
-			
-			//assigns the values from the result set to the class variables
-			while(rs.next()){
-				this.caseID = rs.getInt(1);
-				this.dateTime = rs.getString(2);
-				this.address = rs.getString(3);
-				this.activeStatus = rs.getString(4);
-				this.eirCode = rs.getString(5);
-			}
-			
-			//menu string for displaying in a joptionpane
-			String Menu = "Please choose what you want to edit: " + "\n"
-			+ "1: Date and Time" + "\n"
-			+ "2: Address" + "\n"
-			+ "3: Status" + "\n"
-			+ "4: Eircode" + "\n";
-			
-			//boolean for quitting, used in case user wants to edit more than one field
-			boolean quit = false;
-			
-			//while statment for looping through menu options
-			while(!quit)
-			{
-				//prints menu to screen
-				int menuChoice = Integer.valueOf(JOptionPane.showInputDialog(Menu));
-				//lets user edit crime code, code must exist in crimeCode table as it is a foreign key
-
-				//lets user edit the date and time, must be done serpately as SQL requires specific formate for datetime
-				if (menuChoice == 1)
-				{
-					String date, time;
-					date = JOptionPane.showInputDialog("Please enter the updated date the crime took place in the format yyyy-mm-dd");
-					time = JOptionPane.showInputDialog("Please enter the updated time the crime took place in the 24 hour format hh:mm");
-					date = date + " " + time;
-					this.setDateTime(date);
-				}
-				//lets the user edit the address
-				else if(menuChoice == 2)
-				{
-					this.setAddress(JOptionPane.showInputDialog("Please enter the Address of the area the crime took place"));
-				}
-				//lets the user edit the status, uses the status array at the top for options to chose from.
-				else if(menuChoice == 3)
-				{
-					this.setActiveStatus(String.valueOf(JOptionPane.showInputDialog(null,null, "Please Select the updated status of the case", JOptionPane.QUESTION_MESSAGE,null,status, status[0])));
-				}
-				//lets the user edit the eircode.
-				else if(menuChoice == 4)
-				{
-					this.setEirCode(JOptionPane.showInputDialog("Please enter the updated Eircode of the area the crime took place"));
-				}
-				//else for invalid options
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Invalid Choice Please choose again");
-				}
-				
-				//confirmation box to check if user wants to edit another value
-				int cont = JOptionPane.showConfirmDialog(null, "would you like to change another value?", "repeat?", JOptionPane.YES_NO_OPTION);
-				
-				//check to see if user selected no, if they did set quit to true to exit loop
-				if (cont == JOptionPane.NO_OPTION)
-				{
-					quit = true;
-				}
-			}
-			
+	
 			//sql statement that updates selected row with new values
+			
 			sql = "UPDATE garda.activecase SET " +
-			"dateAndTime = '" + this.dateTime +
+			"DateTime = '" + this.dateTime +
 			"',address = '" + this.address + 
 			"',status = '" + this.activeStatus +
 			"',eirCode = '" + this.eirCode + "' WHERE caseID = '" + identifier + "';";
+			
+			//System.out.println("\n" + sql);
 
 			//executes the above sql statement
 			st.execute(sql);
-			
 
 			//closes result set and connection
-			rs.close();
-			con.close();
-			
+			con.close();	
 		}
 		//catches errors thrown by database
 		catch(Exception f)

@@ -40,32 +40,10 @@ public class CaseMenu extends JPanel implements ActionListener{
 		
 		updateCase = new JButton("Update an existing case");
 		updateCase.setFont(new Font("Sans-Serif", 0, 25));
-		updateCase.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				ActiveCase caseInput = new ActiveCase();
-				
-				String caseToUpdate = JOptionPane.showInputDialog("Please enter the id of the case you want to edit");
-				caseInput.updateDatabase(caseToUpdate);
-			}
-			
-		});		
 		buttons.add(updateCase);
 		
 		deleteCase = new JButton("Delete an existing case");
 		deleteCase.setFont(new Font("Sans-Serif", 0, 25));
-		deleteCase.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				ActiveCase caseInput = new ActiveCase();
-				
-				String caseToUpdate = JOptionPane.showInputDialog("Please enter the id of the case you want to delete");
-				caseInput.deleteFromDatabase(caseToUpdate);
-			}
-			
-		});		
 		buttons.add(deleteCase);
 		
 		viewCase = new JButton("View an Existing Case");

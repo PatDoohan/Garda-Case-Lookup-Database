@@ -33,7 +33,9 @@ public class WindowHandler extends JFrame implements ActionListener{
 	private ForensicsMenu forensicsMenu;
 	private MapMenu mapMenu;
 	private CreateCaseForm caseForm;
+	private EditCaseForm editCase;
 	private JPanel center;
+	private CaseDeleteForm deleteCase;
 	
 	
 	
@@ -207,6 +209,27 @@ public class WindowHandler extends JFrame implements ActionListener{
 			
 		});
 		
+		caseMenu.updateCase.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{	
+				//sets the caseMenu to Invisible and the caseDisplay to visible.
+				caseMenu.setVisible(false);
+				editCase.setVisible(true);
+			}
+			
+		});
+		
+		caseMenu.deleteCase.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{	
+				//sets the caseMenu to Invisible and the caseDisplay to visible.
+				caseMenu.setVisible(false);
+				deleteCase.setVisible(true);
+			}
+			
+		});;
 		//adds the caseMenu to the Container card layout.
 		Container.add(caseMenu);
 		//creates a new caseDisplay panel
@@ -300,9 +323,17 @@ public class WindowHandler extends JFrame implements ActionListener{
 		caseForm.setVisible(false);
 		Container.add(caseForm);
 		
-		add(Container, BorderLayout.CENTER);
-	
+		editCase = new EditCaseForm();
+		editCase.cancel.addActionListener(this);
+		editCase.setVisible(false);
+		Container.add(editCase);
 		
+		deleteCase = new CaseDeleteForm();
+		deleteCase.cancel.addActionListener(this);
+		deleteCase.setVisible(false);
+		Container.add(deleteCase);
+		
+		add(Container, BorderLayout.CENTER);
 	}
 	
 	public static void main (String [] args)
@@ -313,7 +344,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 	    frame.setSize(1200,1000);
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
-		
 	}
 
 	@Override
@@ -382,7 +412,24 @@ public class WindowHandler extends JFrame implements ActionListener{
 				caseForm.setVisible(false);
 				caseMenu.setVisible(true);
 			}
-			
+		}
+		
+		else if(editCase.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editCase.clearFields();
+				editCase.setVisible(false);
+				caseMenu.setVisible(true);
+			}
+		}
+		
+		else if(deleteCase.isVisible())
+		{
+			deleteCase.clearFields();
+			deleteCase.setVisible(false);
+			caseMenu.setVisible(true);
 		}
 	}
 }
