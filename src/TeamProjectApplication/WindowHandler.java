@@ -163,16 +163,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 			
 		});
 		
-		mainMenu.mapLookup.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//makes the evidenceMenu visible and the main menu invisible.
-				mapMenu.setVisible(true);
-				mainMenu.setVisible(false);
-			}
-			
-		});
+		
 		//sets listener for logout to the outer class listener that handles returning to previous menus
 		mainMenu.Logout.addActionListener(this);
 		//adds the main menu to the container card layout.
@@ -216,6 +207,17 @@ public class WindowHandler extends JFrame implements ActionListener{
 				//sets the caseMenu to Invisible and the caseDisplay to visible.
 				caseMenu.setVisible(false);
 				editCase.setVisible(true);
+			}
+			
+		});
+		
+		caseMenu.mapLookup.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//makes the evidenceMenu visible and the main menu invisible.
+				mapMenu.setVisible(true);
+				caseMenu.setVisible(false);
 			}
 			
 		});
@@ -401,7 +403,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 		else if(mapMenu.isVisible())
 		{
 			mapMenu.setVisible(false);
-			mainMenu.setVisible(true);
+			caseMenu.setVisible(true);
 		}
 		else if(caseForm.isVisible())
 		{

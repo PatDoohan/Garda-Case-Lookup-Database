@@ -10,7 +10,7 @@ public class GardaMenu extends JPanel implements ActionListener{
 	
 	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics, Logout;
 	protected JLabel gardaLogo, pageTitle, menulbl;
-	protected JPanel buttons, header, container, menu;
+	protected JPanel buttons, header, container;
 	
 	
 	public GardaMenu()
@@ -25,15 +25,16 @@ public class GardaMenu extends JPanel implements ActionListener{
 		header.add(gardaLogo);
 		header.add(pageTitle);
 		
-		menu = new JPanel();
-		menu.setBorder(new EmptyBorder(0,0,120,0));;
-		menulbl = new JLabel("Main Menu");
-		menulbl.setAlignmentY(LEFT_ALIGNMENT);
-		menulbl.setFont(new Font("Sans-Serif",0, 40));
-		menu.add(menulbl);
+		
+	
+		
 		
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20, 20));
+		
+		menulbl = new JLabel("Main Menu", SwingConstants.CENTER);
+		menulbl.setFont(new Font("Sans-Serif",0, 40));
+		buttons.add(menulbl);
 		
 		caseLookup = new JButton("Case");
 		caseLookup.setFont(new Font("Sans-Serif", 0, 25));
@@ -43,9 +44,6 @@ public class GardaMenu extends JPanel implements ActionListener{
 		EvidenceMenu.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(EvidenceMenu);
 		
-		mapLookup = new JButton("Map Lookup");
-		mapLookup.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(mapLookup);
 		
 		CrimeStatistics = new JButton("Crime Statistics");
 		CrimeStatistics.setFont(new Font("Sans-Serif", 0, 25));
@@ -61,7 +59,7 @@ public class GardaMenu extends JPanel implements ActionListener{
 		
 		container.add(header, BorderLayout.NORTH);
 		container.add(buttons, BorderLayout.SOUTH);
-		container.add(menu, BorderLayout.CENTER);
+		
 		
 		add(container,BorderLayout.CENTER);
 	}

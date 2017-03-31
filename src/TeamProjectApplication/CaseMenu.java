@@ -12,8 +12,8 @@ import java.sql.Statement;
 
 public class CaseMenu extends JPanel implements ActionListener{
 	
-	private JLabel gardaLogo, pageTitle;
-	protected JButton createCase, updateCase, deleteCase, viewCase ,back;
+	private JLabel gardaLogo, pageTitle, menulbl;
+	protected JButton createCase, updateCase, deleteCase, viewCase ,back, mapLookup, Logout;
 	private JPanel buttons, header, container;
 	private int caseID, crimeCode;
 	private String date, time;
@@ -34,21 +34,29 @@ public class CaseMenu extends JPanel implements ActionListener{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
-		createCase  = new JButton("Create a new case");
+		menulbl = new JLabel("Case Menu", SwingConstants.CENTER);
+		menulbl.setFont(new Font("Sans-Serif",0, 40));
+		buttons.add(menulbl);
+		
+		createCase  = new JButton("New Case");
 		createCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(createCase);
 		
-		updateCase = new JButton("Update an existing case");
+		updateCase = new JButton("Update Case");
 		updateCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(updateCase);
 		
-		deleteCase = new JButton("Delete an existing case");
+		deleteCase = new JButton("Delete Case");
 		deleteCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(deleteCase);
 		
-		viewCase = new JButton("View an Existing Case");
+		viewCase = new JButton("View Case");
 		viewCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(viewCase);
+		
+		mapLookup = new JButton("Map Lookup");
+		mapLookup.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(mapLookup);
 		
 		back = new JButton("Return to main menu");
 		back.setFont(new Font("Sans-Serif", 0, 25));

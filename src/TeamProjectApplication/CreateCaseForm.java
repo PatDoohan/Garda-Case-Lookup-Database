@@ -1,6 +1,7 @@
 package TeamProjectApplication;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,20 +15,33 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 
 	//Instance Varibales
 	private JTextField caseID, date, time, address, eircode;
-	private JLabel caseIDLabel, dateLabel, timeLabel, addressLabel, statusLabel,eircodeLabel;
+	private JLabel caseIDLabel, dateLabel, timeLabel, addressLabel, statusLabel,eircodeLabel, titleLabel;
 	private String[] status = {"Open", "Active", "In Court", "Closed"};
 	private JComboBox setStatus;
 	protected JButton submit, cancel;
-	private JPanel container, form, buttons;
+	private JPanel container, form, buttons, title;
 	private ActiveCase inputCase = new ActiveCase();
 
 	public CreateCaseForm()
 	{
+		
+		title = new JPanel();
+		title.setBorder(new EmptyBorder(0,0,120,0));
+		titleLabel = new JLabel("New Case");
+		titleLabel.setFont(new Font("Sans-Serif",0, 40));
+		title.add(titleLabel);
+		
 		//setting border for panel
 		this.setLayout(new BorderLayout());
 		JPanel form = new JPanel();
 		form.setLayout(new GridLayout(0,2,5,5));
 		form.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
+		
+		title = new JPanel();
+		title.setBorder(new EmptyBorder(0,0,120,0));
+		titleLabel = new JLabel("New Case");
+		titleLabel.setFont(new Font("Sans-Serif",0, 40));
+		title.add(titleLabel);
 		
 		caseIDLabel = new JLabel("Case ID:");
 		inputCase.assignID();
@@ -64,7 +78,7 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		form.add(eircode);
 		
 		buttons = new JPanel();
-		submit = new JButton();
+		submit = new JButton("Submit");
 		cancel = new JButton("Cancel");
 		buttons.add(submit);
 		buttons.add(cancel);
@@ -72,8 +86,10 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		container = new JPanel();
 		container.setLayout(new GridLayout(0,1));
 		container.setBorder(new EmptyBorder(200, 0, 0, 0));
+		container.add(title);
 		container.add(form);
 		container.add(buttons);
+		
 		
 		add(container, BorderLayout.CENTER);
 	}

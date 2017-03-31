@@ -8,11 +8,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class VehicleMenu extends JPanel{
 
-		private JLabel gardaLogo, pageTitle;
+		private JLabel gardaLogo, pageTitle, menulbl;
 		private JPanel buttons, header, container;
 		protected JButton addVehicle, editVehicle, deleteVehicle, viewVehicle, back;
 		public VehicleMenu()
@@ -30,16 +31,21 @@ public class VehicleMenu extends JPanel{
 			buttons = new JPanel();
 			buttons.setLayout(new GridLayout (0,1, 20,20));
 			
-			addVehicle = new JButton("Add a new Vehicle");
+
+			menulbl = new JLabel("Vehicle Menu", SwingConstants.CENTER);
+			menulbl.setFont(new Font("Sans-Serif",0, 40));
+			buttons.add(menulbl);
+			
+			addVehicle = new JButton("Add Vehicle");
 			addVehicle.setFont(new Font("Sans-Serif", 0, 25));
 			
-			editVehicle = new JButton("Update an existing Vehicle");
+			editVehicle = new JButton("Update Vehicle");
 			editVehicle.setFont(new Font("Sans-Serif", 0, 25));
 			
-			deleteVehicle = new JButton("Delete a Vehicle");
+			deleteVehicle = new JButton("Delete Vehicle");
 			deleteVehicle.setFont(new Font("Sans-Serif", 0, 25));
 			
-			viewVehicle = new JButton("View an existing Vehicle");
+			viewVehicle = new JButton("View Vehicle");
 			viewVehicle.setFont(new Font("Sans-Serif", 0, 25));
 			
 			back = new JButton("Return to Evidence Menu");

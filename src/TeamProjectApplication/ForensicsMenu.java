@@ -8,11 +8,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class ForensicsMenu extends JPanel{
 
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, menulbl;
 	private JPanel buttons, header, container;
 	protected JButton addForensics, editForensics, deleteForensics, viewForensics, back;
 	public ForensicsMenu()
@@ -29,17 +30,21 @@ public class ForensicsMenu extends JPanel{
 		
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
+
+		menulbl = new JLabel("Forensics Menu", SwingConstants.CENTER);
+		menulbl.setFont(new Font("Sans-Serif",0, 40));
+		buttons.add(menulbl);
 		
-		addForensics = new JButton("Add a new Forensics Report");
+		addForensics = new JButton("Add Forensics Report");
 		addForensics.setFont(new Font("Sans-Serif", 0, 25));
 		
-		editForensics = new JButton("Update an existing Forensics Report");
+		editForensics = new JButton("Update Forensics Report");
 		editForensics.setFont(new Font("Sans-Serif", 0, 25));
 		
-		deleteForensics = new JButton("Delete a Forensics Report");
+		deleteForensics = new JButton("Delete Report");
 		deleteForensics.setFont(new Font("Sans-Serif", 0, 25));
 		
-		viewForensics = new JButton("View an existing Forensics Report");
+		viewForensics = new JButton("View Report");
 		viewForensics.setFont(new Font("Sans-Serif", 0, 25));
 		
 		back = new JButton("Return to Evidence Menu");

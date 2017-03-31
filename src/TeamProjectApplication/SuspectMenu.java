@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 public class SuspectMenu extends JPanel{
 
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, menulbl;
 	private JPanel buttons, header, container;
 	protected JButton addSuspect, editSuspect, deleteSuspect, viewSuspect, back;
 	public SuspectMenu()
@@ -27,16 +27,21 @@ public class SuspectMenu extends JPanel{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
-		addSuspect = new JButton("Add a new suspect");
+
+		menulbl = new JLabel("Suspect Menu", SwingConstants.CENTER);
+		menulbl.setFont(new Font("Sans-Serif",0, 40));
+		buttons.add(menulbl);
+		
+		addSuspect = new JButton("Add suspect");
 		addSuspect.setFont(new Font("Sans-Serif", 0, 25));
 		
-		editSuspect = new JButton("Update an existing suspect");
+		editSuspect = new JButton("Update suspect");
 		editSuspect.setFont(new Font("Sans-Serif", 0, 25));
 		
-		deleteSuspect = new JButton("Delete a suspect");
+		deleteSuspect = new JButton("Delete suspect");
 		deleteSuspect.setFont(new Font("Sans-Serif", 0, 25));
 		
-		viewSuspect = new JButton("View an existing suspect");
+		viewSuspect = new JButton("View suspect");
 		viewSuspect.setFont(new Font("Sans-Serif", 0, 25));
 		
 		back = new JButton("Return to Evidence Menu");
