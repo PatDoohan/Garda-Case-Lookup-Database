@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class SuspectMenu extends JPanel{
 
 	private JLabel gardaLogo, pageTitle;

@@ -120,9 +120,13 @@ public class CaseDisplay extends JPanel{
 		caseGuards.add(caseCrimes);
 		
 		forensics = new JTable();
+		forensics.setFont(new Font("Sans-Serif", 0, 14));
 		suspects = new JTable();
+		suspects.setFont(new Font("Sans-Serif", 0, 14));
 		witness = new JTable();
+		witness.setFont(new Font("Sans-Serif", 0, 14));
 		vehicles = new JTable();
+		vehicles.setFont(new Font("Sans-Serif", 0, 14));
 
 		try
 		{
