@@ -37,8 +37,8 @@ public class EditCaseForm extends JPanel implements ActionListener{
 	{
 		//setting border for panel
 				this.setLayout(new BorderLayout());
-				JPanel form = new JPanel();
-				JPanel caseSelection = new JPanel();
+				form = new JPanel();
+				caseSelection = new JPanel();
 				caseSelection.setLayout(new GridLayout(0,4,5,5));
 				caseSelection.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
 				form.setLayout(new GridLayout(0,2,5,5));

@@ -2,7 +2,6 @@ package TeamProjectApplication;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigInteger;
@@ -18,13 +17,12 @@ import javax.swing.JPanel;
 
 public class WindowHandler extends JFrame implements ActionListener{
 	
-	//Varibales, Panels and Classes created to be used in the Windowhandler
+	//Variables, Panels and Classes created to be used in the Windowhandler
 	private LoginScreen login;
 	private GardaMenu mainMenu;
 	private CaseMenu caseMenu;
 	private CaseDisplay caseDisplay;
 	private JPanel Container;
-	private int caseToView;
 	private CardLayout cLayout;
 	private EvidenceMenu evidenceMenu;
 	private SuspectMenu suspectMenu;
@@ -34,8 +32,16 @@ public class WindowHandler extends JFrame implements ActionListener{
 	private MapMenu mapMenu;
 	private CreateCaseForm caseForm;
 	private EditCaseForm editCase;
-	private JPanel center;
 	private CaseDeleteForm deleteCase;
+	private AddSuspectForm addSuspect;
+	private AddVehicleForm addVehicle;
+	private EditSuspect editSuspect;
+	private DeleteSuspectForm deleteSuspect;
+	private EditVehicle editVehicle;
+	private DeleteVehicle deleteVehicle;
+	private AddWitnessForm addWitness;
+	private EditWitness editWitness;
+	private DeleteWitness deleteWitness;
 	
 	
 	
@@ -298,15 +304,115 @@ public class WindowHandler extends JFrame implements ActionListener{
 		suspectMenu.back.addActionListener(this);
 		Container.add(suspectMenu);
 		
+		suspectMenu.addSuspect.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				suspectMenu.setVisible(false);
+				addSuspect.setVisible(true);
+			}
+					
+		});	
+		
+		suspectMenu.editSuspect.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				suspectMenu.setVisible(false);
+				editSuspect.setVisible(true);
+			}
+					
+		});	
+		
+		suspectMenu.deleteSuspect.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				suspectMenu.setVisible(false);
+				deleteSuspect.setVisible(true);
+			}
+					
+		});	
+		
+		
 		witnessMenu = new WitnessMenu();
 		witnessMenu.back.addActionListener(this);
 		witnessMenu.setVisible(false);
+		witnessMenu.addWitness.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				witnessMenu.setVisible(false);
+				addWitness.setVisible(true);
+			}
+					
+		});	
+		
+		witnessMenu.editWitness.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				witnessMenu.setVisible(false);
+				editWitness.setVisible(true);
+			}
+					
+		});	
+		
+		witnessMenu.deleteWitness.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				witnessMenu.setVisible(false);
+				deleteWitness.setVisible(true);
+			}
+					
+		});	
+		
 		Container.add(witnessMenu);
 		
 		vehicleMenu = new VehicleMenu();
 		vehicleMenu.back.addActionListener(this);
 		vehicleMenu.setVisible(false);
+		vehicleMenu.addVehicle.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				vehicleMenu.setVisible(false);
+				addVehicle.setVisible(true);
+			}
+					
+		});	
+		
+		vehicleMenu.editVehicle.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				vehicleMenu.setVisible(false);
+				editVehicle.setVisible(true);
+			}
+					
+		});	
+		
+		vehicleMenu.deleteVehicle.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				vehicleMenu.setVisible(false);
+				deleteVehicle.setVisible(true);
+			}
+					
+		});	
 		Container.add(vehicleMenu);
+		
 		
 		forensicsMenu = new ForensicsMenu();
 		forensicsMenu.back.addActionListener(this);
@@ -332,6 +438,51 @@ public class WindowHandler extends JFrame implements ActionListener{
 		deleteCase.cancel.addActionListener(this);
 		deleteCase.setVisible(false);
 		Container.add(deleteCase);
+		
+		addSuspect = new AddSuspectForm();
+		addSuspect.cancel.addActionListener(this);
+		addSuspect.setVisible(false);
+		Container.add(addSuspect);
+		
+		editSuspect = new EditSuspect();
+		editSuspect.cancel.addActionListener(this);
+		editSuspect.setVisible(false);
+		Container.add(editSuspect);
+		
+		addVehicle = new AddVehicleForm();
+		addVehicle.cancel.addActionListener(this);
+		addVehicle.setVisible(false);
+		Container.add(addVehicle);
+		
+		deleteSuspect = new DeleteSuspectForm();
+		deleteSuspect.cancel.addActionListener(this);
+		deleteSuspect.setVisible(false);
+		Container.add(deleteSuspect);
+		
+		editVehicle = new EditVehicle();
+		editVehicle.cancel.addActionListener(this);
+		editVehicle.setVisible(false);
+		Container.add(editVehicle);
+		
+		deleteVehicle = new DeleteVehicle();
+		deleteVehicle.cancel.addActionListener(this);
+		deleteVehicle.setVisible(false);
+		Container.add(deleteVehicle);
+		
+		addWitness = new AddWitnessForm();
+		addWitness.cancel.addActionListener(this);
+		addWitness.setVisible(false);
+		Container.add(addWitness);
+		
+		editWitness = new EditWitness();
+		editWitness.cancel.addActionListener(this);
+		editWitness.setVisible(false);
+		Container.add(editWitness);
+		
+		deleteWitness = new DeleteWitness();
+		deleteWitness.cancel.addActionListener(this);
+		deleteWitness.setVisible(false);
+		Container.add(deleteWitness);
 		
 		add(Container, BorderLayout.CENTER);
 	}
@@ -431,5 +582,94 @@ public class WindowHandler extends JFrame implements ActionListener{
 			deleteCase.setVisible(false);
 			caseMenu.setVisible(true);
 		}
+		
+		else if(addSuspect.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				addSuspect.clearfields();
+				addSuspect.setVisible(false);
+				suspectMenu.setVisible(true);
+			}
+		}
+		
+		else if(editSuspect.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editSuspect.clearfields();
+				editSuspect.setVisible(false);
+				suspectMenu.setVisible(true);
+			}
+		}
+		
+		else if(addVehicle.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				addVehicle.clearfields();
+				addVehicle.setVisible(false);
+				vehicleMenu.setVisible(true);
+			}
+		}
+		
+		else if(editVehicle.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editVehicle.clearfields();
+				editVehicle.setVisible(false);
+				vehicleMenu.setVisible(true);
+			}
+		}
+		
+		else if(deleteSuspect.isVisible())
+		{
+			deleteSuspect.clearfields();
+			deleteSuspect.setVisible(false);
+			suspectMenu.setVisible(true);
+		}
+		
+		else if(deleteVehicle.isVisible())
+		{
+			deleteVehicle.clearfields();
+			deleteVehicle.setVisible(false);
+			suspectMenu.setVisible(true);
+		}
+		
+		else if(deleteWitness.isVisible())
+		{
+			deleteWitness.clearfields();
+			deleteWitness.setVisible(false);
+			witnessMenu.setVisible(true);
+		}
+		
+		else if(editWitness.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editWitness.clearfields();
+				editWitness.setVisible(false);
+				witnessMenu.setVisible(true);
+			}
+		}
+		
+		else if(addWitness.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				addWitness.clearfields();
+				addWitness.setVisible(false);
+				witnessMenu.setVisible(true);
+			}
+		}
+		
+		
 	}
 }
