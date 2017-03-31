@@ -51,8 +51,12 @@ public class LoginScreen extends JPanel{
 		TextContainer.add(password);
 		
 		login = new JButton("Login");
+		login.setToolTipText("Login");
 		login.setPreferredSize(new Dimension(100,35));
 		login.setMnemonic('L');	
+	
+		
+		
 		
 		buttonPane = new JPanel();
 		buttonPane.add(login);
