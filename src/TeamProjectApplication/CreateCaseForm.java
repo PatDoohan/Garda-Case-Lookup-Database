@@ -1,6 +1,7 @@
 package TeamProjectApplication;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -25,23 +26,21 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 	public CreateCaseForm()
 	{
 		
-		title = new JPanel();
-		title.setBorder(new EmptyBorder(0,0,120,0));
-		titleLabel = new JLabel("New Case");
-		titleLabel.setFont(new Font("Sans-Serif",0, 40));
-		title.add(titleLabel);
-		
+	
 		//setting border for panel
 		this.setLayout(new BorderLayout());
 		JPanel form = new JPanel();
 		form.setLayout(new GridLayout(0,2,5,5));
-		form.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
+		form.setBorder(new CompoundBorder(new EmptyBorder(0,0,0,0), new CompoundBorder(new EtchedBorder(), new EmptyBorder(0,0,0,0))));
 		
-		title = new JPanel();
-		title.setBorder(new EmptyBorder(0,0,120,0));
+	
+	
 		titleLabel = new JLabel("New Case");
+		JLabel blankLabel = new JLabel("");
 		titleLabel.setFont(new Font("Sans-Serif",0, 40));
-		title.add(titleLabel);
+		form.add(titleLabel);
+		form.add(blankLabel);
+		
 		
 		caseIDLabel = new JLabel("Case ID:");
 		inputCase.assignID();
@@ -86,7 +85,6 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		container = new JPanel();
 		container.setLayout(new GridLayout(0,1));
 		container.setBorder(new EmptyBorder(200, 0, 0, 0));
-		container.add(title);
 		container.add(form);
 		container.add(buttons);
 		

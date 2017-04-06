@@ -20,7 +20,7 @@ public class LoginScreen extends JPanel{
 	protected JPasswordField password;
 	protected JLabel gardaLogo, usernameLabel, passwordLabel;
 	protected JPanel container, TextContainer, buttonPane;
-	protected JButton login;
+	public static JButton login;
 	private boolean validated = false;
 		
 	public LoginScreen()
@@ -54,6 +54,7 @@ public class LoginScreen extends JPanel{
 		login.setToolTipText("Login");
 		login.setPreferredSize(new Dimension(100,35));
 		login.setMnemonic('L');	
+
 	
 		
 		

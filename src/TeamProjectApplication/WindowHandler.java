@@ -125,9 +125,9 @@ public class WindowHandler extends JFrame implements ActionListener{
 				//if the wrong values are entered an error will be popped to screen
 				else
 				{
-					/*************************************************************
-					 * PLACE HOLDER VALUE, NEEDS TO BE CHANGED TO POP UP NOTIFICATION
-					 *************************************************************/
+					/******************************************************************
+					 * PLACE HOLDER VALUE, NEEDS TO BE CHANGED TO POP UP NOTIFICATION *
+					 ******************************************************************/
 					System.out.println("passwords do not match");
 				}
 			}
@@ -341,7 +341,8 @@ public class WindowHandler extends JFrame implements ActionListener{
 	public static void main (String [] args)
 	{
 		WindowHandler frame = new WindowHandler();
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.getRootPane().setDefaultButton(LoginScreen.login);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setTitle("Garda Case Tracking Database");
 	    frame.setSize(1200,1000);
 	    frame.setLocationRelativeTo(null);

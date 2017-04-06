@@ -2,6 +2,7 @@ package TeamProjectApplication;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -125,14 +126,19 @@ public class EditCaseForm extends JPanel implements ActionListener{
 				submit = new JButton("Submit");
 				submit.addActionListener(this);
 				cancel = new JButton("Cancel");
+				
 				buttons.add(submit);
 				buttons.add(cancel);
+				
+				
 				
 				container = new JPanel();
 				container.setLayout(new GridLayout(0,1));
 				container.setBorder(new EmptyBorder(200, 0, 0, 0));
 				container.add(form);
 				container.add(buttons);
+				
+				
 				
 				add(caseSelection,BorderLayout.NORTH);
 				add(container, BorderLayout.CENTER);
