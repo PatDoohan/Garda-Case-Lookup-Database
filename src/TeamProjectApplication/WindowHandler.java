@@ -42,6 +42,9 @@ public class WindowHandler extends JFrame implements ActionListener{
 	private AddWitnessForm addWitness;
 	private EditWitness editWitness;
 	private DeleteWitness deleteWitness;
+	private AddForensicsForm addForensic;
+	private EditForensics editForensic;
+	private DeleteForensics deleteForensic;
 	
 	
 	
@@ -66,6 +69,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 			{
 				//creates variables for the data entered by the user
 				String enteredUsername = login.userName.getText();
+				@SuppressWarnings("deprecation")
 				String enteredPassword = login.password.getText();
 				//creates variables for hasing the password and the data retrieved from the database
 				String hashedPassword = null, retrievedLogin = null, retrievedPassword=null;
@@ -173,6 +177,8 @@ public class WindowHandler extends JFrame implements ActionListener{
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				mapMenu.searchMap();
+				mapMenu.back.setVisible(false);
 				//makes the evidenceMenu visible and the main menu invisible.
 				mapMenu.setVisible(true);
 				mainMenu.setVisible(false);
@@ -419,6 +425,38 @@ public class WindowHandler extends JFrame implements ActionListener{
 		forensicsMenu.setVisible(false);
 		Container.add(forensicsMenu);
 		
+		forensicsMenu.addForensics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				forensicsMenu.setVisible(false);
+				addForensic.setVisible(true);
+			}
+					
+		});	
+		
+		forensicsMenu.editForensics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				forensicsMenu.setVisible(false);
+				editForensic.setVisible(true);
+			}
+					
+		});	
+		
+		forensicsMenu.deleteForensics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the evidence menu and makes the Forensics menu visible.
+				forensicsMenu.setVisible(false);
+				deleteForensic.setVisible(true);
+			}
+					
+		});	
 		mapMenu = new MapMenu();
 		mapMenu.back.addActionListener(this);
 		mapMenu.setVisible(false);
@@ -483,6 +521,21 @@ public class WindowHandler extends JFrame implements ActionListener{
 		deleteWitness.cancel.addActionListener(this);
 		deleteWitness.setVisible(false);
 		Container.add(deleteWitness);
+		
+		addForensic = new AddForensicsForm();
+		addForensic.cancel.addActionListener(this);
+		addForensic.setVisible(false);
+		Container.add(addForensic);
+		
+		editForensic = new EditForensics();
+		editForensic.cancel.addActionListener(this);
+		editForensic.setVisible(false);
+		Container.add(editForensic);
+		
+		deleteForensic = new DeleteForensics();
+		deleteForensic.cancel.addActionListener(this);
+		deleteForensic.setVisible(false);
+		Container.add(deleteForensic);
 		
 		add(Container, BorderLayout.CENTER);
 	}
@@ -668,6 +721,35 @@ public class WindowHandler extends JFrame implements ActionListener{
 				addWitness.setVisible(false);
 				witnessMenu.setVisible(true);
 			}
+		}
+		
+		else if(addForensic.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				addForensic.clearfields();
+				addForensic.setVisible(false);
+				forensicsMenu.setVisible(true);
+			}
+		}
+		
+		else if(editForensic.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editForensic.clearfields();
+				editForensic.setVisible(false);
+				forensicsMenu.setVisible(true);
+			}
+		}
+		
+		else if(deleteForensic.isVisible())
+		{
+			deleteForensic.clearfields();
+			deleteForensic.setVisible(false);
+			forensicsMenu.setVisible(true);
 		}
 		
 		

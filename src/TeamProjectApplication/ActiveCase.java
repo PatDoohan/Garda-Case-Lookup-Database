@@ -4,13 +4,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.swing.JOptionPane;
-
 public class ActiveCase implements DatabaseFunctionality{
 
 	//Instance Varibales for use in methods
 	private int caseID;
-	private int crimeCode;
 	private String dateTime, address, eirCode, activeStatus;
 	private String[] status = {"Open", "Active", "In Court", "Closed"};
 
@@ -103,11 +100,14 @@ public class ActiveCase implements DatabaseFunctionality{
 		return this.eirCode;
 	}
 	
+	/**
+	 * implemented method from database functionality to add a case to the database.
+	 */
 	@Override
-	public void addToDatabase() {
+	public void addToDatabase() 
+	{		
 		//instance variables for use with SQL connection
 		Statement st;
-		ResultSet rs;
 		String sql;
 		
 		try
@@ -118,33 +118,33 @@ public class ActiveCase implements DatabaseFunctionality{
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
-			//create result set from statement
-			rs = st.executeQuery("select * from garda.activecase");
 			
-			//create a statement to be used in the statement object
+			/* create a statement to be used in the statement object, this statements creates a full
+			 * SQL statlement that will insert all the data from the class into the correct columns in the database*/
 			sql = "INSERT INTO garda.activecase values(" + "'" + this.caseID + "', '"  + this.dateTime  +  "', '" + this.address + "', '" + this.activeStatus + "', '" + this.eirCode + "');";
 			
 			//uses sql string to execute the statement
 			st.execute(sql);
 			
-			//closes result set and connection
-			rs.close();
+			//closes the connection
 			con.close();
-			
 		}
 		//catches errors thrown by database
 		catch(Exception e)
 		{
 			System.out.println("Error: " + e.getMessage());
 		}
-		
 	}
 
+	/**
+	 * Implemented method from database functionality interface to delete a record from the database
+	 * based on the unique identifier from that record, in this case it is the caseID.
+	 */
 	@Override
-	public void deleteFromDatabase(String identifier) {
+	public void deleteFromDatabase(String identifier) 
+	{		
 		//instance variables for use with SQL connection
 		Statement st;
-		ResultSet rs;
 		String sql;
 		
 		try
@@ -155,17 +155,14 @@ public class ActiveCase implements DatabaseFunctionality{
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
-			//create result set from statement
-			rs = st.executeQuery("select * from garda.activecase");	
-			
-			//create a statement to be used in the statement object
+		
+			//creates a sql statement that uses the unique identifier entered to delete a specific row from the datatbase.
 			sql = "DELETE FROM garda.activecase " + "WHERE caseID = '" + identifier +"';";
 			
 			//uses sql string to execute the statement
 			st.execute(sql);
 			
-			//closes result set and connection
-			rs.close();
+			//closes the connection
 			con.close();
 		}
 		//catches errors thrown by database
@@ -173,7 +170,6 @@ public class ActiveCase implements DatabaseFunctionality{
 		{			
 			System.out.println("Error: " + e.getMessage());
 		}
-		
 	}
 	
 	/**
@@ -184,6 +180,7 @@ public class ActiveCase implements DatabaseFunctionality{
 		//instance variables for use with SQL connection
 		Statement st;
 		ResultSet rs;
+		
 		try
 		{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
@@ -195,7 +192,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			//create result set from statement, gets the highest value from all the case numbers
 			rs = st.executeQuery("SELECT MAX(caseID) FROM garda.activeCase");
 			
-			//gets the value from the result set, increments it and assigns it to the new CaseID
+			//gets the value from the result set, increments it and assigns it to the new CaseID in the class
 			while(rs.next())
 			{
 				caseID = rs.getInt(1)+1;
@@ -204,14 +201,12 @@ public class ActiveCase implements DatabaseFunctionality{
 			//closes result set and connection
 			rs.close();
 			con.close();
-			
 		}
 		//catches errors thrown by database
 		catch(Exception f)
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
-		
 	}
 	
 	public void GetCase(String identifier)
@@ -220,6 +215,7 @@ public class ActiveCase implements DatabaseFunctionality{
 		Statement st;
 		ResultSet rs;
 		String sql;
+		
 		try
 		{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
@@ -248,15 +244,14 @@ public class ActiveCase implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
-		
 	}
 	
 	public void updateDatabase(String identifier)
 	{
 		//instance variables for use with SQL connection
 		Statement st;
-		ResultSet rs;
 		String sql;
+		
 		try
 		{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
@@ -266,20 +261,20 @@ public class ActiveCase implements DatabaseFunctionality{
 			//Create Statement object	
 			st = con.createStatement();
 	
-			//sql statement that updates selected row with new values
 			
+			/*sql statement that updates selected row with new values, values will be inputed to class by the appropriate
+			 * form in this case the edit case form will use the set methods of the class to add the values to the class*/
 			sql = "UPDATE garda.activecase SET " +
 			"DateTime = '" + this.dateTime +
 			"',address = '" + this.address + 
 			"',status = '" + this.activeStatus +
 			"',eirCode = '" + this.eirCode + "' WHERE caseID = '" + identifier + "';";
 			
-			//System.out.println("\n" + sql);
 
 			//executes the above sql statement
 			st.execute(sql);
 
-			//closes result set and connection
+			//closes the connection
 			con.close();	
 		}
 		//catches errors thrown by database
