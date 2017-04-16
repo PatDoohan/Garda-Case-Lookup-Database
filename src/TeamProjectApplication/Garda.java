@@ -76,25 +76,31 @@ public class Garda extends Person implements DatabaseFunctionality{
 	@Override
 	public void addToDatabase()
 	{
+		//instance variables for database
 		Statement st;
-		ResultSet rs;
 		String sql;
 		
 		try
 		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			//Create Statement object	
 			st = con.createStatement();
-			rs = st.executeQuery("select * from garda.garda");
 			
+			//sql statement for inserting data into the garda table in the database
 			sql = "INSERT INTO garda.garda values(" + "'" + this.idNo + "', '" + this.barracksID + "', '" + this.name + "', '"
-					+ this.address +  "', '" + this.phoneNo + "', '"+ this.ppsNumber + "');";
+			+ this.address +  "', '" + this.phoneNo + "', '"+ this.ppsNumber + "');";
+			
+			//executes the above sql statement
 			st.execute(sql);
 			
-			rs.close();
+			//closes the connection
 			con.close();
 			
 		}
+		//catches errors thrown by database
 		catch(Exception e)
 		{
 			System.out.println("Error: " + e.getMessage());
@@ -111,26 +117,32 @@ public class Garda extends Person implements DatabaseFunctionality{
 	@Override
 	public void deleteFromDatabase(String idNo)
 	{
+		//instance variables for database
 		Statement st;
-		ResultSet rs;
 		String sql;
 		
 		try
 		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			//Create Statement object	
 			st = con.createStatement();
-			rs = st.executeQuery("select * from garda.garda");	
 			
+			//sql for deleting a record from the garda table based on the id number entered
 			sql = "DELETE FROM garda.garda " + "WHERE idNo = '" + idNo +"';";
+			
+			//executes the above sql statement
 			st.execute(sql);
 			
-			rs.close();
+			//closes the connection
 			con.close();
 		}
+		//catches errors thrown by database
 		catch(Exception e)
 		{
-		System.out.println("Error: " + e.getMessage());
+			System.out.println("Error: " + e.getMessage());
 		}
 	}
 	

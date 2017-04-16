@@ -11,16 +11,28 @@ public class Person {
 			this.ppsNumber = ppsNumber;
 		}
 
+		/**
+		 * getter method for pps number
+		 * @return
+		 */
 		public String getPPS()
 		{
 			return this.ppsNumber;
 		}
 		
+		/**
+		 * getter method for name
+		 * @return
+		 */
 		public String getName()
 		{
 			return this.name;
 		}
 		
+		/**
+		 * getter method for address
+		 * @return
+		 */
 		public String getAddress()
 		{
 			return this.address;
