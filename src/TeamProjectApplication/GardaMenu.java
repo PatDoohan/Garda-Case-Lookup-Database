@@ -7,8 +7,8 @@ import java.awt.*;
 public class GardaMenu extends JPanel{
 	
 	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics, Logout;
-	protected JLabel gardaLogo, pageTitle;
-	protected JPanel buttons, header, container;
+	protected JLabel gardaLogo, pageTitle, menulbl;
+	protected JPanel buttons, header, container, menu;
 	
 	
 	public GardaMenu()
@@ -46,6 +46,7 @@ public class GardaMenu extends JPanel{
 		
 		//Creates the map menu button and adds it to the button panel
 		mapLookup = new JButton("Map Menu");
+
 		mapLookup.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(mapLookup);
 		
@@ -64,10 +65,11 @@ public class GardaMenu extends JPanel{
 		container.setLayout(new BorderLayout());
 		container.setBorder(new EmptyBorder(20,20,20,20));
 		
+
 		//adds the header and buttons to the panel
 		container.add(header, BorderLayout.CENTER);
 		container.add(buttons, BorderLayout.SOUTH);
-		
+    
 		//adds the container to the main panel
 		add(container,BorderLayout.CENTER);
 	}

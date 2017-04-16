@@ -65,8 +65,7 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		form.add(eircode);
 		
 		buttons = new JPanel();
-		submit = new JButton("Submit");
-		submit.addActionListener(this);
+		submit = new JButton();
 		cancel = new JButton("Cancel");
 		buttons.add(submit);
 		buttons.add(cancel);
