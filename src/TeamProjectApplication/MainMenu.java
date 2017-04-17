@@ -4,14 +4,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class GardaMenu extends JPanel{
+public class MainMenu extends JPanel{
 	
-	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics, Logout;
+	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics, crimeMenu, gardaMenu, Logout;
 	protected JLabel gardaLogo, pageTitle;
 	protected JPanel buttons, header, container;
 	
 	
-	public GardaMenu()
+	public MainMenu()
 	{
 		//creates the header panel that holds the garda logo and label
 		header = new JPanel();
@@ -43,6 +43,16 @@ public class GardaMenu extends JPanel{
 		EvidenceMenu = new JButton("Evidence Menu");
 		EvidenceMenu.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(EvidenceMenu);
+		
+		//Creates the Crime menu button and adds it to the button panel
+		crimeMenu = new JButton("Crime Menu");
+		crimeMenu.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(crimeMenu);
+		
+		//Creates the garda menu button and adds it to the button panel
+		gardaMenu = new JButton("Garda Menu");
+		gardaMenu.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(gardaMenu);
 		
 		//Creates the map menu button and adds it to the button panel
 		mapLookup = new JButton("Map Menu");

@@ -19,7 +19,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 	
 	//Variables, Panels and Classes created to be used in the Windowhandler
 	private LoginScreen login;
-	private GardaMenu mainMenu;
+	private MainMenu mainMenu;
 	private CaseMenu caseMenu;
 	private CaseDisplay caseDisplay;
 	private JPanel Container;
@@ -45,6 +45,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 	private AddForensicsForm addForensic;
 	private EditForensics editForensic;
 	private DeleteForensics deleteForensic;
+	private CrimeMenu crimeMenu;
 	
 	
 	
@@ -147,7 +148,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 		
 
 		//creates instance of main menu using GardaMenu panel
-		mainMenu = new GardaMenu();
+		mainMenu = new MainMenu();
 		//sets visible to false as this should not be displayed until user passes authentication
 		mainMenu.setVisible(false);
 		//adds action listener for caseLookup button from GardaMenu class
@@ -173,6 +174,17 @@ public class WindowHandler extends JFrame implements ActionListener{
 			
 		});
 		
+		mainMenu.crimeMenu.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//makes the evidenceMenu visible and the main menu invisible.
+				crimeMenu.setVisible(true);
+				mainMenu.setVisible(false);
+			}
+			
+		});
+		
 		mainMenu.mapLookup.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -185,6 +197,8 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 			
 		});
+		
+		
 		//sets listener for logout to the outer class listener that handles returning to previous menus
 		mainMenu.Logout.addActionListener(this);
 		//adds the main menu to the container card layout.
@@ -457,6 +471,12 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 					
 		});	
+		
+		crimeMenu = new CrimeMenu();
+		crimeMenu.back.addActionListener(this);
+		crimeMenu.setVisible(false);
+		Container.add(crimeMenu);
+		
 		mapMenu = new MapMenu();
 		mapMenu.back.addActionListener(this);
 		mapMenu.setVisible(false);
@@ -750,6 +770,12 @@ public class WindowHandler extends JFrame implements ActionListener{
 			deleteForensic.clearfields();
 			deleteForensic.setVisible(false);
 			forensicsMenu.setVisible(true);
+		}
+		
+		else if(crimeMenu.isVisible())
+		{
+			crimeMenu.setVisible(false);
+			mainMenu.setVisible(true);
 		}
 		
 		
