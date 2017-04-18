@@ -1,81 +1,87 @@
 package TeamProjectApplication;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-public class EditSuspect extends JPanel implements ActionListener {
-
-	//instance variables and components to build the GUI
-	private JTextField SuspectID, pps, name, address, description, priorConvictions;
-	private JLabel SuspectIDLabel, ppsLabel, nameLabel, addressLabel, descriptionLabel, priorConvictionsLabel, statusLabel;
-	private String[] status = {"Suspect", "Fugitive", "Arrested", "Processed"};
-	private String[] defaultstatus = {"Suspect", "Fugitive", "Arrested", "Processed"};
-	private JComboBox setStatus;
-	protected JButton submit, cancel, caseSubmit, caseClear;
-	private JPanel container, form, buttons, caseSelection;
-	Suspect suspectIn = new Suspect();
+public class EditGarda extends JPanel implements ActionListener{
 	
-	//main class for EditSuspect that builds the Panel
-	public EditSuspect()
+	//instance variables and components to build the GUI
+	private JTextField gardaID, barracksID, name, address, phoneNO, PPSNumber;
+	private JLabel gardaIDLabel, barracksIDLabel, nameLabel, addressLabel, phoneNOLabel, PPSNumberLabel, statusLabel;
+	private String[] status = {"Active", "Suspended", "Transferred", "Retired"};
+	private String[] defaultstatus = {"Active", "Suspended", "Transferred", "Retired"};
+	protected JButton submit, cancel, caseSubmit, caseClear;
+	private JComboBox setStatus;
+	private JPanel container, form, buttons, caseSelection;
+	//instance of suspect class for data manipulation
+	Garda gardaIn = new Garda();
+	
+	public EditGarda()
 	{
-		//sets the layout to border layout as the default layout for a jpanel is flow.
+		//sets the layout to border layout as the default layout for a jpanel is flow
 		this.setLayout(new BorderLayout());
 		
 		/* Creates the form panel that will hold all the labels and text fields for the form.
 		 * It is given a grid layout so that each row will be a different section of the form e.g 
-		 * what case it is a part of then on the next line the ID number of the suspect file etc.*/
+		 * what the name is and on the next line the Description of the crime etc.*/
 		form = new JPanel();
 		form.setLayout(new GridLayout(0,2,5,5));
 		form.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
 		
-		/* Creates the panel that will hold the panels and buttons for the suspect file selection
-		 * the layout is set to allow all the items in the panel to exist on the same row */
+		/* this is the panel where the information is entered to find the crime that needs to be edited */
 		caseSelection = new JPanel();
 		caseSelection.setLayout(new GridLayout(0,4,5,5));
 		caseSelection.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
-	
-		//creates the panel, text field and buttons for the file selection panel.
-		SuspectIDLabel = new JLabel("Suspect ID To Update: ");
-		SuspectID = new JTextField();
+		
+		gardaID = new JTextField();
+		gardaIDLabel = new JLabel("Garda ID Number:");
 		caseSubmit = new JButton("Submit");
 		caseClear = new JButton("Clear");
 		
-		//adds functionality to the submit button
 		caseSubmit.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				//sets the suspectID field to uneditable to stop it being accidently changed while in use.
-				SuspectID.setEditable(false);
+				gardaID.setEditable(false);
 				
-				//uses the method in the suspect class to retrieve the information from the database and assign it to the variables in class
-				int getSuspect = suspectIn.getSuspect(Integer.valueOf(SuspectID.getText()));
+				//assigns the return value from the get garda method to an int
+				int getGarda = gardaIn.getGarda(gardaID.getText());
 				
-				if(getSuspect == 0)
+				//if the returned value is 0 it means that the case does not exist.
+				if(getGarda == 0)
 				{
-					JOptionPane.showMessageDialog(null,"Suspect Not Found, Please Enter a valid suspect ID", "Suspect Not Found",  JOptionPane.ERROR_MESSAGE);
-					SuspectID.setEditable(true);
+					JOptionPane.showMessageDialog(null, "Garda" + gardaID.getText() + " could not be found, please check the ID and try again ", "Error", JOptionPane.ERROR_MESSAGE);
+					gardaID.setEditable(true);
 				}
 				
 				else
 				{
 					//sets the textfields to the appropriate values retrieved from the database.
-					pps.setText(suspectIn.getSuspectPPS());
-					name.setText(suspectIn.getName());
-					address.setText(suspectIn.getAddress());
-					priorConvictions.setText(suspectIn.getSuspectPriors());
-					description.setText(suspectIn.getSuspectDescription());
+					barracksID.setText(gardaIn.getBarracks());
+					name.setText(gardaIn.getName());
+					address.setText(gardaIn.getAddress());
+					phoneNO.setText(gardaIn.getPhoneNo());
+					PPSNumber.setText(gardaIn.getPPS());
 					
 					//checks to see what the default status is from the available array and sets it to default using a model
 					for (int i = 0; i < status.length; i++)
 					{
 						//if statement that checks what the status is equal to in the array, then it swaps that to the first slot in the array
-						if(status[i].equals(suspectIn.getSuspectStatus()))
+						if(status[i].equals(gardaIn.getStatus()))
 						{
 							String temp = status[0];
 							status[0] = status [i];
@@ -86,9 +92,7 @@ public class EditSuspect extends JPanel implements ActionListener {
 					DefaultComboBoxModel model = new DefaultComboBoxModel(status);
 					setStatus.setModel(model);
 				}
-			
 			}
-					
 		});
 		
 		//functionality for the clear button that clears all the fields and sets them to defaults
@@ -97,56 +101,55 @@ public class EditSuspect extends JPanel implements ActionListener {
 			public void actionPerformed(ActionEvent e)
 			{
 				//calls the clearfields method to clear all the information
-				clearfields();				
+				clearfields();
+				
 			}
 		});
 		
 		//adds the label, text field and buttons to the caseSelection panel
-		caseSelection.add(SuspectIDLabel);
-		caseSelection.add(SuspectID);
+		caseSelection.add(gardaIDLabel);
+		caseSelection.add(gardaID);
 		caseSelection.add(caseSubmit);
 		caseSelection.add(caseClear);
 		
-		//this is the label and textfield for the suspect pps number if known
-		ppsLabel = new JLabel("Suspect PPS Number:");
-		pps = new JTextField();
-		form.add(ppsLabel);
-		form.add(pps);
+		//this is the label and text field for the witness name
+		barracksID = new JTextField();
+		barracksIDLabel = new JLabel("Garda Barracks ID:");
+		form.add(barracksIDLabel);
+		form.add(barracksID);
 		
-		//this is the label and textfield for the suspect name if known
-		nameLabel = new JLabel("Suspect Name:");
+		//this is the label and text field for the witness address
 		name = new JTextField();
+		nameLabel = new JLabel("Garda Name:");
 		form.add(nameLabel);
 		form.add(name);
 		
-		//this is the label and textfield for the suspect address if known
-		addressLabel = new JLabel("Suspect Address:");
+		//this is the label and text field for the witness contact information e.g. email/phone
 		address = new JTextField();
+		addressLabel = new JLabel("Home Address:");
 		form.add(addressLabel);
 		form.add(address);
 		
-		//this is the label and textfield for the suspect description
-		descriptionLabel = new JLabel("Suspect Description:");
-		description = new JTextField();
-		form.add(descriptionLabel);
-		form.add(description);
+		phoneNO = new JTextField();
+		phoneNOLabel = new JLabel("Phone Number:");
+		form.add(phoneNOLabel);
+		form.add(phoneNO);
 		
-		//this is the label and textfield for the suspects priors if known
-		this.priorConvictionsLabel = new JLabel("Prior Convictions:");
-		this.priorConvictions = new JTextField();
-		form.add(priorConvictionsLabel);
-		form.add(priorConvictions);
+		PPSNumber = new JTextField();
+		PPSNumberLabel = new JLabel("PPS Number: ");
+		form.add(PPSNumberLabel);
+		form.add(PPSNumber);
 		
-		//this is the label and combobox for the current status of the suspect
+		//this is the label and combobox for the current status of the Gardda
 		this.statusLabel = new JLabel("Current Status:");
 		this.setStatus = new JComboBox(status);
 		form.add(statusLabel);
 		form.add(setStatus);
-				
+		
 		/* these are the buttons to cancel and sumbit and the panel that holds them
 		 * Submit uses the inner class listener to perform a function
 		 * and the cancel button is used by the window handler class to
-		 * return to the previous menu*/
+		 * return to the previous menu*/		
 		buttons = new JPanel();
 		submit = new JButton("Submit");
 		submit.addActionListener(this);
@@ -164,61 +167,53 @@ public class EditSuspect extends JPanel implements ActionListener {
 		//adds the container and case selection to the panel
 		add(caseSelection,BorderLayout.NORTH);
 		add(container, BorderLayout.CENTER);
-		
 	}
-
+	
 	//this is the action event that happens upon pressing the submit button
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
-	{		
+	{
 		/*creates a string of all the information entered to be used in the confirmation panel
 		 * This is done to allow the user and overview of the information entered so they can review and
 		 * see if the whole thing is correct*/
-		String suspectInformation = "Suspect ID: " + SuspectID.getText() + "\nSuspect PPS: " + pps.getText() + "\nName: " + name.getText()
-		+ "\nAddress: " + address.getText() + "\nDescription: " + description.getText() + "\nPriorConvictions: " + priorConvictions.getText()
-		+ "\nCurrent Status: " + setStatus.getSelectedItem();
+		String information = "GardaID: " + gardaID.getText() + "\nBarracksID: " + barracksID.getText() + "\nGarda Name: "
+		+ name.getText() + "\nHome Address: " + address.getText() + "\nPhone Number: " + phoneNO.getText() + "\nPPSNumber: " + PPSNumber.getText();
 		
 		/* this is the confirmation dialog box that prints the above string in a popup box that gives the user a chance to confirm or cancel
-		 * the adding of the new case */
-		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to update the follwoing Information?\n" + suspectInformation);
-		
+		 * the adding of the new vehicle */
+		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to ADd the follwoing Information?\n" + information);
 		//if the user confirms they want to add the information the following code is executed
 		if(confirmation == 0)
 		{
-			//All the information is retrieved from the text fields and inserted into the suspect class using the set methods
-			suspectIn.setPPS(pps.getText());
-			suspectIn.setName(name.getText());
-			suspectIn.setAddress(address.getText());
-			suspectIn.setSuspectDescription(description.getText());
-			suspectIn.setSuspectPriors(priorConvictions.getText());
-			suspectIn.setSuspectStatus(setStatus.getSelectedItem());	
+			//uses the methods in set methods in the witness class to assign the values to variables
+			gardaIn.setBarrack(barracksID.getText());
+			gardaIn.setName(name.getText());
+			gardaIn.setAddress(address.getText());
+			gardaIn.setPhoneNo(phoneNO.getText());
+			gardaIn.setPPS(PPSNumber.getText());
+			gardaIn.setStatus(String.valueOf(setStatus.getSelectedItem()));
 			
-			//calls the method to add the updated data to the database.
-			suspectIn.updateSuspect();
+			//calls the method to add the data to the database.
+			gardaIn.updateGarda();
 			
-			//calls the clearfields method to reset the fields to default for the next entry
+			//calls the clear fields method to reset the fields to default for the next entry
 			clearfields();
 		}
 	}
-	
-	//method for clearing all information from fields after successful edit or cancellation of edit
+
 	public void clearfields()
 	{
-		//resets the forensicID field to blank and sets it as editable again.
-		SuspectID.setEditable(true);
-		SuspectID.setText(null);
-		
-		//sets all the text fields to blank
-		pps.setText(null);
+		//sets all the fields to blank
+		gardaID.setEditable(true);
+		gardaID.setText(null);
+		barracksID.setText(null);
 		name.setText(null);
 		address.setText(null);
-		description.setText(null);
-		priorConvictions.setText(null);
-		SuspectID.setText(null);
+		phoneNO.setText(null);
+		PPSNumber.setText(null);
 		
 		//uses a model a to set the combobox back to the default values with suspect being the default
 		DefaultComboBoxModel model = new DefaultComboBoxModel(defaultstatus);
 		setStatus.setModel(model);
 	}
-
 }

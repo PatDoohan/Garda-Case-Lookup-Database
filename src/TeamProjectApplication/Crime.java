@@ -1,6 +1,7 @@
 package TeamProjectApplication;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Crime implements DatabaseFunctionality{
@@ -60,7 +61,7 @@ public class Crime implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			
@@ -99,7 +100,7 @@ public class Crime implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			
@@ -119,5 +120,166 @@ public class Crime implements DatabaseFunctionality{
 		}
 		
 	}
-
+	
+	public void getCrime(String indentifier)
+	{
+		//instance variables for use with SQL connection
+		Statement st;
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			rs = st.executeQuery("Select * from garda.crime where crimeCode = '" + indentifier + "';");
+			
+			//assigns the retrieved data to the class variables
+			while(rs.next())
+			{
+				this.crimeCode = rs.getInt(1);
+				this.crimeName = rs.getString(2);
+				this.crimeDescription = rs.getString(3);
+			}
+			
+			//closes the result set and connection
+			rs.close();
+			con.close();
+		}
+		//catches errors thrown by database
+		catch(Exception e)
+		{			
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+	}
+	
+	public void updateCrime()
+	{
+		//instance variables for use with SQL connection
+		Statement st;
+		ResultSet rs;
+		String sql;
+		
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			
+			//sql statement for updating the values in the database from the values inputed in the form
+			sql = "UPDATE garda.Crime SET " +
+			"crimeCode = '" + this.crimeCode
+			+"',crimeName = '" + this.crimeName
+			+"',crimeDescription = '" + this.crimeDescription 
+			+ "' WHERE crimeCode = '" + crimeCode +	"';";
+			
+			//executes the above sql statement
+			st.execute(sql);
+			
+			//closes the connection
+			con.close();
+		}
+		//catches errors thrown by database
+		catch(Exception e)
+		{
+			System.out.println("Error: " + e.getMessage());
+		}
+	}
+	
+	public int checkCrime(String Identifier)
+	{
+		Statement st;
+		ResultSet rs;
+		String sql;
+		
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			if(Identifier.equals(null))
+			{
+			}
+			
+			else
+			{
+				rs = st.executeQuery("Select * from garda.crime where crimeCode = '" + Identifier + "';");
+				
+				int count = 0;
+				
+				while(rs.next())
+				{
+					rs.getString(1);
+					count++;
+				}
+				
+				if(count < 1)
+				{
+					return 0;
+				}
+				
+				//closes the connection
+				con.close();
+			}
+	
+		}
+		//catches errors thrown by database
+		catch(Exception e)
+		{
+			System.out.println("Error: " + e.getMessage());
+		}
+	
+		return -1;
+	}
+	
+	public int linkToCase(String Identifier)
+	{
+		Statement st;
+		ResultSet rs;
+		String sql;
+		
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			if(Identifier.equals(null))
+			{
+			}
+			
+			else
+			{
+				sql = "Insert into garda.committedcrime Values('"+ this.crimeCode + "','" + Identifier + "');";
+				
+				st.execute(sql);
+				
+				
+				//closes the connection
+				con.close();
+			}
+	
+		}
+		//catches errors thrown by database
+		catch(Exception e)
+		{
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return -1;
+		
+	}
 }

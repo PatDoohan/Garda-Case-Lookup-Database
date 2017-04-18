@@ -49,11 +49,8 @@ public class ForensicsMenu extends JPanel{
 		
 		//Creates the edit a forensic file button 
 		editForensics = new JButton("Update an existing Forensics Report");
+		//editForensics.setVisible(false);
 		editForensics.setFont(new Font("Sans-Serif", 0, 25));
-		
-		//Creates the delete a forensic file button 
-		deleteForensics = new JButton("Delete a Forensics Report");
-		deleteForensics.setFont(new Font("Sans-Serif", 0, 25));
 		
 		//Creates the view a forensic file button 
 		viewForensics = new JButton("View an existing Forensics Report");
@@ -66,7 +63,6 @@ public class ForensicsMenu extends JPanel{
 		//adds the buttons to the button panel
 		buttons.add(addForensics);
 		buttons.add(editForensics);
-		buttons.add(deleteForensics);
 		buttons.add(viewForensics);
 		buttons.add(back);
 		
@@ -81,5 +77,14 @@ public class ForensicsMenu extends JPanel{
 		
 		//adds the container to the main panel
 		add(container);	
+	}
+	
+
+	public void validate(Boolean Admin)
+	{
+		if(Admin)
+		{
+			editForensics.setVisible(true);
+		}
 	}
 }

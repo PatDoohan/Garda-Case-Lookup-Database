@@ -54,54 +54,64 @@ public class EditForensics extends JPanel implements ActionListener{
 				//sets the forensicID field to uneditable to stop it being accidently changed while in use.
 				forensicID.setEditable(false);
 				//uses the method in the forensics class to retrieve the information from the database and assign it to the variables in class
-				f1.getForensicFile(Integer.valueOf(forensicID.getText()));
+				int returnForensic = f1.getForensicFile(Integer.valueOf(forensicID.getText()));
 				//array that is used to change the values in comboboxes that have been changed from default
-				String[] editConfirmation = {"Present","Not Present"};
-				
-			
-				/* If statements that change the default values to the values that were retrieved from the database.
-				 * uses unique models for each as using one model would result in all the values changing at once */
-				if(f1.getBioEvidence().equals(confirmation[1]))
+				if(returnForensic == 0)
 				{
-					DefaultComboBoxModel bioModel = new DefaultComboBoxModel(editConfirmation);
-					bioBox.setModel(bioModel);
+					JOptionPane.showMessageDialog(null,"Forensics File Not Found, Please Enter a Forensics File ID", "Forensics File Not Found",  JOptionPane.ERROR_MESSAGE);
+					forensicID.setEditable(true);
 				}
 				
-				if(f1.getPrints().equals(confirmation[1]))
+				else
 				{
-					DefaultComboBoxModel printsModel = new DefaultComboBoxModel(editConfirmation);
-					printsBox.setModel(printsModel);
+					String[] editConfirmation = {"Present","Not Present"};
+					
+					
+					/* If statements that change the default values to the values that were retrieved from the database.
+					 * uses unique models for each as using one model would result in all the values changing at once */
+					if(f1.getBioEvidence().equals(confirmation[1]))
+					{
+						DefaultComboBoxModel bioModel = new DefaultComboBoxModel(editConfirmation);
+						bioBox.setModel(bioModel);
+					}
+					
+					if(f1.getPrints().equals(confirmation[1]))
+					{
+						DefaultComboBoxModel printsModel = new DefaultComboBoxModel(editConfirmation);
+						printsBox.setModel(printsModel);
+					}
+					
+					if(f1.getTrackEvidence().equals(confirmation[1]))
+					{
+						DefaultComboBoxModel trackModel = new DefaultComboBoxModel(editConfirmation);
+						tracksBox.setModel(trackModel);
+					}
+					
+					if(f1.getDigitalEvidence().equals(confirmation[1]))
+					{
+						DefaultComboBoxModel digitalModel = new DefaultComboBoxModel(editConfirmation);
+						digitalBox.setModel(digitalModel);
+					}
+					
+					if(f1.getToolMarkEvidence().equals(confirmation[1]))
+					{
+						DefaultComboBoxModel toolMarkModel = new DefaultComboBoxModel(editConfirmation);
+						toolMarkBox.setModel(toolMarkModel);
+					}
+					
+					if(f1.getNarcoticEvidence().equals(confirmation[1]))
+					{
+						DefaultComboBoxModel narcoticModel = new DefaultComboBoxModel(editConfirmation);
+						narcoticBox.setModel(narcoticModel);
+					}
+					
+					if(f1.getfirearmEvidence().equals(confirmation[1]))
+					{
+						DefaultComboBoxModel firearmEvidence = new DefaultComboBoxModel(editConfirmation);
+						firearmBox.setModel(firearmEvidence);
+					}
 				}
 				
-				if(f1.getTrackEvidence().equals(confirmation[1]))
-				{
-					DefaultComboBoxModel trackModel = new DefaultComboBoxModel(editConfirmation);
-					tracksBox.setModel(trackModel);
-				}
-				
-				if(f1.getDigitalEvidence().equals(confirmation[1]))
-				{
-					DefaultComboBoxModel digitalModel = new DefaultComboBoxModel(editConfirmation);
-					digitalBox.setModel(digitalModel);
-				}
-				
-				if(f1.getToolMarkEvidence().equals(confirmation[1]))
-				{
-					DefaultComboBoxModel toolMarkModel = new DefaultComboBoxModel(editConfirmation);
-					toolMarkBox.setModel(toolMarkModel);
-				}
-				
-				if(f1.getNarcoticEvidence().equals(confirmation[1]))
-				{
-					DefaultComboBoxModel narcoticModel = new DefaultComboBoxModel(editConfirmation);
-					narcoticBox.setModel(narcoticModel);
-				}
-				
-				if(f1.getfirearmEvidence().equals(confirmation[1]))
-				{
-					DefaultComboBoxModel firearmEvidence = new DefaultComboBoxModel(editConfirmation);
-					firearmBox.setModel(firearmEvidence);
-				}
 			}	
 		});
 		

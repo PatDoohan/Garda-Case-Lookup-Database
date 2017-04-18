@@ -193,7 +193,7 @@ public class Suspect extends Person implements DatabaseFunctionality{
 	}
 	
 	//method for getting the suspect information from the database and assigning it to the class variables
-	public void getSuspect(int suspectID)
+	public int getSuspect(int suspectID)
 	{
 		//instance variables for use with SQL connection
 		Statement st;
@@ -211,6 +211,8 @@ public class Suspect extends Person implements DatabaseFunctionality{
 			//create result set from statement, statement returns the row that is identified by the caseID entered by the user
 			rs = st.executeQuery("SELECT * FROM garda.Suspect WHERE suspectID = " + "'" + suspectID +"'");
 			
+			int count = 0;
+			
 			//assigns the values from the result set to the class variables				
 			while(rs.next())
 			{
@@ -222,13 +224,15 @@ public class Suspect extends Person implements DatabaseFunctionality{
 				this.priorConvictions = rs.getString(6);
 				this.currentStatus = rs.getString(7);
 				this.EvidenceID = rs.getInt(8);
+				count++;
 			}
 			
-			//error handling for when a suspect is not found in the database
-			if(this.SuspectId == 0)
+			
+			if(count < 1)
 			{
-				JOptionPane.showMessageDialog(null,"Suspect Not Found, Please Enter a valid suspect ID", "Suspect Not Found",  JOptionPane.ERROR_MESSAGE);
+				return 0;
 			}
+
 				
 			//closes the connection and result set
 			rs.close();
@@ -240,6 +244,8 @@ public class Suspect extends Person implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
+		
+		return -1;
 	}
 	
 	//method that updates the values in the database with the new values inputted from the form
@@ -315,7 +321,7 @@ public class Suspect extends Person implements DatabaseFunctionality{
 		
 	}
 	
-	public void linkToCase(int caseNumber)
+	public int linkToCase(int caseNumber)
 	{
 		//instance variables for database
 		Statement st;
@@ -330,32 +336,48 @@ public class Suspect extends Person implements DatabaseFunctionality{
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement, gets the highest value from all the case numbers
-			rs = st.executeQuery("SELECT EvidenceID FROM garda.caseevidence WHERE caseID = " + caseNumber);
+			
 		
 			//assigns results of the above statement to the evidence id field
-			while(rs.next()){
-				this.EvidenceID = rs.getInt(1);
-			}
+			rs = st.executeQuery("Select caseID from activeCase where caseID = ' " + caseNumber +"';");
 			
-			//if evidence id is still 0 at this point then an evidenceID was not found and a new one has to be made.
-			if(EvidenceID == 0)
+			int count = 0;
+			
+			while(rs.next())
 			{
-				//sql statement that retrieves the max value for the evidenceID column
-				rs = st.executeQuery("SELECT MAX(EvidenceID) FROM garda.caseevidence");
-				
-				while(rs.next())
-				{
-					//incremenets the retrieved max value and assigns it to the evidenceID
-					this.EvidenceID = rs.getInt(1)+1;
-				}
-				
-				//inserts the new evidenceID and case number it links to into the case evidence field
-				sql = "INSERT INTO garda.caseevidence Values("+ EvidenceID + "," + caseNumber + ");";
-				st.execute(sql);
-				
+				rs.getString(1);
+				count++;
 			}
 			
+			if(count < 1)
+			{
+				return 0;
+			}
 			
+			else
+			{
+				rs = st.executeQuery("SELECT EvidenceID FROM garda.caseevidence WHERE caseID = " + caseNumber);
+				
+				while(rs.next()){
+					this.EvidenceID = rs.getInt(1);
+				}
+			//if evidence id is still 0 at this point then an evidenceID was not found and a new one has to be made.
+				if(EvidenceID == 0)
+				{
+					//sql statement that retrieves the max value for the evidenceID column
+					rs = st.executeQuery("SELECT MAX(EvidenceID) FROM garda.caseevidence");
+					
+					while(rs.next())
+					{
+						//incremenets the retrieved max value and assigns it to the evidenceID
+						this.EvidenceID = rs.getInt(1)+1;
+					}
+					
+					//inserts the new evidenceID and case number it links to into the case evidence field
+					sql = "INSERT INTO garda.caseevidence Values("+ EvidenceID + "," + caseNumber + ");";
+					st.execute(sql);
+				}
+			}
 			//closes result set and connection
 			rs.close();
 			con.close();
@@ -366,6 +388,7 @@ public class Suspect extends Person implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
+		return -1;
 	}
 	
 	//method for clearing all the data from the class
