@@ -6,7 +6,6 @@ import java.awt.*;
 
 public class CrimeMenu extends JPanel{
 
-
 	protected JButton addCrime, editCrime, deleteCrime, viewCrime, back;
 	protected JLabel gardaLogo, pageTitle;
 	protected JPanel buttons, header, container;
@@ -46,14 +45,9 @@ public class CrimeMenu extends JPanel{
 		buttons.add(editCrime);
 		
 		//Creates the view crime button and adds it to the button panel
-		editCrime = new JButton("Update Crime");
-		editCrime.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(editCrime);
-		
-		//Creates the deletecrime button and adds it to the button panel
-		deleteCrime = new JButton("Delete Crime");
-		deleteCrime.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(deleteCrime);
+		viewCrime = new JButton("View Crime");
+		viewCrime.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(viewCrime);
 		
 		//Creates the return to main menu button and adds it to the button panel
 		back = new JButton("Return to Main Menu");

@@ -127,13 +127,22 @@ public class AddVehicleForm extends JPanel implements ActionListener{
 			
 			/*a link is made to the case specified by the user, this is used to pull the information
 			 *into the case overview*/
-			vehicleIn.linkToCase(Integer.valueOf(caseIn.getText()));	
+			 int returnCase = vehicleIn.linkToCase(Integer.valueOf(caseIn.getText()));	
 			
-			//calls the method to add the data to the database.
-			vehicleIn.addToDatabase();
+			 if(returnCase == 0)
+			 {
+				 JOptionPane.showMessageDialog(null,"Case Not Found, Please Enter a case ID and try again", "Case Not Found",  JOptionPane.ERROR_MESSAGE);
+			 }
+			 
+			 else
+			 {
+				//calls the method to add the data to the database.
+					vehicleIn.addToDatabase();
+					
+					//calls the clearfields method to reset the fields to default for the next entry
+					clearfields();
+			 }
 			
-			//calls the clearfields method to reset the fields to default for the next entry
-			clearfields();
 		}
 	}
 	

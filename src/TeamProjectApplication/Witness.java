@@ -173,7 +173,7 @@ public class Witness extends Person implements DatabaseFunctionality{
 		}
 	}
 	
-	public void linkToCase(int caseNumber)
+	public int linkToCase(int caseNumber)
 	{
 		//instance variables for use with SQL connection
 		Statement st;
@@ -188,31 +188,52 @@ public class Witness extends Person implements DatabaseFunctionality{
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement, gets the highest value from all the case numbers
-			rs = st.executeQuery("SELECT EvidenceID FROM garda.caseevidence WHERE caseID = " + caseNumber);
-		
-			//assigns results of the above statement to the evidence id field
+			
+			rs = st.executeQuery("Select caseID from activeCase where caseID = ' " + caseNumber +"';");
+			
+			int count = 0;
+			
 			while(rs.next())
 			{
-				this.EvidenceID = rs.getInt(1);
+				rs.getString(1);
+				count++;
 			}
 			
-			//if evidence id is still 0 at this point then an evidenceID was not found and a new one has to be made.
-			if(EvidenceID == 0)
+			if(count < 1)
 			{
-				//sql statement that retrieves the max value for the evidenceID column
-				rs = st.executeQuery("SELECT MAX(EvidenceID) FROM garda.caseevidence");
+				return 0;
+			}
+			
+			else
+			{
+				rs = st.executeQuery("SELECT EvidenceID FROM garda.caseevidence WHERE caseID = " + caseNumber);
 				
+				//assigns results of the above statement to the evidence id field
 				while(rs.next())
-				{	
-					//incremenets the retrieved max value and assigns it to the evidenceID
-					this.EvidenceID = rs.getInt(1)+1;
+				{
+					this.EvidenceID = rs.getInt(1);
 				}
 				
-				//inserts the new evidenceID and case number it links to into the case evidence field
-				sql = "INSERT INTO garda.caseevidence Values("+ EvidenceID + "," + caseNumber + ");";
-				st.execute(sql);
-				
+				//if evidence id is still 0 at this point then an evidenceID was not found and a new one has to be made.
+				if(EvidenceID == 0)
+				{
+					//sql statement that retrieves the max value for the evidenceID column
+					rs = st.executeQuery("SELECT MAX(EvidenceID) FROM garda.caseevidence");
+					
+					while(rs.next())
+					{	
+						//incremenets the retrieved max value and assigns it to the evidenceID
+						this.EvidenceID = rs.getInt(1)+1;
+					}
+					
+					//inserts the new evidenceID and case number it links to into the case evidence field
+					sql = "INSERT INTO garda.caseevidence Values("+ EvidenceID + "," + caseNumber + ");";
+					st.execute(sql);
+					
+				}
 			}
+	
+			
 			
 			//closes result set and connection
 			rs.close();
@@ -224,10 +245,11 @@ public class Witness extends Person implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
+		return -1;
 	}
 	
 	//method for getting the witness information from the database and assigning it to the class variables
-	public void getWitness(String pps)
+	public int getWitness(String pps)
 	{
 		//instance variables for use with SQL connection
 		Statement st;
@@ -245,6 +267,8 @@ public class Witness extends Person implements DatabaseFunctionality{
 			//creates a result set from an sql statement that retrieves all data based on where the witness pps entered
 			rs = st.executeQuery("Select * from garda.witness where witnessPPS = '" + pps + "';");
 			
+			int count = 0;
+			
 			//assigns the values from the result set to the class variables				
 			while(rs.next())
 			{
@@ -253,8 +277,13 @@ public class Witness extends Person implements DatabaseFunctionality{
 				this.address = rs.getString(3);
 				this.contactInfo = rs.getString(4);
 				this.EvidenceID = rs.getInt(5);
+				count++;
 			}
 			
+			if(count < 1)
+			{
+				return 0;
+			}
 			//closes the result set and connection
 			rs.close();
 			con.close();
@@ -264,6 +293,7 @@ public class Witness extends Person implements DatabaseFunctionality{
 		{
 			System.out.println("Error:" + e.getMessage());
 		}
+		return -1;
 	}
 
 

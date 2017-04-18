@@ -138,7 +138,7 @@ public class Forensics implements DatabaseFunctionality{
 	}
 	
 	//method that gets a forensic file from the database and assigns the retrieved values to the class variables
-	public void getForensicFile(int ForensicIDIn)
+	public int getForensicFile(int ForensicIDIn)
 	{
 		//instance variables for database
 		Statement st;
@@ -154,7 +154,7 @@ public class Forensics implements DatabaseFunctionality{
 			//create result set from statement, returns all the column from the specified row
 			rs = st.executeQuery("SELECT * FROM garda.forensics where ForensicID = " + ForensicIDIn);
 			
-						
+			int count = 0;
 			//sets the values returned to the class variables
 			while(rs.next())
 			{
@@ -167,8 +167,16 @@ public class Forensics implements DatabaseFunctionality{
 				narcoticEvidence = rs.getString(7);
 				firearmEvidence = rs.getString(8);
 				EvidenceID = rs.getInt(9);
+				count++;
 			}
+		
+			if(count < 1)
+			{
+				return 0;
+			}		
 	
+			
+			
 			//closes result set and connection
 			rs.close();
 			con.close();
@@ -179,6 +187,7 @@ public class Forensics implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
+		return -1;
 	}
 	
 	//method that updates the values in the database with the new values inputted from the form
@@ -258,7 +267,7 @@ public class Forensics implements DatabaseFunctionality{
 		
 	}
 	
-	public void linkToCase(int caseNumber)
+	public int linkToCase(int caseNumber)
 	{
 		//instance variables for database
 		Statement st;
@@ -274,31 +283,50 @@ public class Forensics implements DatabaseFunctionality{
 			//Create Statement object	
 			st = con.createStatement();
 			//create result set from statement, tries to retrieve the evidenceID from the evidence ID linked to the case NUmber
-			rs = st.executeQuery("SELECT EvidenceID FROM garda.caseevidence WHERE caseID = " + caseNumber);
-		
-			//assigns results of the above statement to the evidence id field
-			while(rs.next()){
-				this.EvidenceID = rs.getInt(1);
+			
+
+			rs = st.executeQuery("Select caseID from activeCase where caseID = ' " + caseNumber +"';");
+			
+			int count = 0;
+			
+			while(rs.next())
+			{
+				rs.getString(1);
+				count++;
 			}
 			
-			//if evidence id is still 0 at this point then an evidenceID was not found and a new one has to be made.
-			if(EvidenceID == 0)
+			if(count < 1)
 			{
-				//sql statement that retrieves the max value for the evidenceID column
-				rs = st.executeQuery("SELECT MAX(EvidenceID) FROM garda.caseevidence");
-				
-				while(rs.next())
-				{
-					//incremenets the retrieved max value and assigns it to the evidenceID
-					this.EvidenceID = rs.getInt(1)+1;
+				return 0;
+			}
+			
+			else
+			{
+				rs = st.executeQuery("SELECT EvidenceID FROM garda.caseevidence WHERE caseID = " + caseNumber);
+			
+				//assigns results of the above statement to the evidence id field
+				while(rs.next()){
+					this.EvidenceID = rs.getInt(1);
 				}
 				
-				//inserts the new evidenceID and case number it links to into the case evidence field
-				sql = "INSERT INTO garda.caseevidence Values("+ EvidenceID + "," + caseNumber + ");";
-				st.execute(sql);
-				
+				//if evidence id is still 0 at this point then an evidenceID was not found and a new one has to be made.
+				if(EvidenceID == 0)
+				{
+					//sql statement that retrieves the max value for the evidenceID column
+					rs = st.executeQuery("SELECT MAX(EvidenceID) FROM garda.caseevidence");
+					
+					while(rs.next())
+					{
+						//incremenets the retrieved max value and assigns it to the evidenceID
+						this.EvidenceID = rs.getInt(1)+1;
+					}
+					
+					//inserts the new evidenceID and case number it links to into the case evidence field
+					sql = "INSERT INTO garda.caseevidence Values("+ EvidenceID + "," + caseNumber + ");";
+					st.execute(sql);
+					
+				}
 			}
-			
 			
 			//closes result set and connection
 			rs.close();
@@ -310,6 +338,7 @@ public class Forensics implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
+		return -1;
 	}
 
 	/**

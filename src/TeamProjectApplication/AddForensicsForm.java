@@ -154,13 +154,21 @@ public class AddForensicsForm extends JPanel implements ActionListener {
 			
 			/*a link is made to the case specified by the user, this is used to pull the information
 			 *into the case overview*/
-			f1.linkToCase(Integer.valueOf(evidenceID.getText()));
+			int returnCase = f1.linkToCase(Integer.valueOf(evidenceID.getText()));
 			
-			//calls the method to add the data to the database.
-			f1.addToDatabase();
-			
-			//calls the clearfields method to reset the fields to default for the next entry
-			clearfields();
+			if(returnCase == 0)
+			{
+				JOptionPane.showMessageDialog(null,"Case Not Found, Please Enter a case ID and try again", "Case Not Found",  JOptionPane.ERROR_MESSAGE);
+			}
+			else
+			{
+				//calls the method to add the data to the database.
+				f1.addToDatabase();
+				
+				//calls the clearfields method to reset the fields to default for the next entry
+				clearfields();
+			}
+		
 		}
 	}
 	

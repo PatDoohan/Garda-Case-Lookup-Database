@@ -4,15 +4,12 @@ import java.sql.*;
 
 public class Garda extends Person implements DatabaseFunctionality{
 	
-	private String idNo, barracksID, phoneNo;
+	private String idNo, barracksID, phoneNo, status = "Active";
 	
 	
-	public Garda(String idNo, String barracksId, String name, String address, String phoneNo, String ppsNumber)
+	public Garda()
 	{
-		super(ppsNumber,name, address);
-		this.idNo = idNo;
-		this.barracksID = barracksId;
-		this.phoneNo = phoneNo;
+		super(null,null, null);
 	}
 	
 	/**
@@ -73,6 +70,17 @@ public class Garda extends Person implements DatabaseFunctionality{
 	 * Method for adding the class to the database, takes all the values assigned into 
 	 * the class and concatenates them onto an INSERT SQL Statement.
 	 */
+	
+	public String getStatus()
+	{
+		return this.status;
+	}
+	
+	public void setStatus(String status)
+	{
+		this.status = status;
+	}
+	
 	@Override
 	public void addToDatabase()
 	{
@@ -85,13 +93,13 @@ public class Garda extends Person implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			
 			//sql statement for inserting data into the garda table in the database
 			sql = "INSERT INTO garda.garda values(" + "'" + this.idNo + "', '" + this.barracksID + "', '" + this.name + "', '"
-			+ this.address +  "', '" + this.phoneNo + "', '"+ this.ppsNumber + "');";
+			+ this.address +  "', '" + this.phoneNo + "', '"+ this.ppsNumber + "', '"+ this.status+"');";
 			
 			//executes the above sql statement
 			st.execute(sql);
@@ -126,7 +134,7 @@ public class Garda extends Person implements DatabaseFunctionality{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","Password");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
 			
@@ -146,5 +154,166 @@ public class Garda extends Person implements DatabaseFunctionality{
 		}
 	}
 	
+	public int getGarda(String identifier)
+	{
+		//instance variables for database
+		Statement st;
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			rs = st.executeQuery("Select * from garda.garda where idNo = '" + identifier + "';");
+			
+			int count = 0;
+			
+			//assigns the retrieved data to the class variables
+			while(rs.next())
+			{
+				System.out.print("here");
+				this.idNo = rs.getString(1);
+				this.barracksID = rs.getString(2);
+				this.name = rs.getString(3);
+				this.address = rs.getString(4);
+				this.phoneNo = rs.getString(5);
+				this.ppsNumber = rs.getString(6);
+				this.status = rs.getString(7);
+				count++;
+			}
+			
+			if(count < 1)
+			{
+				return 0;
+			}
+			
+			
+			
+			
+			//closes the result set and connection
+			rs.close();
+			con.close();
+		}
+		//catches errors thrown by database
+		catch(Exception e)
+		{
+			System.out.println("Error: " + e.getMessage());
+		}
+		return -1;
+	}	
 	
+	public void updateGarda()
+	{
+		//instance variables for database
+		Statement st;
+		String sql;
+		
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			
+			//sql for Updating a record from the garda table based on the id number entered
+			sql = "UPDATE garda.garda SET " +
+			"idNo = '" + this.idNo
+			+"',barracksId = '" + this.barracksID
+			+"',Fullname = '" + this.name 
+			+"',address = '" + this.address
+			+"',phoneNo = '" + this.phoneNo
+			+"',PPSNumber = '" + this.ppsNumber 
+			+"',Status = '" + this.status 
+			+ "' WHERE idNo = '" + this.idNo +	"';";
+			
+			//executes the above sql statement
+			st.execute(sql);
+			
+			//closes the connection
+			con.close();
+		}
+		//catches errors thrown by database
+		catch(Exception e)
+		{
+			System.out.println("Error: " + e.getMessage());
+		}
+	}
+	
+	//method for assigning gardaí to cases
+	public int assignToCase(String CaseID)
+	{
+		//instance variables for database
+		Statement st;
+		String sql;
+		ResultSet rs;
+		String getCase = null, getID= null;
+		
+		try
+		{
+			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+			Class.forName("com.mysql.jdbc.Driver");
+			//connection for MYSQL workbench.
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+			//Create Statement object	
+			st = con.createStatement();
+			//sql query that searches and checks if the entered id and case numbers are already in a record
+			rs = st.executeQuery("SELECT * FROM garda.assignedgarda WHERE gardaID = '" + this.idNo + "' AND caseID = " + CaseID);
+			
+		
+			//assigns the values(if any) to the variables for comparison
+			while(rs.next())
+			{
+				getID = rs.getString(1);
+				getCase = String.valueOf(rs.getInt(2));
+			}
+			
+			//checks to see if the record is already in the table, if it is returns a 0, this is used by the assign class to signify that the garda is already assigned to this case
+			if(idNo.equals(getID) && CaseID.equals(getCase))
+			{
+				return 0;
+			}
+			
+			//checks to see if the garda is active as non-active gardaí should not be assigned cases.
+			if(!this.status.equals("Active"))
+			{
+				return 1;
+			}
+			
+			//sql statement to check if the caseID that the user is attempting to assign a garda to exists
+			sql = "Select caseID from activeCase where caseID = ' " + CaseID +"';";
+			//executes the above statement and stores it in a result set
+			rs = st.executeQuery(sql);
+	
+			//if the result set is empty it returns a 2, this is used by the assign class to signify that the case doesn't exist
+			if(!rs.next())
+			{
+				return 2;
+			}
+			
+			//sql statement for assigning the garda to the case.
+			sql = "Insert into garda.assignedgarda values ('" + this.idNo + "','" + CaseID + "');";
+			//executes the above statement
+			st.execute(sql);
+			
+			//closes the connection and result set
+			con.close();
+			rs.close();
+	
+		}
+		//catches errors thrown by database
+		catch(Exception e)
+		{
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		//default return value
+		return -1;
+	}
 }

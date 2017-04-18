@@ -53,10 +53,21 @@ public class EditWitness extends JPanel implements ActionListener{
 				pps.setEditable(false);
 				
 				//sets the textfields to the appropriate values retrieved from the database.
-				witnessIn.getWitness(pps.getText());
-				name.setText(witnessIn.getName());
-				address.setText(witnessIn.getAddress());
-				contactInfo.setText(witnessIn.getContactInfo());
+				int returnWitness = witnessIn.getWitness(pps.getText());
+				
+				if(returnWitness == 0)
+				{
+					JOptionPane.showMessageDialog(null,"Witness Not Found, Please Enter a valid Witness pps", "Witness Not Found",  JOptionPane.ERROR_MESSAGE);
+					pps.setEditable(true);
+				}
+				
+				else
+				{
+					name.setText(witnessIn.getName());
+					address.setText(witnessIn.getAddress());
+					contactInfo.setText(witnessIn.getContactInfo());
+				}
+				
 			}
 		});
 		

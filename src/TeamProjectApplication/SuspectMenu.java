@@ -45,10 +45,7 @@ public class SuspectMenu extends JPanel{
 		//creates the update suspect button
 		editSuspect = new JButton("Update an existing suspect");
 		editSuspect.setFont(new Font("Sans-Serif", 0, 25));
-		
-		//creates the delete suspect button
-		deleteSuspect = new JButton("Delete a suspect");
-		deleteSuspect.setFont(new Font("Sans-Serif", 0, 25));
+		//editSuspect.setVisible(false);
 		
 		//creates the view suspect button
 		viewSuspect = new JButton("View an existing suspect");
@@ -61,7 +58,6 @@ public class SuspectMenu extends JPanel{
 		//adds the above buttons the panel
 		buttons.add(addSuspect);
 		buttons.add(editSuspect);
-		buttons.add(deleteSuspect);
 		buttons.add(viewSuspect);
 		buttons.add(back);
 		
@@ -76,5 +72,13 @@ public class SuspectMenu extends JPanel{
 		
 		//adds the container to the main panel
 		add(container);	
+	}
+	
+	public void validate(Boolean Admin)
+	{
+		if(Admin)
+		{
+			editSuspect.setVisible(true);
+		}
 	}
 }

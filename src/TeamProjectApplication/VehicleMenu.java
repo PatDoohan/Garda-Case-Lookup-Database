@@ -47,11 +47,8 @@ public class VehicleMenu extends JPanel{
 		//creates the edit vehicle button
 		editVehicle = new JButton("Update an existing Vehicle");
 		editVehicle.setFont(new Font("Sans-Serif", 0, 25));
-		
-		//creates the delete vehicle button
-		deleteVehicle = new JButton("Delete a Vehicle");
-		deleteVehicle.setFont(new Font("Sans-Serif", 0, 25));
-		
+		//editVehicle.setVisible(false);
+
 		//creates the view vehicle button
 		viewVehicle = new JButton("View an existing Vehicle");
 		viewVehicle.setFont(new Font("Sans-Serif", 0, 25));
@@ -63,7 +60,6 @@ public class VehicleMenu extends JPanel{
 		//adds the above buttons the panel
 		buttons.add(addVehicle);
 		buttons.add(editVehicle);
-		buttons.add(deleteVehicle);
 		buttons.add(viewVehicle);
 		buttons.add(back);
 		
@@ -78,5 +74,13 @@ public class VehicleMenu extends JPanel{
 		
 		//adds the container to the main panel
 		add(container);	
+	}
+	
+	public void validate(Boolean Admin)
+	{
+		if(Admin)
+		{
+			editVehicle.setVisible(true);
+		}
 	}
 }

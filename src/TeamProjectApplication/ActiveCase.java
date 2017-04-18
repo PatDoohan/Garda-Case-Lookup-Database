@@ -209,7 +209,7 @@ public class ActiveCase implements DatabaseFunctionality{
 		}
 	}
 	
-	public void GetCase(String identifier)
+	public int GetCase(String identifier)
 	{
 		//instance variables for use with SQL connection
 		Statement st;
@@ -227,14 +227,24 @@ public class ActiveCase implements DatabaseFunctionality{
 			//create result set from statement, statement returns the row that is identified by the caseID entered by the user
 			rs = st.executeQuery("SELECT * FROM garda.activeCase WHERE caseID = " + "'" + identifier +"'");
 			
+			int count = 0;
+			
 			//assigns the values from the result set to the class variables
-			while(rs.next()){
+			while(rs.next())
+			{
 				this.caseID = rs.getInt(1);
 				this.dateTime = rs.getString(2);
 				this.address = rs.getString(3);
 				this.activeStatus = rs.getString(4);
 				this.eirCode = rs.getString(5);
+				count++;
 			}
+			
+			if(count < 1)
+			{
+				return 0;
+			}
+			
 			rs.close();
 			con.close();
 			
@@ -244,6 +254,7 @@ public class ActiveCase implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
+		return -1;
 	}
 	
 	public void updateDatabase(String identifier)

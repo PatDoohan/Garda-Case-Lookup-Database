@@ -69,33 +69,43 @@ public class EditCaseForm extends JPanel implements ActionListener{
 				caseID.setEditable(false);
 				
 				//uses the method in the case class to retrieve the information from the database and assign it to the variables in class
-				inputCase.GetCase(caseID.getText());
+				int returnCase = inputCase.GetCase(caseID.getText());
 				
-				//splits the date and time so that is correctly displayed as the sql format holds both values in one.
-				String dateTime = inputCase.getDate();
-				String[] dateTimeSplit = dateTime.split("\\s");
-				
-				//sets the textfields to the appropriate values retrieved from the database.
-				date.setText(dateTimeSplit[0]);
-				time.setText(dateTimeSplit[1]);
-				address.setText(inputCase.getAddress());
-				eircode.setText(inputCase.getEircode());
-				
-				//checks to see what the default status is from the available array and sets it to default using a model
-				for (int i = 0; i < status.length; i++)
+				if(returnCase == 0)
 				{
-					//if statement that checks what the status is equal to in the array, then it swaps that to the first slot in the array
-					if(status[i].equals(inputCase.getStatus()))
-					{
-						String temp = status[0];
-						status[0] = status [i];
-						status[i] = temp;
-					}
+					JOptionPane.showMessageDialog(null,"Witness Not Found, Please Enter a valid Witness pps", "Witness Not Found",  JOptionPane.ERROR_MESSAGE);
+					caseID.setEditable(true);
 				}
-				//the new array is then turned into a model and that model is set as the default for the status Combobox
-				DefaultComboBoxModel model = new DefaultComboBoxModel(status);
-				setStatus.setModel(model);
+				
+				else
+				{
+					//splits the date and time so that is correctly displayed as the sql format holds both values in one.
+					String dateTime = inputCase.getDate();
+					String[] dateTimeSplit = dateTime.split("\\s");
+					
+					//sets the textfields to the appropriate values retrieved from the database.
+					date.setText(dateTimeSplit[0]);
+					time.setText(dateTimeSplit[1]);
+					address.setText(inputCase.getAddress());
+					eircode.setText(inputCase.getEircode());
+					
+					//checks to see what the default status is from the available array and sets it to default using a model
+					for (int i = 0; i < status.length; i++)
+					{
+						//if statement that checks what the status is equal to in the array, then it swaps that to the first slot in the array
+						if(status[i].equals(inputCase.getStatus()))
+						{
+							String temp = status[0];
+							status[0] = status [i];
+							status[i] = temp;
+						}
+					}
+					//the new array is then turned into a model and that model is set as the default for the status Combobox
+					DefaultComboBoxModel model = new DefaultComboBoxModel(status);
+					setStatus.setModel(model);
+				}
 			}
+			
 					
 		});		
 		

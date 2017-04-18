@@ -53,13 +53,26 @@ public class EditVehicle extends JPanel implements ActionListener{
 				//sets the suspectID field to uneditable to stop it being accidently changed while in use.
 				reg.setEditable(false);
 				
+				
+				
 				//sets the textfields to the appropriate values retrieved from the database.
-				vehicleIn.getVehicle(reg.getText());
-				type.setText(vehicleIn.getType());
-				make.setText(vehicleIn.getMake());
-				model.setText(vehicleIn.getModel());
-				colour.setText(vehicleIn.getColour());
-				desc.setText(vehicleIn.getDescription());
+				int returnVehicle = vehicleIn.getVehicle(reg.getText());
+				
+				if(returnVehicle == 0)
+				{
+					JOptionPane.showMessageDialog(null,"Vehicle Not Found, Please Enter a valid vehicle regestration", "Vehicle Not Found",  JOptionPane.ERROR_MESSAGE);
+					reg.setEditable(true);
+				}
+				
+				else
+				{
+					type.setText(vehicleIn.getType());
+					make.setText(vehicleIn.getMake());
+					model.setText(vehicleIn.getModel());
+					colour.setText(vehicleIn.getColour());
+					desc.setText(vehicleIn.getDescription());
+				}
+				
 			}	
 		});
 		

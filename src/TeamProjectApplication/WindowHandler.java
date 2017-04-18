@@ -32,22 +32,21 @@ public class WindowHandler extends JFrame implements ActionListener{
 	private MapMenu mapMenu;
 	private CreateCaseForm caseForm;
 	private EditCaseForm editCase;
-	private CaseDeleteForm deleteCase;
 	private AddSuspectForm addSuspect;
 	private AddVehicleForm addVehicle;
 	private EditSuspect editSuspect;
-	private DeleteSuspectForm deleteSuspect;
 	private EditVehicle editVehicle;
-	private DeleteVehicle deleteVehicle;
 	private AddWitnessForm addWitness;
 	private EditWitness editWitness;
-	private DeleteWitness deleteWitness;
 	private AddForensicsForm addForensic;
 	private EditForensics editForensic;
-	private DeleteForensics deleteForensic;
 	private CrimeMenu crimeMenu;
-	
-	
+	private GardaMenu gardaMenu;
+	private AddCrimeForm addCrime;
+	private EditCrime editCrime;
+	private AddGardaForm addGarda;
+	private EditGarda editGarda;
+	private AssignGarda assignGarda;
 	
 	public WindowHandler()
 	{
@@ -136,10 +135,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 				//if the wrong values are entered an error will be popped to screen
 				else
 				{
-					/*************************************************************
-					 * PLACE HOLDER VALUE, NEEDS TO BE CHANGED TO POP UP NOTIFICATION
-					 *************************************************************/
-					System.out.println("passwords do not match");
+					JOptionPane.showMessageDialog(null, "Incorrect Username/Password Entered Please Try Again" , "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -180,6 +176,17 @@ public class WindowHandler extends JFrame implements ActionListener{
 			{
 				//makes the evidenceMenu visible and the main menu invisible.
 				crimeMenu.setVisible(true);
+				mainMenu.setVisible(false);
+			}
+			
+		});
+		
+		mainMenu.gardaMenu.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//makes the evidenceMenu visible and the main menu invisible.
+				gardaMenu.setVisible(true);
 				mainMenu.setVisible(false);
 			}
 			
@@ -246,16 +253,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 			
 		});
 		
-		caseMenu.deleteCase.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{	
-				//sets the caseMenu to Invisible and the caseDisplay to visible.
-				caseMenu.setVisible(false);
-				deleteCase.setVisible(true);
-			}
-			
-		});;
 		//adds the caseMenu to the Container card layout.
 		Container.add(caseMenu);
 		//creates a new caseDisplay panel
@@ -346,18 +343,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 					
 		});	
 		
-		suspectMenu.deleteSuspect.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				suspectMenu.setVisible(false);
-				deleteSuspect.setVisible(true);
-			}
-					
-		});	
-		
-		
 		witnessMenu = new WitnessMenu();
 		witnessMenu.back.addActionListener(this);
 		witnessMenu.setVisible(false);
@@ -382,18 +367,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 					
 		});	
-		
-		witnessMenu.deleteWitness.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				witnessMenu.setVisible(false);
-				deleteWitness.setVisible(true);
-			}
-					
-		});	
-		
 		Container.add(witnessMenu);
 		
 		vehicleMenu = new VehicleMenu();
@@ -420,17 +393,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 					
 		});	
-		
-		vehicleMenu.deleteVehicle.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				vehicleMenu.setVisible(false);
-				deleteVehicle.setVisible(true);
-			}
-					
-		});	
+
 		Container.add(vehicleMenu);
 		
 		
@@ -461,21 +424,70 @@ public class WindowHandler extends JFrame implements ActionListener{
 					
 		});	
 		
-		forensicsMenu.deleteForensics.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				forensicsMenu.setVisible(false);
-				deleteForensic.setVisible(true);
-			}
-					
-		});	
-		
 		crimeMenu = new CrimeMenu();
 		crimeMenu.back.addActionListener(this);
 		crimeMenu.setVisible(false);
 		Container.add(crimeMenu);
+		
+		crimeMenu.addCrime.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the crime menu and makes the add crime form visible.
+				crimeMenu.setVisible(false);
+				addCrime.setVisible(true);
+			}
+					
+		});	
+		
+		crimeMenu.editCrime.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the crime menu and makes the edit crime form visible.
+				crimeMenu.setVisible(false);
+				editCrime.setVisible(true);
+			}
+					
+		});	
+		
+		gardaMenu = new GardaMenu();
+		gardaMenu.back.addActionListener(this);
+		gardaMenu.setVisible(false);
+		Container.add(gardaMenu);
+		
+		gardaMenu.addGarda.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the crime menu and makes the edit crime form visible.
+				gardaMenu.setVisible(false);
+				addGarda.setVisible(true);
+			}
+					
+		});
+		
+		gardaMenu.editGarda.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the crime menu and makes the edit crime form visible.
+				gardaMenu.setVisible(false);
+				editGarda.setVisible(true);
+			}
+					
+		});
+		
+		gardaMenu.assignGarda.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//hides the crime menu and makes the edit crime form visible.
+				gardaMenu.setVisible(false);
+				assignGarda.setVisible(true);
+			}
+					
+		});
 		
 		mapMenu = new MapMenu();
 		mapMenu.back.addActionListener(this);
@@ -492,11 +504,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 		editCase.setVisible(false);
 		Container.add(editCase);
 		
-		deleteCase = new CaseDeleteForm();
-		deleteCase.cancel.addActionListener(this);
-		deleteCase.setVisible(false);
-		Container.add(deleteCase);
-		
 		addSuspect = new AddSuspectForm();
 		addSuspect.cancel.addActionListener(this);
 		addSuspect.setVisible(false);
@@ -512,20 +519,11 @@ public class WindowHandler extends JFrame implements ActionListener{
 		addVehicle.setVisible(false);
 		Container.add(addVehicle);
 		
-		deleteSuspect = new DeleteSuspectForm();
-		deleteSuspect.cancel.addActionListener(this);
-		deleteSuspect.setVisible(false);
-		Container.add(deleteSuspect);
 		
 		editVehicle = new EditVehicle();
 		editVehicle.cancel.addActionListener(this);
 		editVehicle.setVisible(false);
 		Container.add(editVehicle);
-		
-		deleteVehicle = new DeleteVehicle();
-		deleteVehicle.cancel.addActionListener(this);
-		deleteVehicle.setVisible(false);
-		Container.add(deleteVehicle);
 		
 		addWitness = new AddWitnessForm();
 		addWitness.cancel.addActionListener(this);
@@ -537,11 +535,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 		editWitness.setVisible(false);
 		Container.add(editWitness);
 		
-		deleteWitness = new DeleteWitness();
-		deleteWitness.cancel.addActionListener(this);
-		deleteWitness.setVisible(false);
-		Container.add(deleteWitness);
-		
 		addForensic = new AddForensicsForm();
 		addForensic.cancel.addActionListener(this);
 		addForensic.setVisible(false);
@@ -552,10 +545,30 @@ public class WindowHandler extends JFrame implements ActionListener{
 		editForensic.setVisible(false);
 		Container.add(editForensic);
 		
-		deleteForensic = new DeleteForensics();
-		deleteForensic.cancel.addActionListener(this);
-		deleteForensic.setVisible(false);
-		Container.add(deleteForensic);
+		addCrime = new AddCrimeForm();
+		addCrime.cancel.addActionListener(this);
+		addCrime.setVisible(false);
+		Container.add(addCrime);
+		
+		editCrime = new EditCrime();
+		editCrime.cancel.addActionListener(this);
+		editCrime.setVisible(false);
+		Container.add(editCrime);
+		
+		addGarda = new AddGardaForm();
+		addGarda.cancel.addActionListener(this);
+		addGarda.setVisible(false);
+		Container.add(addGarda);
+		
+		editGarda = new EditGarda();
+		editGarda.cancel.addActionListener(this);
+		editGarda.setVisible(false);
+		Container.add(editGarda);
+		
+		assignGarda = new AssignGarda();
+		assignGarda.cancel.addActionListener(this);
+		assignGarda.setVisible(false);
+		Container.add(assignGarda);
 		
 		add(Container, BorderLayout.CENTER);
 	}
@@ -571,7 +584,8 @@ public class WindowHandler extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) 
+	{
 
 		if(caseMenu.isVisible() == true)
 		{
@@ -649,13 +663,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 		}
 		
-		else if(deleteCase.isVisible())
-		{
-			deleteCase.clearFields();
-			deleteCase.setVisible(false);
-			caseMenu.setVisible(true);
-		}
-		
 		else if(addSuspect.isVisible())
 		{
 			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
@@ -698,27 +705,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 				editVehicle.setVisible(false);
 				vehicleMenu.setVisible(true);
 			}
-		}
-		
-		else if(deleteSuspect.isVisible())
-		{
-			deleteSuspect.clearfields();
-			deleteSuspect.setVisible(false);
-			suspectMenu.setVisible(true);
-		}
-		
-		else if(deleteVehicle.isVisible())
-		{
-			deleteVehicle.clearfields();
-			deleteVehicle.setVisible(false);
-			suspectMenu.setVisible(true);
-		}
-		
-		else if(deleteWitness.isVisible())
-		{
-			deleteWitness.clearfields();
-			deleteWitness.setVisible(false);
-			witnessMenu.setVisible(true);
 		}
 		
 		else if(editWitness.isVisible())
@@ -765,19 +751,66 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 		}
 		
-		else if(deleteForensic.isVisible())
-		{
-			deleteForensic.clearfields();
-			deleteForensic.setVisible(false);
-			forensicsMenu.setVisible(true);
-		}
-		
 		else if(crimeMenu.isVisible())
 		{
 			crimeMenu.setVisible(false);
 			mainMenu.setVisible(true);
 		}
 		
+		else if(gardaMenu.isVisible())
+		{
+			gardaMenu.setVisible(false);
+			mainMenu.setVisible(true);
+		}
 		
+		else if(addCrime.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				addCrime.clearfields();
+				addCrime.setVisible(false);
+				crimeMenu.setVisible(true);
+			}
+		}
+		
+		else if(editCrime.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editCrime.clearfields();
+				editCrime.setVisible(false);
+				crimeMenu.setVisible(true);
+			}
+		}
+		
+		else if(addGarda.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editGarda.clearfields();
+				addGarda.setVisible(false);
+				gardaMenu.setVisible(true);
+			}
+		}
+		
+		else if(editGarda.isVisible())
+		{
+			int confirmation = JOptionPane.showConfirmDialog(null, "All Information will be cleared, are you sure you want to quit? \n");
+			if(confirmation == 0)
+			{
+				editGarda.clearfields();
+				editGarda.setVisible(false);
+				gardaMenu.setVisible(true);
+			}
+		}
+		
+		else if(assignGarda.isVisible())
+		{
+			assignGarda.setVisible(false);
+			gardaMenu.setVisible(true);
+		}
 	}
 }
