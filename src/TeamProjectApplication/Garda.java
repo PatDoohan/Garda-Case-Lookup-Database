@@ -1,10 +1,13 @@
 package TeamProjectApplication;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class Garda extends Person implements DatabaseFunctionality{
 	
-	private String idNo, barracksID, phoneNo, status = "Active";
+	private String idNo, barracksID, phoneNo, status = "Active", password, Certified = "False";
 	
 	
 	public Garda()
@@ -66,10 +69,6 @@ public class Garda extends Person implements DatabaseFunctionality{
 		return this.phoneNo;
 	}
 	
-	/**
-	 * Method for adding the class to the database, takes all the values assigned into 
-	 * the class and concatenates them onto an INSERT SQL Statement.
-	 */
 	
 	public String getStatus()
 	{
@@ -81,6 +80,41 @@ public class Garda extends Person implements DatabaseFunctionality{
 		this.status = status;
 	}
 	
+	public void setPassword(String password)
+	{
+		
+		MessageDigest m;
+		try 
+		{
+			m = MessageDigest.getInstance("SHA-512");
+			m.update(password.getBytes(),0,password.length());
+			this.password = new BigInteger(1, m.digest()).toString(16);
+		} 
+		catch (NoSuchAlgorithmException e) 
+		{
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public String getPassword()
+	{
+		return this.password;
+	}
+	
+	public void setCertified(String certified)
+	{
+		this.Certified = certified;
+	}
+	
+	public String getCertification()
+	{
+		return this.Certified;
+	}
+	/**
+	 * Method for adding the class to the database, takes all the values assigned into 
+	 * the class and concatenates them onto an INSERT SQL Statement.
+	 */
 	@Override
 	public void addToDatabase()
 	{
@@ -99,7 +133,7 @@ public class Garda extends Person implements DatabaseFunctionality{
 			
 			//sql statement for inserting data into the garda table in the database
 			sql = "INSERT INTO garda.garda values(" + "'" + this.idNo + "', '" + this.barracksID + "', '" + this.name + "', '"
-			+ this.address +  "', '" + this.phoneNo + "', '"+ this.ppsNumber + "', '"+ this.status+"');";
+			+ this.address +  "', '" + this.phoneNo + "', '"+ this.ppsNumber + "', '"+ this.status+"', '"+ this.password+"', '"+ this.Certified + "');";
 			
 			//executes the above sql statement
 			st.execute(sql);
@@ -184,6 +218,8 @@ public class Garda extends Person implements DatabaseFunctionality{
 				this.phoneNo = rs.getString(5);
 				this.ppsNumber = rs.getString(6);
 				this.status = rs.getString(7);
+				this.password = rs.getString(8);
+				this.Certified = rs.getString(9);
 				count++;
 			}
 			
@@ -231,6 +267,7 @@ public class Garda extends Person implements DatabaseFunctionality{
 			+"',phoneNo = '" + this.phoneNo
 			+"',PPSNumber = '" + this.ppsNumber 
 			+"',Status = '" + this.status 
+			+"',Certified = '" + this.Certified 
 			+ "' WHERE idNo = '" + this.idNo +	"';";
 			
 			//executes the above sql statement

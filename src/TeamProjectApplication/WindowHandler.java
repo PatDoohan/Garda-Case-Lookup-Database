@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 public class WindowHandler extends JFrame implements ActionListener{
 	
 	//Variables, Panels and Classes created to be used in the Windowhandler
-	private LoginScreen login;
 	private MainMenu mainMenu;
 	private CaseMenu caseMenu;
 	private CaseDisplay caseDisplay;
@@ -47,8 +46,8 @@ public class WindowHandler extends JFrame implements ActionListener{
 	private AddGardaForm addGarda;
 	private EditGarda editGarda;
 	private AssignGarda assignGarda;
-	
-	public WindowHandler()
+
+	public WindowHandler(boolean validation)
 	{
 		//this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("gardaLogo.png")));
 		//creates container to hold different windows.
@@ -58,93 +57,9 @@ public class WindowHandler extends JFrame implements ActionListener{
 		//setting the layout in the container
 		Container.setLayout(cLayout);
 		
-		//creates the login screen from the class login screen that extends from jpanel
-		login = new LoginScreen();
-		//sets it to visible as it is the first screen required to be displayed
-		login.setVisible(true);
-		//creates a listener for the login button
-		login.login.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//creates variables for the data entered by the user
-				String enteredUsername = login.userName.getText();
-				@SuppressWarnings("deprecation")
-				String enteredPassword = login.password.getText();
-				//creates variables for hasing the password and the data retrieved from the database
-				String hashedPassword = null, retrievedLogin = null, retrievedPassword=null;
-				//tries to has the password entered by the user, catches noSuchAlgorithmException.
-				try 
-				{
-					/*
-					 * creates a message digest using sha 512 which encryptes the password
-					 * entered by the user as the password in the database has already been
-					 * encrypted, so the entered password must be encrypted to compare them.
-					 */
-					MessageDigest m;
-					m = MessageDigest.getInstance("SHA-512");
-					m.update(enteredPassword.getBytes(),0,enteredPassword.length());
-					hashedPassword = new BigInteger(1, m.digest()).toString(16);
-				}
-				catch (NoSuchAlgorithmException e1) 
-				{
-					e1.printStackTrace();
-				}
-
-				//instance variales for use with the database.
-				Statement st;
-				ResultSet rs;
-				
-				try
-				{
-					//creates connection to database
-					Class.forName("com.mysql.jdbc.Driver");
-					//connects to mysql with username and password.
-					java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
-					//creates a statement
-					st = con.createStatement();
-					//creates a query and returns a result set from it based on the entered username.
-					rs = st.executeQuery("SELECT * FROM garda.authentication WHERE LoginID = '" + enteredUsername + "';");
-				
-					//uses the result set to set the values to the retrieved variables
-					while(rs.next())
-					{
-						retrievedLogin = rs.getString(1);
-						retrievedPassword = rs.getString(2);
-					}	
-					//closes result set and connection.
-					rs.close();
-					con.close();
-				}
-				
-				catch(Exception f)
-				{
-					System.out.println("Error: " + f.getMessage());
-				}
-			
-				/*
-				 * if the correct username and password is entered sets login to invisible and the main menu 
-				 * to visible.
-				*/
-				if(retrievedLogin.equals(enteredUsername) && retrievedPassword.equals(hashedPassword))
-				{
-					mainMenu.setVisible(true);
-					login.setVisible(false);
-				}
-				
-				//if the wrong values are entered an error will be popped to screen
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Incorrect Username/Password Entered Please Try Again" , "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		//adds login to CardLayout container.
-		Container.add(login);
-		
 
 		//creates instance of main menu using GardaMenu panel
-		mainMenu = new MainMenu();
+		mainMenu = new MainMenu(validation);
 		//sets visible to false as this should not be displayed until user passes authentication
 		mainMenu.setVisible(false);
 		//adds action listener for caseLookup button from GardaMenu class
@@ -169,28 +84,33 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 			
 		});
-		
-		mainMenu.crimeMenu.addActionListener(new ActionListener()
+		if(validation == true)
 		{
-			public void actionPerformed(ActionEvent e)
+			mainMenu.crimeMenu.addActionListener(new ActionListener()
 			{
-				//makes the evidenceMenu visible and the main menu invisible.
-				crimeMenu.setVisible(true);
-				mainMenu.setVisible(false);
-			}
+				public void actionPerformed(ActionEvent e)
+				{
+					//makes the evidenceMenu visible and the main menu invisible.
+					crimeMenu.setVisible(true);
+					mainMenu.setVisible(false);
+				}
+				
+			});
 			
-		});
+
+			mainMenu.gardaMenu.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					//makes the evidenceMenu visible and the main menu invisible.
+					gardaMenu.setVisible(true);
+					mainMenu.setVisible(false);
+				}
+				
+			});
+		}
+	
 		
-		mainMenu.gardaMenu.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//makes the evidenceMenu visible and the main menu invisible.
-				gardaMenu.setVisible(true);
-				mainMenu.setVisible(false);
-			}
-			
-		});
 		
 		mainMenu.mapLookup.addActionListener(new ActionListener()
 		{
@@ -212,7 +132,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 		Container.add(mainMenu);
 		
 		//creates instance of CaseMenu panel
-		caseMenu = new CaseMenu();
+		caseMenu = new CaseMenu(validation);
 		//sets visible to false as this should not be visible until navigated to via the main menu
 		caseMenu.setVisible(false);
 		//sets listener for return to main menu to the outer class listener that handles returning to previous menus
@@ -242,16 +162,20 @@ public class WindowHandler extends JFrame implements ActionListener{
 			
 		});
 		
-		caseMenu.updateCase.addActionListener(new ActionListener()
+		if(validation == true)
 		{
-			public void actionPerformed(ActionEvent e)
-			{	
-				//sets the caseMenu to Invisible and the caseDisplay to visible.
-				caseMenu.setVisible(false);
-				editCase.setVisible(true);
-			}
-			
-		});
+			caseMenu.updateCase.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{	
+					//sets the caseMenu to Invisible and the caseDisplay to visible.
+					caseMenu.setVisible(false);
+					editCase.setVisible(true);
+				}
+				
+			});	
+		}
+		
 		
 		//adds the caseMenu to the Container card layout.
 		Container.add(caseMenu);
@@ -317,7 +241,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 		//adds the evidence menu to the container card layout.
 		Container.add(evidenceMenu);
 		
-		suspectMenu = new SuspectMenu();
+		suspectMenu = new SuspectMenu(validation);
 		suspectMenu.back.addActionListener(this);
 		Container.add(suspectMenu);
 		
@@ -332,18 +256,22 @@ public class WindowHandler extends JFrame implements ActionListener{
 					
 		});	
 		
-		suspectMenu.editSuspect.addActionListener(new ActionListener()
+		if(validation == true)
 		{
-			public void actionPerformed(ActionEvent e)
+			suspectMenu.editSuspect.addActionListener(new ActionListener()
 			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				suspectMenu.setVisible(false);
-				editSuspect.setVisible(true);
-			}
-					
-		});	
+				public void actionPerformed(ActionEvent e)
+				{
+					//hides the evidence menu and makes the Forensics menu visible.
+					suspectMenu.setVisible(false);
+					editSuspect.setVisible(true);
+				}
+						
+			});
+		}
+			
 		
-		witnessMenu = new WitnessMenu();
+		witnessMenu = new WitnessMenu(validation);
 		witnessMenu.back.addActionListener(this);
 		witnessMenu.setVisible(false);
 		witnessMenu.addWitness.addActionListener(new ActionListener()
@@ -357,19 +285,23 @@ public class WindowHandler extends JFrame implements ActionListener{
 					
 		});	
 		
-		witnessMenu.editWitness.addActionListener(new ActionListener()
+		if(validation == true)
 		{
-			public void actionPerformed(ActionEvent e)
+			witnessMenu.editWitness.addActionListener(new ActionListener()
 			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				witnessMenu.setVisible(false);
-				editWitness.setVisible(true);
-			}
-					
-		});	
+				public void actionPerformed(ActionEvent e)
+				{
+					//hides the evidence menu and makes the Forensics menu visible.
+					witnessMenu.setVisible(false);
+					editWitness.setVisible(true);
+				}
+						
+			});	
+		}
+	
 		Container.add(witnessMenu);
 		
-		vehicleMenu = new VehicleMenu();
+		vehicleMenu = new VehicleMenu(validation);
 		vehicleMenu.back.addActionListener(this);
 		vehicleMenu.setVisible(false);
 		vehicleMenu.addVehicle.addActionListener(new ActionListener()
@@ -383,21 +315,25 @@ public class WindowHandler extends JFrame implements ActionListener{
 					
 		});	
 		
-		vehicleMenu.editVehicle.addActionListener(new ActionListener()
+		if(validation == true)
 		{
-			public void actionPerformed(ActionEvent e)
+			vehicleMenu.editVehicle.addActionListener(new ActionListener()
 			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				vehicleMenu.setVisible(false);
-				editVehicle.setVisible(true);
-			}
-					
-		});	
+				public void actionPerformed(ActionEvent e)
+				{
+					//hides the evidence menu and makes the Forensics menu visible.
+					vehicleMenu.setVisible(false);
+					editVehicle.setVisible(true);
+				}
+						
+			});	
+		}
+		
 
 		Container.add(vehicleMenu);
 		
 		
-		forensicsMenu = new ForensicsMenu();
+		forensicsMenu = new ForensicsMenu(validation);
 		forensicsMenu.back.addActionListener(this);
 		forensicsMenu.setVisible(false);
 		Container.add(forensicsMenu);
@@ -413,17 +349,20 @@ public class WindowHandler extends JFrame implements ActionListener{
 					
 		});	
 		
-		forensicsMenu.editForensics.addActionListener(new ActionListener()
+		if(validation == true)
 		{
-			public void actionPerformed(ActionEvent e)
+			forensicsMenu.editForensics.addActionListener(new ActionListener()
 			{
-				//hides the evidence menu and makes the Forensics menu visible.
-				forensicsMenu.setVisible(false);
-				editForensic.setVisible(true);
-			}
-					
-		});	
-		
+				public void actionPerformed(ActionEvent e)
+				{
+					//hides the evidence menu and makes the Forensics menu visible.
+					forensicsMenu.setVisible(false);
+					editForensic.setVisible(true);
+				}
+						
+			});	
+		}
+	
 		crimeMenu = new CrimeMenu();
 		crimeMenu.back.addActionListener(this);
 		crimeMenu.setVisible(false);
@@ -572,16 +511,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 		
 		add(Container, BorderLayout.CENTER);
 	}
-	
-	public static void main (String [] args)
-	{
-		WindowHandler frame = new WindowHandler();
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setTitle("Garda Case Tracking Database");
-	    frame.setSize(1200,1000);
-	    frame.setLocationRelativeTo(null);
-	    frame.setVisible(true);
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
@@ -602,10 +531,14 @@ public class WindowHandler extends JFrame implements ActionListener{
 		
 		else if(mainMenu.isVisible() == true)
 		{
-			mainMenu.setVisible(false);
-			login.setVisible(true);
-			login.userName.setText(null);
-			login.password.setText(null);
+			dispose();
+			Login frame = new Login();
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    frame.setTitle("Garda Case Tracking Database");
+		    frame.setSize(1200,1000);
+		    frame.setLocationRelativeTo(null);
+		    frame.setVisible(true);
+			
 		}
 		
 		else if(evidenceMenu.isVisible())

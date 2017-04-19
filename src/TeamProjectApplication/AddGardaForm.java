@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,10 +19,16 @@ import javax.swing.border.EtchedBorder;
 public class AddGardaForm extends JPanel implements ActionListener{
 
 	//instance variables and components to build the GUI
-	private JTextField gardaID, barracksID, name, address, phoneNO, PPSNumber;
-	private JLabel gardaIDLabel, barracksIDLabel, nameLabel, addressLabel, phoneNOLabel, PPSNumberLabel;
+	private JTextField gardaID, barracksID, name, address, phoneNO, PPSNumber, Password;
+	private JLabel gardaIDLabel, barracksIDLabel, nameLabel, addressLabel, phoneNOLabel, PPSNumberLabel, statusLabel, certificationLabel, PasswordLabel;
 	protected JButton submit, cancel;
+	private String[] status = {"Active", "Suspended", "Transferred", "Retired"};
+	private String[] defaultstatus = {"Active", "Suspended", "Transferred", "Retired"};
+	private String[] certified = {"True", "False"};
+	private String[] defaultCertified = {"False", "True"};
+	private JComboBox setStatus, setCertification;
 	private JPanel container, form, buttons;
+	private String password;
 	//instance of suspect class for data manipulation
 	Garda gardaIn = new Garda();
 
@@ -69,6 +78,23 @@ public class AddGardaForm extends JPanel implements ActionListener{
 		form.add(PPSNumberLabel);
 		form.add(PPSNumber);
 		
+		//this is the label and combobox for the current status of the Gardda
+		this.statusLabel = new JLabel("Current Status:");
+		this.setStatus = new JComboBox(status);
+		form.add(statusLabel);
+		form.add(setStatus);
+		
+		Password = new JTextField();
+		PasswordLabel = new JLabel("New Login Password: ");
+		form.add(PasswordLabel);
+		form.add(Password);
+		
+		
+		this.certificationLabel = new JLabel("Certification: ");
+		this.setCertification = new JComboBox(defaultCertified);
+		form.add(certificationLabel);
+		form.add(setCertification);
+		
 		/* these are the buttons to cancel and sumbit and the panel that holds them
 		 * Submit uses the inner class listener to perform a function
 		 * and the cancel button is used by the window handler class to
@@ -100,7 +126,8 @@ public class AddGardaForm extends JPanel implements ActionListener{
 		 * This is done to allow the user and overview of the information entered so they can review and
 		 * see if the whole thing is correct*/
 		String information = "GardaID: " + gardaID.getText() + "\nBarracksID: " + barracksID.getText() + "\nGarda Name: "
-		+ name.getText() + "\nHome Address: " + address.getText() + "\nPhone Number: " + phoneNO.getText() + "\nPPSNumber: " + PPSNumber.getText();
+		+ name.getText() + "\nHome Address: " + address.getText() + "\nPhone Number: " + phoneNO.getText() + "\nPPSNumber: " + PPSNumber.getText()
+		+ "\nCurrent Status: " + setStatus.getSelectedItem() + "\nPassword: " + Password.getText() +  "\n Certification: " + setCertification.getSelectedItem(); 
 		
 		/* this is the confirmation dialog box that prints the above string in a popup box that gives the user a chance to confirm or cancel
 		 * the adding of the new vehicle */
@@ -115,6 +142,9 @@ public class AddGardaForm extends JPanel implements ActionListener{
 			gardaIn.setAddress(address.getText());
 			gardaIn.setPhoneNo(phoneNO.getText());
 			gardaIn.setPPS(PPSNumber.getText());
+			gardaIn.setStatus(String.valueOf(setStatus.getSelectedItem()));
+			gardaIn.setPassword(Password.getText());
+			gardaIn.setCertified(String.valueOf(setCertification.getSelectedItem()));
 			
 			//calls the method to add the data to the database.
 			gardaIn.addToDatabase();
@@ -134,6 +164,13 @@ public class AddGardaForm extends JPanel implements ActionListener{
 		address.setText(null);
 		phoneNO.setText(null);
 		PPSNumber.setText(null);
+		
+		//uses a model a to set the combobox back to the default values with suspect being the default
+				DefaultComboBoxModel model = new DefaultComboBoxModel(defaultstatus);
+				setStatus.setModel(model);
+				
+				DefaultComboBoxModel cmodel = new DefaultComboBoxModel(defaultCertified);
+				setCertification.setModel(cmodel);
 	}
 
 }
