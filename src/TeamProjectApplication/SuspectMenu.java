@@ -15,7 +15,7 @@ public class SuspectMenu extends JPanel{
 	private JPanel buttons, header, container;
 	protected JButton addSuspect, editSuspect, deleteSuspect, viewSuspect, back;
 	
-	public SuspectMenu()
+	public SuspectMenu(boolean validation)
 	{
 		//creates the header panel that holds the garda logo and label
 		header = new JPanel();
@@ -42,10 +42,13 @@ public class SuspectMenu extends JPanel{
 		addSuspect = new JButton("Add a new suspect");
 		addSuspect.setFont(new Font("Sans-Serif", 0, 25));
 		
-		//creates the update suspect button
-		editSuspect = new JButton("Update an existing suspect");
-		editSuspect.setFont(new Font("Sans-Serif", 0, 25));
-		//editSuspect.setVisible(false);
+		if(validation == true)
+		{
+			//creates the update suspect button
+			editSuspect = new JButton("Update an existing suspect");
+			editSuspect.setFont(new Font("Sans-Serif", 0, 25));
+			buttons.add(editSuspect);
+		}
 		
 		//creates the view suspect button
 		viewSuspect = new JButton("View an existing suspect");
@@ -57,7 +60,7 @@ public class SuspectMenu extends JPanel{
 		
 		//adds the above buttons the panel
 		buttons.add(addSuspect);
-		buttons.add(editSuspect);
+
 		buttons.add(viewSuspect);
 		buttons.add(back);
 		
@@ -72,13 +75,5 @@ public class SuspectMenu extends JPanel{
 		
 		//adds the container to the main panel
 		add(container);	
-	}
-	
-	public void validate(Boolean Admin)
-	{
-		if(Admin)
-		{
-			editSuspect.setVisible(true);
-		}
 	}
 }

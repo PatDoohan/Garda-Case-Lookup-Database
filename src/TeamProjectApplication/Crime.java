@@ -210,6 +210,7 @@ public class Crime implements DatabaseFunctionality{
 			st = con.createStatement();
 			if(Identifier.equals(null))
 			{
+				return 2;
 			}
 			
 			else

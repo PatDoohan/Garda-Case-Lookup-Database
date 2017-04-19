@@ -4,11 +4,16 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import org.jdatepicker.impl.*;
+import org.jdatepicker.util.*;
+import org.jdatepicker.*;
+
 
 @SuppressWarnings("serial")
 public class CreateCaseForm extends JPanel implements ActionListener{
@@ -22,6 +27,8 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 	private JPanel container, form, buttons;
 	private ActiveCase inputCase = new ActiveCase();
 	private Crime crimeIn = new Crime();
+	JDatePickerImpl datePicker;
+	TimePicker timepicker;
 
 	public CreateCaseForm()
 	{
@@ -40,21 +47,30 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		form.add(caseIDLabel);
 		form.add(caseID);
 		
-		dateLabel = new JLabel("Date of Crime: ");
-		date = new JTextField();
-		form.add(dateLabel);
-		form.add(date);
-		
-		timeLabel = new JLabel("Time of Crime: ");
-		time = new JTextField();
-		form.add(timeLabel);
-		form.add(time);
-		
 		addressLabel = new JLabel("Address of Crime: ");
 		address = new JTextField();
 		form.add(addressLabel);
 		form.add(address);
 		
+		dateLabel = new JLabel("Date of Crime: ");
+		UtilDateModel model = new UtilDateModel();
+		//model.setDate(20,04,2014);
+		// Need this...
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		// Don't know about the formatter, but there it is...
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		form.add(dateLabel);
+		form.add(datePicker);
+		
+		timeLabel = new JLabel("Time of Crime: ");
+		timepicker = new TimePicker();
+		form.add(timeLabel);
+		form.add(timepicker);
+	
 		statusLabel = new JLabel("Current status of case: ");
 		setStatus = new JComboBox(status);
 		form.add(statusLabel);
@@ -105,12 +121,11 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		add(container, BorderLayout.CENTER);
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
 		//private JTextField caseID date, time, address, eircode;
-		String dataConfirmation = "Case ID: " + caseID.getText() + "\nDate: " + date.getText() + "\nTime: " + time.getText() + "\nAddress: " 
+		String dataConfirmation = "Case ID: " + caseID.getText() + "\nDate: " + datePicker.getJFormattedTextField().getText() + "\nTime: " + timepicker.getTime() + "\nAddress: " 
 		+ address.getText() + "\nStatus: " + setStatus.getSelectedItem() + "\nEircode: " + eircode.getText();
 		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to add the follwoing Information?\n" + dataConfirmation);
 		
@@ -125,55 +140,75 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		
 		if(crimecheck1 == 0 || crimecheck2 == 0 || crimecheck3 == 0 || crimecheck4 == 0 || crimecheck5 == 0)
 		{
-			if(crimecheck1 == 0)
+			if(crimecheck1 == 0 && !crimecode1.getText().equals(null))
 			{
 				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode1.getText() + " Found, Please Enter a Crime Code 1 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
-			else if(crimecheck2 == 0)
+			else if(crimecheck2 == 0 && !crimecode2.getText().equals(null))
 			{
 				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode2.getText() + " Found, Please Enter Crime Code 2 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
-			else if(crimecheck3 == 0)
+			else if(crimecheck3 == 0 && !crimecode3.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode3.getText() + " Found, Please Enter Crime Code 2 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode3.getText() + " Found, Please Enter Crime Code 3 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
-			else if(crimecheck4 == 0)
+			else if(crimecheck4 == 0 && !crimecode4.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode4.getText() + " Found, Please Enter Crime Code 2 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode4.getText() + " Found, Please Enter Crime Code 4 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
-			else if(crimecheck5 == 0)
+			else if(crimecheck5 == 0 && !crimecode5.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode5.getText() + " Found, Please Enter Crime Code 2 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode5.getText() + " Found, Please Enter Crime Code 5 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 		}
 		
 		if(confirmation == 0 && allClear == true)
 		{
-			inputCase.setDateTime(date.getText() + " " + time.getText());
+			inputCase.setDate(datePicker.getJFormattedTextField().getText());
+			inputCase.setTime(timepicker.getTime());
 			inputCase.setAddress(address.getText());
 			inputCase.setActiveStatus(setStatus.getSelectedItem());
 			inputCase.setEirCode(eircode.getText());
 			inputCase.addToDatabase();
 			
-			crimeIn.getCrime(crimecode1.getText());
-			crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
-			crimeIn.getCrime(crimecode2.getText());
-			crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
-			crimeIn.getCrime(crimecode3.getText());
-			crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
-			crimeIn.getCrime(crimecode4.getText());
-			crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
-			crimeIn.getCrime(crimecode5.getText());
-			crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
+			if(!crimecode1.getText().isEmpty())
+			{
+				crimeIn.getCrime(crimecode1.getText());
+				crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
+			}
+			
+			if(!crimecode2.getText().isEmpty())
+			{
+				crimeIn.getCrime(crimecode2.getText());
+				crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
+			}
+			
+			if(!crimecode3.getText().isEmpty())
+			{
+				crimeIn.getCrime(crimecode3.getText());
+				crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
+			}
+			
+			if(!crimecode4.getText().isEmpty())
+			{
+				crimeIn.getCrime(crimecode4.getText());
+				crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
+			}
+			
+			if(!crimecode5.getText().isEmpty())
+			{
+				crimeIn.getCrime(crimecode5.getText());
+				crimeIn.linkToCase(String.valueOf(inputCase.getCaseID()));
+			}
 			
 			inputCase.assignID();
 			clearFields();
@@ -184,8 +219,8 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 	public void clearFields()
 	{
 		caseID.setText(String.valueOf(inputCase.getCaseID()));
-		date.setText(null);
-		time.setText(null);
+		timepicker.resetTimer();
+		datePicker.getJFormattedTextField().setText("");
 		address.setText(null);
 		setStatus.setSelectedItem(0);
 		eircode.setText(null);		

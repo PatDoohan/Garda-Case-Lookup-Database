@@ -20,7 +20,7 @@ public class ForensicsMenu extends JPanel{
 	protected JButton addForensics, editForensics, deleteForensics, viewForensics, back;
 	
 	
-	public ForensicsMenu()
+	public ForensicsMenu(boolean validation)
 	{
 		//creates the header panel that holds the garda logo and label
 		header = new JPanel();
@@ -47,10 +47,13 @@ public class ForensicsMenu extends JPanel{
 		addForensics = new JButton("Add a new Forensics Report");
 		addForensics.setFont(new Font("Sans-Serif", 0, 25));
 		
-		//Creates the edit a forensic file button 
-		editForensics = new JButton("Update an existing Forensics Report");
-		//editForensics.setVisible(false);
-		editForensics.setFont(new Font("Sans-Serif", 0, 25));
+		if(validation== true)
+		{
+			//Creates the edit a forensic file button 
+			editForensics = new JButton("Update an existing Forensics Report");
+			editForensics.setFont(new Font("Sans-Serif", 0, 25));
+			buttons.add(editForensics);
+		}
 		
 		//Creates the view a forensic file button 
 		viewForensics = new JButton("View an existing Forensics Report");
@@ -62,7 +65,7 @@ public class ForensicsMenu extends JPanel{
 		
 		//adds the buttons to the button panel
 		buttons.add(addForensics);
-		buttons.add(editForensics);
+
 		buttons.add(viewForensics);
 		buttons.add(back);
 		

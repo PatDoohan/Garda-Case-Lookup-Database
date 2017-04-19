@@ -12,7 +12,7 @@ public class CaseMenu extends JPanel{
 	protected JButton createCase, updateCase, deleteCase, viewCase ,back;
 	private JPanel buttons, header, container;
 	
-	public CaseMenu()
+	public CaseMenu(boolean validation)
 	{
 		//creates the header panel that holds the garda logo and label
 		header = new JPanel();
@@ -37,10 +37,13 @@ public class CaseMenu extends JPanel{
 		createCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(createCase);
 		
-		//creates the edit case button and adds it to the button panel
-		updateCase = new JButton("Update an existing case");
-		updateCase.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(updateCase);
+		if(validation == true)
+		{
+			//creates the edit case button and adds it to the button panel
+			updateCase = new JButton("Update an existing case");
+			updateCase.setFont(new Font("Sans-Serif", 0, 25));
+			buttons.add(updateCase);
+		}
 		
 		//creates the view case button and adds it to the button panel
 		viewCase = new JButton("View an Existing Case");

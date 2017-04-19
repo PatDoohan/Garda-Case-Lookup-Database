@@ -8,7 +8,7 @@ public class ActiveCase implements DatabaseFunctionality{
 
 	//Instance Varibales for use in methods
 	private int caseID;
-	private String dateTime, address, eirCode, activeStatus;
+	private String date, time, address, eirCode, activeStatus;
 	private String[] status = {"Open", "Active", "In Court", "Closed"};
 
 	/**
@@ -23,9 +23,14 @@ public class ActiveCase implements DatabaseFunctionality{
 	 * setter method for date and time
 	 * @param dateTime
 	 */
-	public void setDateTime(String dateTime)
+	public void setDate(String date)
 	{
-		this.dateTime = dateTime;
+		this.date = date;
+	}
+	
+	public void setTime(String time)
+	{
+		this.time = time;
 	}
 	
 	/**
@@ -70,7 +75,7 @@ public class ActiveCase implements DatabaseFunctionality{
 	 */
 	public String getDate()
 	{
-		return this.dateTime;
+		return this.date;
 	}
 	
 	/**
@@ -89,6 +94,11 @@ public class ActiveCase implements DatabaseFunctionality{
 	public String getStatus()
 	{
 		return this.activeStatus;
+	}
+	
+	public String getTime()
+	{
+		return this.time;
 	}
 	
 	/**
@@ -121,7 +131,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			
 			/* create a statement to be used in the statement object, this statements creates a full
 			 * SQL statlement that will insert all the data from the class into the correct columns in the database*/
-			sql = "INSERT INTO garda.activecase values(" + "'" + this.caseID + "', '"  + this.dateTime  +  "', '" + this.address + "', '" + this.activeStatus + "', '" + this.eirCode + "');";
+			sql = "INSERT INTO garda.activecase values(" + "'" + this.caseID + "', '"  + this.address + "', '" +  this.date + "', '" + this.time + "', '" +this.activeStatus + "', '" + this.eirCode + "');";
 			
 			//uses sql string to execute the statement
 			st.execute(sql);
@@ -233,10 +243,11 @@ public class ActiveCase implements DatabaseFunctionality{
 			while(rs.next())
 			{
 				this.caseID = rs.getInt(1);
-				this.dateTime = rs.getString(2);
-				this.address = rs.getString(3);
-				this.activeStatus = rs.getString(4);
-				this.eirCode = rs.getString(5);
+				this.address = rs.getString(2);
+				this.date = rs.getString(3);
+				this.time = rs.getString(4);
+				this.activeStatus = rs.getString(5);
+				this.eirCode = rs.getString(6);
 				count++;
 			}
 			
@@ -276,8 +287,9 @@ public class ActiveCase implements DatabaseFunctionality{
 			/*sql statement that updates selected row with new values, values will be inputed to class by the appropriate
 			 * form in this case the edit case form will use the set methods of the class to add the values to the class*/
 			sql = "UPDATE garda.activecase SET " +
-			"DateTime = '" + this.dateTime +
 			"',address = '" + this.address + 
+			"Date = '" + this.date +
+			"Time = '" + this.time +
 			"',status = '" + this.activeStatus +
 			"',eirCode = '" + this.eirCode + "' WHERE caseID = '" + identifier + "';";
 			

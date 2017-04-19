@@ -17,7 +17,7 @@ public class WitnessMenu extends JPanel {
 	private JPanel buttons, header, container;
 	protected JButton addWitness, editWitness, deleteWitness, viewWitness, back;
 	
-	public WitnessMenu()
+	public WitnessMenu(boolean validation)
 	{
 		//creates the header panel that holds the garda logo and label
 		header = new JPanel();
@@ -44,13 +44,15 @@ public class WitnessMenu extends JPanel {
 		addWitness = new JButton("Add a new Witness");
 		addWitness.setFont(new Font("Sans-Serif", 0, 25));
 		
-		//creates the edit Witness button
-		editWitness = new JButton("Update an existing Witness");
-		editWitness.setFont(new Font("Sans-Serif", 0, 25));
+		if(validation == true)
+		{
+			//creates the edit Witness button
+			editWitness = new JButton("Update an existing Witness");
+			editWitness.setFont(new Font("Sans-Serif", 0, 25));
+			buttons.add(editWitness);
+		}
 		
-		//creates the delete Witness button
-		deleteWitness = new JButton("Delete a Witness");
-		deleteWitness.setFont(new Font("Sans-Serif", 0, 25));
+		
 		
 		//creates the view Witness button
 		viewWitness = new JButton("View an existing Witness");
@@ -62,8 +64,6 @@ public class WitnessMenu extends JPanel {
 		
 		//adds the above buttons the panel
 		buttons.add(addWitness);
-		buttons.add(editWitness);
-		buttons.add(deleteWitness);
 		buttons.add(viewWitness);
 		buttons.add(back);
 		

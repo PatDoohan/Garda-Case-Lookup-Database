@@ -20,11 +20,13 @@ public class EditGarda extends JPanel implements ActionListener{
 	
 	//instance variables and components to build the GUI
 	private JTextField gardaID, barracksID, name, address, phoneNO, PPSNumber;
-	private JLabel gardaIDLabel, barracksIDLabel, nameLabel, addressLabel, phoneNOLabel, PPSNumberLabel, statusLabel;
+	private JLabel gardaIDLabel, barracksIDLabel, nameLabel, addressLabel, phoneNOLabel, PPSNumberLabel, statusLabel, certificationLabel;
 	private String[] status = {"Active", "Suspended", "Transferred", "Retired"};
 	private String[] defaultstatus = {"Active", "Suspended", "Transferred", "Retired"};
+	private String[] certified = {"True", "False"};
+	private String[] defaultCertified = {"False", "True"};
 	protected JButton submit, cancel, caseSubmit, caseClear;
-	private JComboBox setStatus;
+	private JComboBox setStatus, setCertification;
 	private JPanel container, form, buttons, caseSelection;
 	//instance of suspect class for data manipulation
 	Garda gardaIn = new Garda();
@@ -91,6 +93,12 @@ public class EditGarda extends JPanel implements ActionListener{
 					//the new array is then turned into a model and that model is set as the default for the status Combobox
 					DefaultComboBoxModel model = new DefaultComboBoxModel(status);
 					setStatus.setModel(model);
+					
+					if(gardaIn.getCertification().equals("True"))
+					{
+						DefaultComboBoxModel cModel = new DefaultComboBoxModel(certified);
+						setCertification.setModel(cModel);
+					}
 				}
 			}
 		});
@@ -146,6 +154,12 @@ public class EditGarda extends JPanel implements ActionListener{
 		form.add(statusLabel);
 		form.add(setStatus);
 		
+		
+		this.certificationLabel = new JLabel("Certified: ");
+		this.setCertification = new JComboBox(defaultCertified);
+		form.add(certificationLabel);
+		form.add(setCertification);
+		
 		/* these are the buttons to cancel and sumbit and the panel that holds them
 		 * Submit uses the inner class listener to perform a function
 		 * and the cancel button is used by the window handler class to
@@ -192,6 +206,7 @@ public class EditGarda extends JPanel implements ActionListener{
 			gardaIn.setPhoneNo(phoneNO.getText());
 			gardaIn.setPPS(PPSNumber.getText());
 			gardaIn.setStatus(String.valueOf(setStatus.getSelectedItem()));
+			gardaIn.setCertified(String.valueOf(setCertification.getSelectedItem()));
 			
 			//calls the method to add the data to the database.
 			gardaIn.updateGarda();
@@ -215,5 +230,8 @@ public class EditGarda extends JPanel implements ActionListener{
 		//uses a model a to set the combobox back to the default values with suspect being the default
 		DefaultComboBoxModel model = new DefaultComboBoxModel(defaultstatus);
 		setStatus.setModel(model);
+		
+		DefaultComboBoxModel cmodel = new DefaultComboBoxModel(defaultCertified);
+		setCertification.setModel(model);
 	}
 }

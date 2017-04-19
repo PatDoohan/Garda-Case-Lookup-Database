@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -16,6 +17,10 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 @SuppressWarnings("serial")
 public class EditCaseForm extends JPanel implements ActionListener{
@@ -30,6 +35,8 @@ public class EditCaseForm extends JPanel implements ActionListener{
 	private JPanel container, form, buttons, caseSelection;
 	//creating instance of active case to manipulate database data
 	private ActiveCase inputCase = new ActiveCase();
+	JDatePickerImpl datePicker;
+	TimePicker timepicker;
 	
 	//main class file for AddForensicForm that builds a UI and implements the listener class
 	public EditCaseForm()
@@ -80,12 +87,13 @@ public class EditCaseForm extends JPanel implements ActionListener{
 				else
 				{
 					//splits the date and time so that is correctly displayed as the sql format holds both values in one.
-					String dateTime = inputCase.getDate();
-					String[] dateTimeSplit = dateTime.split("\\s");
+					String retrievedTime = inputCase.getTime();
 					
+					String[] parts = retrievedTime.split(":");
+				
 					//sets the textfields to the appropriate values retrieved from the database.
-					date.setText(dateTimeSplit[0]);
-					time.setText(dateTimeSplit[1]);
+					datePicker.getJFormattedTextField().setText(inputCase.getDate());
+					timepicker.setTime(parts[0], parts[1]);
 					address.setText(inputCase.getAddress());
 					eircode.setText(inputCase.getEircode());
 					
@@ -123,23 +131,30 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		caseSelection.add(caseSubmit);
 		caseSelection.add(caseClear);
 		
-		//this is the label and textfield for the date the crime took place
-		dateLabel = new JLabel("Date of Crime: ");
-		date = new JTextField();
-		form.add(dateLabel);
-		form.add(date);
-		
-		//this is the label and textfield for the time the crime took place
-		timeLabel = new JLabel("Time of Crime: ");
-		time = new JTextField();
-		form.add(timeLabel);
-		form.add(time);
-		
 		//this is the label and textfield for the address where the crime took place
 		addressLabel = new JLabel("Address of Crime: ");
 		address = new JTextField();
 		form.add(addressLabel);
 		form.add(address);
+		
+		//adds the datepicker to the panel from the JDatePicker Library
+		dateLabel = new JLabel("Date of Crime: ");
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		form.add(dateLabel);
+		form.add(datePicker);
+		
+		
+		//this is the label and textfield for the time the crime took place
+		timeLabel = new JLabel("Time of Crime: ");
+		timepicker = new TimePicker();
+		form.add(timeLabel);
+		form.add(timepicker);
 		
 		//this is the label and textfield for the current status of the case
 		statusLabel = new JLabel("Current status of case: ");
@@ -182,7 +197,7 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		/*creates a string of all the information entered to be used in the confirmation panel
 		 * This is done to allow the user and overview of the information entered so they can review and
 		 * see if the whole thing is correct*/
-		String dataConfirmation = "Case ID: " + caseID.getText() + "\nDate: " + date.getText() + "\nTime: " + time.getText() + "\nAddress: " 
+		String dataConfirmation = "Case ID: " + caseID.getText() + "\nDate: " + datePicker.getJFormattedTextField().getText() + "\nTime: " + timepicker.getTime() + "\nAddress: " 
 		+ address.getText() + "\nStatus: " + setStatus.getSelectedItem() + "\nEircode: " + eircode.getText();
 		
 		/* this is the confirmation dialog box that prints the above string in a popup box that gives the user a chance to confirm or cancel
@@ -193,7 +208,8 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		if(confirmation == 0)
 		{
 			//All the information is retrieved from the text fields and inserted into the suspect class using the set methods
-			inputCase.setDateTime(date.getText() + " " + time.getText());
+			inputCase.setDate(datePicker.getJFormattedTextField().getText());
+			inputCase.setTime(timepicker.getTime());
 			inputCase.setAddress(address.getText());
 			inputCase.setActiveStatus(setStatus.getSelectedItem());
 			inputCase.setEirCode(eircode.getText());
@@ -218,12 +234,11 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		caseID.setText(null);
 		
 		//sets all the text fields to blank
-		date.setText(null);
-		time.setText(null);
+		datePicker.getJFormattedTextField().setText("");
+		timepicker.resetTimer();
 		address.setText(null);
 		eircode.setText(null);		
 	
-
 		//uses a model a to set the combobox back to the default values with suspect being the default
 		DefaultComboBoxModel model = new DefaultComboBoxModel(defaultStatus);
 		setStatus.setModel(model);

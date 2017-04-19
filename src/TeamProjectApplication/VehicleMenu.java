@@ -17,7 +17,7 @@ public class VehicleMenu extends JPanel{
 	private JPanel buttons, header, container;
 	protected JButton addVehicle, editVehicle, deleteVehicle, viewVehicle, back;
 	
-	public VehicleMenu()
+	public VehicleMenu(boolean validation)
 	{
 		//creates the header panel that holds the garda logo and label
 		header = new JPanel();
@@ -44,11 +44,14 @@ public class VehicleMenu extends JPanel{
 		addVehicle = new JButton("Add a new Vehicle");
 		addVehicle.setFont(new Font("Sans-Serif", 0, 25));
 		
-		//creates the edit vehicle button
-		editVehicle = new JButton("Update an existing Vehicle");
-		editVehicle.setFont(new Font("Sans-Serif", 0, 25));
-		//editVehicle.setVisible(false);
-
+		if(validation == true)
+		{
+			//creates the edit vehicle button
+			editVehicle = new JButton("Update an existing Vehicle");
+			editVehicle.setFont(new Font("Sans-Serif", 0, 25));
+			buttons.add(editVehicle);
+		}
+		
 		//creates the view vehicle button
 		viewVehicle = new JButton("View an existing Vehicle");
 		viewVehicle.setFont(new Font("Sans-Serif", 0, 25));
@@ -59,7 +62,7 @@ public class VehicleMenu extends JPanel{
 		
 		//adds the above buttons the panel
 		buttons.add(addVehicle);
-		buttons.add(editVehicle);
+
 		buttons.add(viewVehicle);
 		buttons.add(back);
 		

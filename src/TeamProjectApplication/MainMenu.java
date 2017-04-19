@@ -11,7 +11,7 @@ public class MainMenu extends JPanel{
 	protected JPanel buttons, header, container;
 	
 	
-	public MainMenu()
+	public MainMenu(boolean validation)
 	{
 		//creates the header panel that holds the garda logo and label
 		header = new JPanel();
@@ -44,15 +44,18 @@ public class MainMenu extends JPanel{
 		EvidenceMenu.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(EvidenceMenu);
 		
-		//Creates the Crime menu button and adds it to the button panel
-		crimeMenu = new JButton("Crime Menu");
-		crimeMenu.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(crimeMenu);
-		
-		//Creates the garda menu button and adds it to the button panel
-		gardaMenu = new JButton("Garda Menu");
-		gardaMenu.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(gardaMenu);
+		if(validation == true)
+		{
+			//Creates the Crime menu button and adds it to the button panel
+			crimeMenu = new JButton("Crime Menu");
+			crimeMenu.setFont(new Font("Sans-Serif", 0, 25));
+			buttons.add(crimeMenu);
+			
+			//Creates the garda menu button and adds it to the button panel
+			gardaMenu = new JButton("Garda Menu");
+			gardaMenu.setFont(new Font("Sans-Serif", 0, 25));
+			buttons.add(gardaMenu);
+		}
 		
 		//Creates the map menu button and adds it to the button panel
 		mapLookup = new JButton("Map Menu");
