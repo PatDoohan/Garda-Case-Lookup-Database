@@ -117,7 +117,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e)
 			{
 				mapMenu.searchMap();
-				mapMenu.back.setVisible(false);
 				//makes the evidenceMenu visible and the main menu invisible.
 				mapMenu.setVisible(true);
 				mainMenu.setVisible(false);
@@ -270,6 +269,19 @@ public class WindowHandler extends JFrame implements ActionListener{
 			});
 		}
 			
+		suspectMenu.viewSuspect.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				viewSuspect frame = new viewSuspect(Integer.valueOf(JOptionPane.showInputDialog(null, "Please enter a case ID to view suspects", "input Required", JOptionPane.INFORMATION_MESSAGE)));
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Suspect Viewer");
+			    frame.setSize(900, 350);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}
+					
+		});	
 		
 		witnessMenu = new WitnessMenu(validation);
 		witnessMenu.back.addActionListener(this);
@@ -299,6 +311,20 @@ public class WindowHandler extends JFrame implements ActionListener{
 			});	
 		}
 	
+		witnessMenu.viewWitness.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				ViewWitness frame = new ViewWitness(Integer.valueOf(JOptionPane.showInputDialog(null, "Please enter a case ID to view Witnesses", "input Required", JOptionPane.INFORMATION_MESSAGE)));
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Suspect Viewer");
+			    frame.setSize(900, 350);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}
+					
+		});
+
 		Container.add(witnessMenu);
 		
 		vehicleMenu = new VehicleMenu(validation);
@@ -328,8 +354,20 @@ public class WindowHandler extends JFrame implements ActionListener{
 						
 			});	
 		}
-		
 
+		vehicleMenu.viewVehicle.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				ViewVehicle frame = new ViewVehicle(Integer.valueOf(JOptionPane.showInputDialog(null, "Please enter a case ID to view Vehicles", "input Required", JOptionPane.INFORMATION_MESSAGE)));
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Vehicle Viewer");
+			    frame.setSize(900, 400);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}
+						
+		});	
 		Container.add(vehicleMenu);
 		
 		
@@ -362,7 +400,20 @@ public class WindowHandler extends JFrame implements ActionListener{
 						
 			});	
 		}
-	
+		
+		forensicsMenu.viewForensics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				ViewForensics frame = new ViewForensics(Integer.valueOf(JOptionPane.showInputDialog(null, "Please enter a case ID to view a Forensics File", "input Required", JOptionPane.INFORMATION_MESSAGE)));
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Forensics Viewer");
+			    frame.setSize(900, 350);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}		
+		});		
+		
 		crimeMenu = new CrimeMenu();
 		crimeMenu.back.addActionListener(this);
 		crimeMenu.setVisible(false);

@@ -153,6 +153,7 @@ public class AddSuspectForm extends JPanel implements ActionListener{
 				
 				//calls the clearfields method to reset the fields to default for the next entry
 				clearfields();
+				JOptionPane.showMessageDialog(null, "Suspect Entered Sucessfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 		}

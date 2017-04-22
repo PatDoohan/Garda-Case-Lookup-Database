@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -16,13 +18,13 @@ public class CaseDisplay extends JPanel{
 	
 	//instance variables and components used to build panel and display data
 	private Border b1, b2;
-	private JTable caseIDTable, crimes, suspects, witness, forensics, vehicles, garda;
-	private JPanel evidence, activecase, caseCrimes, caseGuards, container, button; 
+	private JTable caseIDTable, crimes, garda;
+	private JPanel evidence, activecase, caseCrimes, caseGuards, container, button, evidenceButtons; 
 	//this variable is set as protected as the value will be entered from the window handler.
 	protected int caseIDEntered;
-	private JScrollPane caseTable, forensicsTable, suspectTable, witnessTable, vehicleTable, guardTable, crimeTable;
-	private JLabel labelCaseID, labelEvidence, labelForensics, labalWitness, labelSuspects, labelVehicles, labelGuard, labelCrime;
-	protected JButton back;
+	private JScrollPane caseTable, guardTable, crimeTable;
+	private JLabel labelCaseID, labelEvidence, labelGuard, labelCrime;
+	protected JButton back, viewSuspects, viewForensics, viewWitnesses, viewVehicles;
 	
 	//instance variables for use with SQL connection
 	private Statement st;
@@ -132,73 +134,7 @@ public class CaseDisplay extends JPanel{
 		caseGuards.setBorder(b2);
 		caseGuards.add(caseCrimes);
 		
-		//creates the tables that will hold the information from the forensic, 
-		forensics = new JTable();
-		forensics.setFont(new Font("Sans-Serif", 0, 14));
-		suspects = new JTable();
-		suspects.setFont(new Font("Sans-Serif", 0, 14));
-		witness = new JTable();
-		witness.setFont(new Font("Sans-Serif", 0, 14));
-		vehicles = new JTable();
-		vehicles.setFont(new Font("Sans-Serif", 0, 14));
 
-		try
-		{
-			
-			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
-			Class.forName("com.mysql.jdbc.Driver");
-			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
-			//Create Statement object	
-			st = con.createStatement();
-			//create result set from a statement, gets all forensic evidence that is related to the entered case ID
-			rs = st.executeQuery("SELECT BiologicalEvidence, prints, TrackEvidence, DigitalEvidence, ToolMarkEvidence, NarcoticEvidence, FirearmEvidence "
-					+ "from forensics, caseevidence where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = forensics.evidenceID;");
-					
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			forensics.setModel(DbUtils.resultSetToTableModel(rs));
-			
-			//sql statement to retrieve all the related suspects for the entered case id
-			sql = "SELECT suspectPPS, name, address, description, priorConvictions, status from suspect s, caseevidence "
-					+ "where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = s.EvidenceID;";
-			
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			suspects.setModel(DbUtils.resultSetToTableModel(rs));
-			
-			//sql statement to retrieve all the related witnesses for the entered case id
-			sql = "SELECT witnessPPS, name, address, contactInfo from witness, caseevidence "
-					+ "where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = witness.EvidenceID;";
-			
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			witness.setModel(DbUtils.resultSetToTableModel(rs));
-					
-			//sql statement to retrieve all the related vehicles for the entered case id
-			sql = "SELECT reg, type, make, model, colour, description from vehicle, caseevidence "
-					+ "where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = vehicle.EvidenceID;";
-			
-
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			vehicles.setModel(DbUtils.resultSetToTableModel(rs));
-			
-			//closes result set and connection
-			rs.close();
-			con.close();
-					
-		}
-		//catches errors thrown by database
-		catch(Exception e)
-		{
-			System.out.println("Error: " + e.getMessage());
-		}
 		
 		//creates the evidence panel that will hold the labels and tables for forensic, suspect, witness and vehicle data.
 		evidence = new JPanel();
@@ -213,38 +149,88 @@ public class CaseDisplay extends JPanel{
 		//adds the label to the panel
 		evidence.add(labelEvidence);
 		
-		//creates the tables for the evidence panel
-		forensicsTable = new JScrollPane(forensics);
-		forensicsTable.setPreferredSize(new Dimension(50, 39));
-		suspects.getColumnModel().getColumn(3).setPreferredWidth(250);
-		suspectTable = new JScrollPane(suspects);
-		witnessTable = new JScrollPane(witness);
-		vehicleTable = new JScrollPane(vehicles);
-		
-		//creates the labels for the evidence panel
-		labelForensics = new JLabel("Forensic Evidence");
-		labelSuspects = new JLabel("Possible Suspects");
-		labalWitness = new JLabel("Current Witnesses");
-		labelVehicles = new JLabel("Monitored Vehicles for this case");
 		
 		
-		//adds the tables and labels to the panel
-		evidence.add(labelForensics);
-		evidence.add(forensicsTable);
-		evidence.add(labelSuspects);
-		evidence.add(suspectTable);
-		evidence.add(labalWitness);
-		evidence.add(witnessTable);
-		evidence.add(labelVehicles);
-		evidence.add(vehicleTable);
-		//evidence.add(back);
+		viewSuspects = new JButton("View Suspects");
+		viewSuspects.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				viewSuspect frame = new viewSuspect(caseIDEntered);
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Suspect Viewer");
+			    frame.setSize(900, 350);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}
+					
+		});
+		
+		
+		viewWitnesses = new JButton("View Witnesses");
+		viewWitnesses.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				ViewWitness frame = new ViewWitness(caseIDEntered);
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Suspect Viewer");
+			    frame.setSize(900, 350);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}
+					
+		});
+		
+		viewForensics = new JButton("View Forensics");
+		viewForensics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				ViewForensics frame = new ViewForensics(caseIDEntered);
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Forensics Viewer");
+			    frame.setSize(900, 350);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}
+					
+		});
+		
+		viewVehicles = new JButton("View Vehicles");
+		viewVehicles.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				ViewVehicle frame = new ViewVehicle(caseIDEntered);
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setTitle("Vehicle Viewer");
+			    frame.setSize(900, 400);
+			    frame.setLocationRelativeTo(null);
+			    frame.setVisible(true);
+			}
+					
+		});
+		
+		viewSuspects.setSize(new Dimension(150, 100));
+		viewForensics.setSize(new Dimension(150, 100));
+		viewWitnesses.setSize(new Dimension(150, 100));
+		viewVehicles.setSize(new Dimension(150, 100));
+		evidenceButtons = new JPanel();
+		evidenceButtons.setLayout(new GridLayout(1,0,10,10));
+		evidenceButtons.add(viewSuspects);
+		evidenceButtons.add(viewForensics);
+		evidenceButtons.add(viewWitnesses);
+		evidenceButtons.add(viewVehicles);
+		
+		evidence.add(evidenceButtons);
 		
 		//creates the container table that will hold all the information from the case
 		container = new JPanel();
 		container.setLayout(new BorderLayout());
 		container.setBorder(b1);
-		container.add(caseGuards, BorderLayout.NORTH);
-		container.add(evidence, BorderLayout.CENTER);
+		container.add(caseGuards, BorderLayout.CENTER);
+		container.add(evidence, BorderLayout.SOUTH);
 		add(activecase, BorderLayout.NORTH);
 		add(container, BorderLayout.CENTER);
 		
@@ -262,64 +248,7 @@ public class CaseDisplay extends JPanel{
 	{
 		//sets the entered case id as the class variable
 		this.caseIDEntered = caseIn;
-		
-		try
-		{
-			
-			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
-			Class.forName("com.mysql.jdbc.Driver");
-			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
-			//Create Statement object	
-			st = con.createStatement();
-			//create result set from a statement, gets all forensic evidence that is related to the entered case ID
-			rs = st.executeQuery("SELECT BiologicalEvidence, prints, TrackEvidence, DigitalEvidence, ToolMarkEvidence, NarcoticEvidence, FirearmEvidence "
-					+ "from forensics, caseevidence where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = forensics.evidenceID;");
-					
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			forensics.setModel(DbUtils.resultSetToTableModel(rs));
-						
-			//sql statement to retrieve all the related suspects for the entered case id
-			sql = "SELECT suspectPPS, name, address, description, priorConvictions, status from suspect s, caseevidence "
-			+ "where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = s.EvidenceID;";
-			
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			suspects.setModel(DbUtils.resultSetToTableModel(rs));
-			
-			//sql statement to retrieve all the related witnesses for the entered case id
-			sql = "SELECT witnessPPS, name, address, contactInfo from witness, caseevidence "
-			+ "where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = witness.EvidenceID;";
-			
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			witness.setModel(DbUtils.resultSetToTableModel(rs));
-					
-			//sql statement to retrieve all the related vehicles for the entered case id
-			sql = "SELECT reg, type, make, model, colour, description from vehicle, caseevidence "
-			+ "where caseevidence.caseID = " + caseIDEntered + " and caseevidence.EvidenceID = vehicle.EvidenceID;";
-			
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			vehicles.setModel(DbUtils.resultSetToTableModel(rs));
-			
-			//closes result set and connection
-			rs.close();
-			con.close();
-					
-		}
-		//catches errors thrown by database
-		catch(Exception e)
-		{
-			System.out.println("Error: " + e.getMessage());
-		}
-		
+				
 		try
 		{
 			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
@@ -333,6 +262,7 @@ public class CaseDisplay extends JPanel{
 					
 			//create a statement to be used in the statement object
 			caseIDTable.setModel(DbUtils.resultSetToTableModel(rs));
+			caseIDTable.setFont(new Font("Sans-Serif", 0, 14));
 					
 			//sql statement to collect the crime codes related to this case from the database.
 			sql = "SELECT crime.crimeCode, crimeName from crime, committedcrime where committedcrime.CaseID =  " + caseIDEntered  
@@ -343,15 +273,16 @@ public class CaseDisplay extends JPanel{
 			
 			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
 			crimes.setModel(DbUtils.resultSetToTableModel(rs));
-			
+			crimes.setFont(new Font("Sans-Serif", 0, 14));
 			//sql statement to collect the assigned garda related to this case from the database.
-			sql ="select garda.idNo, Fullname from garda.garda, assignedgarda where assignedgarda.caseID = " + caseIDEntered + " and assignedgarda.gardaID = garda.idNo; ";
+			sql ="select garda.idNo, Fullname, barracksId, Status from garda.garda, assignedgarda where assignedgarda.caseID = " + caseIDEntered + " and assignedgarda.gardaID = garda.idNo; ";
 
 			//creates a result set from the above sql statement
 			rs = st.executeQuery(sql);
 			
 			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
 			garda.setModel(DbUtils.resultSetToTableModel(rs));
+			garda.setFont(new Font("Sans-Serif", 0, 14));
 			
 			//closes result set and connection
 			rs.close();
@@ -365,4 +296,6 @@ public class CaseDisplay extends JPanel{
 		}
 
 	}
+	
+
 }

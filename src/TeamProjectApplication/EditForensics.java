@@ -235,6 +235,7 @@ public class EditForensics extends JPanel implements ActionListener{
 			
 			//calls the clearfields method to reset the fields to default for the next entry
 			clearfields();
+			JOptionPane.showMessageDialog(null, "Forensic File Sucessfully Updated", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 		

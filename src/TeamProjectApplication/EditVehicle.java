@@ -174,6 +174,7 @@ public class EditVehicle extends JPanel implements ActionListener{
 			
 			//calls the clearfields method to reset the fields to default for the next entry
 			clearfields();
+			JOptionPane.showMessageDialog(null, "Vehicle Sucessfully Updated", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

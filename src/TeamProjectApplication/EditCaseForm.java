@@ -221,7 +221,7 @@ public class EditCaseForm extends JPanel implements ActionListener{
 			clearFields();
 			
 			//confirmation pane for succesfully entered case.
-			JOptionPane.showMessageDialog(null, "Case Entered Sucessfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Case Sucessfully Updated", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}

@@ -167,6 +167,7 @@ public class AddForensicsForm extends JPanel implements ActionListener {
 				
 				//calls the clearfields method to reset the fields to default for the next entry
 				clearfields();
+				JOptionPane.showMessageDialog(null, "Forensic File Entered Sucessfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 			}
 		
 		}

@@ -213,6 +213,7 @@ public class EditGarda extends JPanel implements ActionListener{
 			
 			//calls the clear fields method to reset the fields to default for the next entry
 			clearfields();
+			JOptionPane.showMessageDialog(null, "Garda Sucessfully Updated", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

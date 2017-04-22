@@ -141,6 +141,7 @@ public class AddVehicleForm extends JPanel implements ActionListener{
 					
 					//calls the clearfields method to reset the fields to default for the next entry
 					clearfields();
+					JOptionPane.showMessageDialog(null, "Vehicle Entered Sucessfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 			 }
 			
 		}

@@ -152,6 +152,7 @@ public class EditWitness extends JPanel implements ActionListener{
 			
 			//calls the method to update the data in the database.
 			witnessIn.UpdateWitness(pps.getText());
+			JOptionPane.showMessageDialog(null, "Witness Sucessfully Updated", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 			
 			//calls the clear fields method to reset the fields to default for the next entry
 			clearfields();

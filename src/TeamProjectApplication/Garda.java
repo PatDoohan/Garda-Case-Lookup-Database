@@ -228,9 +228,6 @@ public class Garda extends Person implements DatabaseFunctionality{
 				return 0;
 			}
 			
-			
-			
-			
 			//closes the result set and connection
 			rs.close();
 			con.close();
