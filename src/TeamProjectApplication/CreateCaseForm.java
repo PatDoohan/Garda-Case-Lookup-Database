@@ -82,27 +82,27 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		form.add(eircode);
 		
 		crimeLabel1 = new JLabel("Crime Code 1: ");
-		crimecode1 = new JTextField("");
+		crimecode1 = new JTextField();
 		form.add(crimeLabel1);
 		form.add(crimecode1);
 		
 		crimeLabel2 = new JLabel("Crime Code 2: ");
-		crimecode2 = new JTextField("");
+		crimecode2 = new JTextField();
 		form.add(crimeLabel2);
 		form.add(crimecode2);
 		
 		crimeLabel3 = new JLabel("Crime Code 3: ");
-		crimecode3 = new JTextField("");
+		crimecode3 = new JTextField();
 		form.add(crimeLabel3);
 		form.add(crimecode3);
 		
 		crimeLabel4 = new JLabel("Crime Code 4: ");
-		crimecode4 = new JTextField("");
+		crimecode4 = new JTextField();
 		form.add(crimeLabel4);
 		form.add(crimecode4);
 		
 		crimeLabel5 = new JLabel("Crime Code 5: ");
-		crimecode5 = new JTextField("");
+		crimecode5 = new JTextField();
 		form.add(crimeLabel5);
 		form.add(crimecode5);
 		
@@ -140,13 +140,13 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		
 		if(crimecheck1 == 0 || crimecheck2 == 0 || crimecheck3 == 0 || crimecheck4 == 0 || crimecheck5 == 0)
 		{
-			if(crimecheck1 == 0 && !crimecode1.getText().equals(null))
+			if(crimecheck1 == 0 && !crimecode1.getText().isEmpty())
 			{
 				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode1.getText() + " Found, Please Enter a Crime Code 1 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
-			else if(crimecheck2 == 0 && !crimecode2.getText().equals(null))
+			else if(crimecheck2 == 0 && !crimecode2.getText().isEmpty())
 			{
 				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode2.getText() + " Found, Please Enter Crime Code 2 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;

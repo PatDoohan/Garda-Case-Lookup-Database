@@ -126,6 +126,7 @@ public class AddWitnessForm extends JPanel implements ActionListener{
 				
 				//calls the clear fields method to reset the fields to default for the next entry
 				clearfields();
+				JOptionPane.showMessageDialog(null, "Witness Entered Sucessfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 			

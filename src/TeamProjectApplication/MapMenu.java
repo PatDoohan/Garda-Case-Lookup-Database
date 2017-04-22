@@ -22,6 +22,7 @@ public class MapMenu extends JPanel{
 		//creates the browser in java that connects directly to google maps to allow the gardaí to search addresses and eircodes
 		browser = new Browser();
 	    BrowserView view = new BrowserView(browser);
+	    browser.setSize(1000, 900);
 	    //browser.loadURL("https://www.google.ie/maps/place/Carrick,+Co.+Donegal,+F92+Y654");
 	    
 	    //creates the button for returning back to the main menu

@@ -62,7 +62,6 @@ public class VehicleMenu extends JPanel{
 		
 		//adds the above buttons the panel
 		buttons.add(addVehicle);
-
 		buttons.add(viewVehicle);
 		buttons.add(back);
 		
