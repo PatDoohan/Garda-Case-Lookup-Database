@@ -4,22 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 
 public class EditGarda extends JPanel implements ActionListener{
 	
 	//instance variables and components to build the GUI
-	private JTextField gardaID, barracksID, name, address, phoneNO, PPSNumber;
+	private JFormattedTextField gardaID, barracksID, name, address, phoneNO, PPSNumber;
 	private JLabel gardaIDLabel, barracksIDLabel, nameLabel, addressLabel, phoneNOLabel, PPSNumberLabel, statusLabel, certificationLabel;
 	private String[] status = {"Active", "Suspended", "Transferred", "Retired"};
 	private String[] defaultstatus = {"Active", "Suspended", "Transferred", "Retired"};
@@ -48,8 +48,9 @@ public class EditGarda extends JPanel implements ActionListener{
 		caseSelection.setLayout(new GridLayout(0,4,5,5));
 		caseSelection.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
 		
-		gardaID = new JTextField();
+		gardaID = new JFormattedTextField();
 		gardaIDLabel = new JLabel("Garda ID Number:");
+		((AbstractDocument)gardaID.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		caseSubmit = new JButton("Submit");
 		caseClear = new JButton("Clear");
 		
@@ -121,30 +122,35 @@ public class EditGarda extends JPanel implements ActionListener{
 		caseSelection.add(caseClear);
 		
 		//this is the label and text field for the witness name
-		barracksID = new JTextField();
+		barracksID = new JFormattedTextField();
 		barracksIDLabel = new JLabel("Garda Barracks ID:");
+		((AbstractDocument)barracksID.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(barracksIDLabel);
 		form.add(barracksID);
 		
 		//this is the label and text field for the witness address
-		name = new JTextField();
+		name = new JFormattedTextField();
 		nameLabel = new JLabel("Garda Name:");
+		((AbstractDocument)name.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(nameLabel);
 		form.add(name);
 		
 		//this is the label and text field for the witness contact information e.g. email/phone
-		address = new JTextField();
+		address = new JFormattedTextField();
 		addressLabel = new JLabel("Home Address:");
+		((AbstractDocument)address.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(addressLabel);
 		form.add(address);
 		
-		phoneNO = new JTextField();
+		phoneNO = new JFormattedTextField();
 		phoneNOLabel = new JLabel("Phone Number:");
+		((AbstractDocument)phoneNO.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(phoneNOLabel);
 		form.add(phoneNO);
 		
-		PPSNumber = new JTextField();
+		PPSNumber = new JFormattedTextField();
 		PPSNumberLabel = new JLabel("PPS Number: ");
+		((AbstractDocument)PPSNumber.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(PPSNumberLabel);
 		form.add(PPSNumber);
 		

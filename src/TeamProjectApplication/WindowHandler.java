@@ -4,13 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,6 +39,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 	private AddGardaForm addGarda;
 	private EditGarda editGarda;
 	private AssignGarda assignGarda;
+	private CrimeStatisticsMenu crimestats;
 
 	public WindowHandler(boolean validation)
 	{
@@ -110,8 +104,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 			});
 		}
 	
-		
-		
 		mainMenu.mapLookup.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -123,8 +115,16 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 			
 		});
-		
-		
+				
+		mainMenu.CrimeStatistics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				crimestats.setVisible(true);
+				mainMenu.setVisible(false);
+			}
+			
+		});
 		//sets listener for logout to the outer class listener that handles returning to previous menus
 		mainMenu.Logout.addActionListener(this);
 		//adds the main menu to the container card layout.
@@ -175,7 +175,20 @@ public class WindowHandler extends JFrame implements ActionListener{
 			});	
 		}
 		
-		
+		caseMenu.addCrime.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{	
+					LinkCrimesToCase frame = new LinkCrimesToCase();
+				    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				    frame.setTitle("Add Crime To Case");
+				    frame.setSize(900, 300);
+				    frame.setLocationRelativeTo(null);
+				    frame.setVisible(true);
+				}
+				
+			});	
+
 		//adds the caseMenu to the Container card layout.
 		Container.add(caseMenu);
 		//creates a new caseDisplay panel
@@ -509,7 +522,6 @@ public class WindowHandler extends JFrame implements ActionListener{
 		addVehicle.setVisible(false);
 		Container.add(addVehicle);
 		
-		
 		editVehicle = new EditVehicle();
 		editVehicle.cancel.addActionListener(this);
 		editVehicle.setVisible(false);
@@ -559,6 +571,11 @@ public class WindowHandler extends JFrame implements ActionListener{
 		assignGarda.cancel.addActionListener(this);
 		assignGarda.setVisible(false);
 		Container.add(assignGarda);
+		
+		crimestats = new CrimeStatisticsMenu();
+		crimestats.back.addActionListener(this);
+		crimestats.setVisible(false);
+		Container.add(crimestats);
 		
 		add(Container, BorderLayout.CENTER);
 	}
@@ -795,6 +812,13 @@ public class WindowHandler extends JFrame implements ActionListener{
 		{
 			assignGarda.setVisible(false);
 			gardaMenu.setVisible(true);
+		}
+		
+		else if(crimestats.isVisible())
+		{
+			crimestats.setVisible(false);
+			mainMenu.setVisible(true);
+			
 		}
 	}
 }

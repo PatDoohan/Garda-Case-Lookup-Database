@@ -6,18 +6,17 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-
+import javax.swing.text.AbstractDocument;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -26,7 +25,7 @@ import org.jdatepicker.impl.UtilDateModel;
 public class EditCaseForm extends JPanel implements ActionListener{
 	
 	//instance variables and components for creating the form, includes all the components required to build the UI
-	private JTextField caseID, date, time, address, eircode;
+	private JFormattedTextField caseID, address, eircode;
 	private JLabel caseIDLabel, dateLabel, timeLabel, addressLabel, statusLabel,eircodeLabel;
 	private String[] status = {"Open", "Active", "In Court", "Closed"};
 	private String[] defaultStatus = {"Open", "Active", "In Court", "Closed"};
@@ -60,7 +59,8 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		
 		//creates the panel, text field and buttons for the file selection panel.
 		caseIDLabel = new JLabel("Please enter the Case ID you wish to Update:");
-		caseID = new JTextField();
+		caseID = new JFormattedTextField();
+		((AbstractDocument)caseID.getDocument()).setDocumentFilter(new LetterFilter());
 		caseID.setPreferredSize(new Dimension(100, 100));
 		caseID.setEditable(true);
 		caseSubmit = new JButton();
@@ -133,7 +133,8 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		
 		//this is the label and textfield for the address where the crime took place
 		addressLabel = new JLabel("Address of Crime: ");
-		address = new JTextField();
+		address = new JFormattedTextField();
+		((AbstractDocument)address.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(addressLabel);
 		form.add(address);
 		
@@ -164,7 +165,8 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		
 		//this is the label and textfield for the eircode where the crime took place
 		eircodeLabel = new JLabel("Eircode of Crime");
-		eircode = new JTextField();
+		eircode = new JFormattedTextField();
+		((AbstractDocument)eircode.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(eircodeLabel);
 		form.add(eircode);
 		
@@ -243,5 +245,4 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		DefaultComboBoxModel model = new DefaultComboBoxModel(defaultStatus);
 		setStatus.setModel(model);
 	}
-	
 }

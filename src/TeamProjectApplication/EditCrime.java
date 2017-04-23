@@ -4,20 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 
 public class EditCrime extends JPanel implements ActionListener{
 	
 	//instance variables and components to build the GUI
-	JTextField crimeCode, crimeName, crimeDescription;
+	private JFormattedTextField crimeCode, crimeName, crimeDescription;
 	JLabel crimeCodeLabel, crimeNameLabel, crimeDescriptionLabel;
 	protected JButton submit, cancel, caseSubmit, caseClear;
 	private JPanel container, form, buttons, caseSelection;
@@ -43,8 +43,9 @@ public class EditCrime extends JPanel implements ActionListener{
 		caseSelection.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
 		
 		//this is the label and text field for the Crime code number and submit and clear buttons
-		crimeCode = new JTextField();
+		crimeCode = new JFormattedTextField();
 		crimeCodeLabel = new JLabel("Crime Code:");
+		((AbstractDocument)crimeCode.getDocument()).setDocumentFilter(new LetterFilter());
 		caseSubmit = new JButton("Submit");
 		caseClear = new JButton("Clear");
 		
@@ -81,14 +82,16 @@ public class EditCrime extends JPanel implements ActionListener{
 		caseSelection.add(caseClear);
 		
 		//this is the label and text field for the crime name
-		crimeName = new JTextField();
+		crimeName = new JFormattedTextField();
 		crimeNameLabel = new JLabel("Crime Name:");
+		((AbstractDocument)crimeName.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(crimeNameLabel);
 		form.add(crimeName);
 		
 		//this is the label and text field for the crime Description
-		crimeDescription = new JTextField();
+		crimeDescription = new JFormattedTextField();
 		crimeDescriptionLabel = new JLabel("Crime Description:");
+		((AbstractDocument)crimeDescription.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(crimeDescriptionLabel);
 		form.add(crimeDescription);
 		

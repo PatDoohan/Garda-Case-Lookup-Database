@@ -4,16 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 
 public class AddWitnessForm extends JPanel implements ActionListener{
 
 	//instance variables and components to build the GUI
-	JTextField pps, name, address, contactInfo, caseIn;
+	JFormattedTextField pps, name, address, contactInfo, caseIn;
 	JLabel ppsLabel, nameLabel, addressLabel, contactLabel, caseLabel;
 	protected JButton submit, cancel;
 	private JPanel container, form, buttons;
@@ -37,31 +37,36 @@ public class AddWitnessForm extends JPanel implements ActionListener{
 		 * done manually as new witness files could be added for older cases as well as newer and there is no
 		 * way to predetermine what case the file is for. */
 		caseLabel = new JLabel("Witness in Case:");
-		caseIn = new JTextField();
+		caseIn = new JFormattedTextField();
+		((AbstractDocument)caseIn.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(caseLabel);
 		form.add(caseIn);
 		
 		//this is the label and text field for the witness PPS number
-		pps = new JTextField();
+		pps = new JFormattedTextField();
 		ppsLabel = new JLabel("Witness PPS Number:");
+		((AbstractDocument)pps.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(ppsLabel);
 		form.add(pps);
 		
 		//this is the label and text field for the witness name
-		name = new JTextField();
+		name = new JFormattedTextField();
 		nameLabel = new JLabel("Witness Name:");
+		((AbstractDocument)name.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(nameLabel);
 		form.add(name);
 		
 		//this is the label and text field for the witness address
-		address = new JTextField();
+		address = new JFormattedTextField();
 		addressLabel = new JLabel("Witness Address:");
+		((AbstractDocument)address.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(addressLabel);
 		form.add(address);
 		
 		//this is the label and text field for the witness contact information e.g. email/phone
-		contactInfo = new JTextField();
+		contactInfo = new JFormattedTextField();
 		contactLabel = new JLabel("Witness Contact Information:");
+		((AbstractDocument)contactInfo.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(contactLabel);
 		form.add(contactInfo);
 		
@@ -143,5 +148,4 @@ public class AddWitnessForm extends JPanel implements ActionListener{
 		contactInfo.setText(null);
 		caseIn.setText(null);
 	}
-
 }
