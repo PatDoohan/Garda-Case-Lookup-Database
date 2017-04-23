@@ -7,11 +7,12 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 
 public class AddSuspectForm extends JPanel implements ActionListener{
 	
 	//instance variables and components to build the GUI
-	private JTextField SuspectID, pps, name, address, description, priorConvictions, caseNumber;
+	private JFormattedTextField SuspectID, pps, name, address, description, priorConvictions, caseNumber;
 	private JLabel SuspectIDLabel, ppsLabel, nameLabel, addressLabel, descriptionLabel, priorConvictionsLabel, statusLabel, caseNumberLabel;
 	private String[] status = {"Suspect", "Fugitive", "Arrested", "Processed"};
 	private JComboBox setStatus;
@@ -37,7 +38,8 @@ public class AddSuspectForm extends JPanel implements ActionListener{
 		 * done manually as new suspect files could be added for older cases as well as newer and there is no
 		 * way to predetermine what case the file is for. */
 		caseNumberLabel = new JLabel("Suspect in Case:");
-		caseNumber = new JTextField();
+		caseNumber = new JFormattedTextField();
+		((AbstractDocument)caseNumber.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(caseNumberLabel);
 		form.add(caseNumber);
 		
@@ -45,7 +47,7 @@ public class AddSuspectForm extends JPanel implements ActionListener{
 		 * as this is unique and assigned automatically the field is set to uneditable by default
 		 * the assignID method in the suspect class is used to assign a unique ID to the suspect file*/
 		SuspectIDLabel = new JLabel("Suspect ID: ");
-		SuspectID = new JTextField();
+		SuspectID = new JFormattedTextField();
 		SuspectID.setEditable(false);
 		suspectIn.assignID();
 		SuspectID.setText(String.valueOf(suspectIn.getSuspectID()));
@@ -54,31 +56,36 @@ public class AddSuspectForm extends JPanel implements ActionListener{
 		
 		//this is the label and textfield for the suspect pps number if known
 		ppsLabel = new JLabel("Suspect PPS Number:");
-		pps = new JTextField();
+		pps = new JFormattedTextField();
+		((AbstractDocument)pps.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(ppsLabel);
 		form.add(pps);
 		
 		//this is the label and textfield for the suspect name if known
 		nameLabel = new JLabel("Suspect Name:");
-		name = new JTextField();
+		name = new JFormattedTextField();
+		((AbstractDocument)name.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(nameLabel);
 		form.add(name);
 		
 		//this is the label and textfield for the suspect address if known
 		addressLabel = new JLabel("Suspect Address:");
-		address = new JTextField();
+		address = new JFormattedTextField();
+		((AbstractDocument)address.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(addressLabel);
 		form.add(address);
 		
 		//this is the label and textfield for the suspect description
 		descriptionLabel = new JLabel("Suspect Description:");
-		description = new JTextField();
+		description = new JFormattedTextField();
+		((AbstractDocument)description.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(descriptionLabel);
 		form.add(description);
 		
 		//this is the label and textfield for the suspects priors if known
 		this.priorConvictionsLabel = new JLabel("Prior Convictions:");
-		this.priorConvictions = new JTextField();
+		this.priorConvictions = new JFormattedTextField();
+		((AbstractDocument)priorConvictions.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(priorConvictionsLabel);
 		form.add(priorConvictions);
 		

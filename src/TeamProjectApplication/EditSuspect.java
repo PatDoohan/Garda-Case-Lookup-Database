@@ -7,18 +7,19 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 
 public class EditSuspect extends JPanel implements ActionListener {
 
 	//instance variables and components to build the GUI
-	private JTextField SuspectID, pps, name, address, description, priorConvictions;
+	private JFormattedTextField SuspectID, pps, name, address, description, priorConvictions;
 	private JLabel SuspectIDLabel, ppsLabel, nameLabel, addressLabel, descriptionLabel, priorConvictionsLabel, statusLabel;
 	private String[] status = {"Suspect", "Fugitive", "Arrested", "Processed"};
 	private String[] defaultstatus = {"Suspect", "Fugitive", "Arrested", "Processed"};
 	private JComboBox setStatus;
 	protected JButton submit, cancel, caseSubmit, caseClear;
 	private JPanel container, form, buttons, caseSelection;
-	Suspect suspectIn = new Suspect();
+	protected Suspect suspectIn = new Suspect();
 	
 	//main class for EditSuspect that builds the Panel
 	public EditSuspect()
@@ -41,7 +42,8 @@ public class EditSuspect extends JPanel implements ActionListener {
 	
 		//creates the panel, text field and buttons for the file selection panel.
 		SuspectIDLabel = new JLabel("Suspect ID To Update: ");
-		SuspectID = new JTextField();
+		SuspectID = new JFormattedTextField();
+		((AbstractDocument)pps.getDocument()).setDocumentFilter(new LetterFilter());
 		caseSubmit = new JButton("Submit");
 		caseClear = new JButton("Clear");
 		
@@ -109,31 +111,36 @@ public class EditSuspect extends JPanel implements ActionListener {
 		
 		//this is the label and textfield for the suspect pps number if known
 		ppsLabel = new JLabel("Suspect PPS Number:");
-		pps = new JTextField();
+		pps = new JFormattedTextField();
+		((AbstractDocument)pps.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(ppsLabel);
 		form.add(pps);
 		
 		//this is the label and textfield for the suspect name if known
 		nameLabel = new JLabel("Suspect Name:");
-		name = new JTextField();
+		name = new JFormattedTextField();
+		((AbstractDocument)name.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(nameLabel);
 		form.add(name);
 		
 		//this is the label and textfield for the suspect address if known
 		addressLabel = new JLabel("Suspect Address:");
-		address = new JTextField();
+		address = new JFormattedTextField();
+		((AbstractDocument)address.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(addressLabel);
 		form.add(address);
 		
 		//this is the label and textfield for the suspect description
 		descriptionLabel = new JLabel("Suspect Description:");
-		description = new JTextField();
+		description = new JFormattedTextField();
+		((AbstractDocument)description.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(descriptionLabel);
 		form.add(description);
 		
 		//this is the label and textfield for the suspects priors if known
 		this.priorConvictionsLabel = new JLabel("Prior Convictions:");
-		this.priorConvictions = new JTextField();
+		this.priorConvictions = new JFormattedTextField();
+		((AbstractDocument)priorConvictions.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(priorConvictionsLabel);
 		form.add(priorConvictions);
 		
@@ -221,5 +228,4 @@ public class EditSuspect extends JPanel implements ActionListener {
 		DefaultComboBoxModel model = new DefaultComboBoxModel(defaultstatus);
 		setStatus.setModel(model);
 	}
-
 }

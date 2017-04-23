@@ -5,21 +5,18 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
-
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 import org.jdatepicker.impl.*;
-import org.jdatepicker.util.*;
-import org.jdatepicker.*;
-
 
 @SuppressWarnings("serial")
 public class CreateCaseForm extends JPanel implements ActionListener{
 
 	//Instance Varibales
-	private JTextField caseID, date, time, address, eircode, crimecode1, crimecode2, crimecode3, crimecode4, crimecode5;
+	private JFormattedTextField caseID, address, eircode, crimecode1, crimecode2, crimecode3, crimecode4, crimecode5;
 	private JLabel caseIDLabel, dateLabel, timeLabel, addressLabel, statusLabel, eircodeLabel, crimeLabel1, crimeLabel2, crimeLabel3, crimeLabel4, crimeLabel5;
 	private String[] status = {"Open", "Active", "In Court", "Closed"};
 	private JComboBox setStatus;
@@ -40,7 +37,7 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		
 		caseIDLabel = new JLabel("Case ID:");
 		inputCase.assignID();
-		caseID = new JTextField();
+		caseID = new JFormattedTextField();
 		caseID.setText(String.valueOf(inputCase.getCaseID()));
 		caseID.setPreferredSize(new Dimension(100, 100));
 		caseID.setEditable(false);
@@ -48,7 +45,8 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		form.add(caseID);
 		
 		addressLabel = new JLabel("Address of Crime: ");
-		address = new JTextField();
+		address = new JFormattedTextField();
+		((AbstractDocument)address.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(addressLabel);
 		form.add(address);
 		
@@ -77,32 +75,38 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		form.add(setStatus);
 		
 		eircodeLabel = new JLabel("Eircode of Crime");
-		eircode = new JTextField();
+		eircode = new JFormattedTextField();
+		((AbstractDocument)eircode.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(eircodeLabel);
 		form.add(eircode);
 		
 		crimeLabel1 = new JLabel("Crime Code 1: ");
-		crimecode1 = new JTextField();
+		crimecode1 = new JFormattedTextField();
+		((AbstractDocument)crimecode1.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(crimeLabel1);
 		form.add(crimecode1);
 		
 		crimeLabel2 = new JLabel("Crime Code 2: ");
-		crimecode2 = new JTextField();
+		crimecode2 = new JFormattedTextField();
+		((AbstractDocument)crimecode2.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(crimeLabel2);
 		form.add(crimecode2);
 		
 		crimeLabel3 = new JLabel("Crime Code 3: ");
-		crimecode3 = new JTextField();
+		crimecode3 = new JFormattedTextField();
+		((AbstractDocument)crimecode3.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(crimeLabel3);
 		form.add(crimecode3);
 		
 		crimeLabel4 = new JLabel("Crime Code 4: ");
-		crimecode4 = new JTextField();
+		crimecode4 = new JFormattedTextField();
+		((AbstractDocument)crimecode4.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(crimeLabel4);
 		form.add(crimecode4);
 		
 		crimeLabel5 = new JLabel("Crime Code 5: ");
-		crimecode5 = new JTextField();
+		crimecode5 = new JFormattedTextField();
+		((AbstractDocument)crimecode5.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(crimeLabel5);
 		form.add(crimecode5);
 		
@@ -142,31 +146,31 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		{
 			if(crimecheck1 == 0 && !crimecode1.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode1.getText() + " Found, Please Enter a Crime Code 1 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code " + crimecode1.getText() + " Not Found, Please Enter a Crime Code 1 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
 			else if(crimecheck2 == 0 && !crimecode2.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode2.getText() + " Found, Please Enter Crime Code 2 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code " + crimecode2.getText() + " Not Found, Please Enter Crime Code 2 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
 			else if(crimecheck3 == 0 && !crimecode3.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode3.getText() + " Found, Please Enter Crime Code 3 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code " + crimecode3.getText() + " Not Found, Please Enter Crime Code 3 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
 			else if(crimecheck4 == 0 && !crimecode4.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode4.getText() + " Found, Please Enter Crime Code 4 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code " + crimecode4.getText() + " Not Found, Please Enter Crime Code 4 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 			
 			else if(crimecheck5 == 0 && !crimecode5.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(null,"Crime Code Not" + crimecode5.getText() + " Found, Please Enter Crime Code 5 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Crime Code " + crimecode5.getText() + " Not Found, Please Enter Crime Code 5 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
 		}

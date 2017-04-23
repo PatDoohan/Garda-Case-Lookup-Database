@@ -4,20 +4,23 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class AddCrimeForm extends JPanel implements ActionListener{
 	
 	//instance variables and components to build the GUI
-	JTextField crimeCode, crimeName, crimeDescription;
+	JFormattedTextField crimeCode;
+	JTextField crimeName, crimeDescription;
 	JLabel crimeCodeLabel, crimeNameLabel, crimeDescriptionLabel;
 	protected JButton submit, cancel;
 	private JPanel container, form, buttons;
 	//instance of witness class for database manipulation
 	Crime crimeIn = new Crime();
-	
+
 	//main class for AddWitnessForm that builds the Panel
 	public AddCrimeForm()
 	{
@@ -30,22 +33,25 @@ public class AddCrimeForm extends JPanel implements ActionListener{
 		form = new JPanel();
 		form.setLayout(new GridLayout(0,2,5,5));
 		form.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
-		
+				
 		//this is the label and text field for the Crime code number
-		crimeCode = new JTextField();
+		crimeCode = new JFormattedTextField();
 		crimeCodeLabel = new JLabel("Crime Code:");
+		((AbstractDocument)crimeCode.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(crimeCodeLabel);
 		form.add(crimeCode);
 		
 		//this is the label and text field for the crime name
 		crimeName = new JTextField();
 		crimeNameLabel = new JLabel("Crime Name:");
+		((AbstractDocument)crimeName.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(crimeNameLabel);
 		form.add(crimeName);
 		
 		//this is the label and text field for the Crime Description
 		crimeDescription = new JTextField();
 		crimeDescriptionLabel = new JLabel("Crime Description:");
+		((AbstractDocument)crimeDescription.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(crimeDescriptionLabel);
 		form.add(crimeDescription);
 		
@@ -110,5 +116,4 @@ public class AddCrimeForm extends JPanel implements ActionListener{
 		crimeName.setText(null);
 		crimeDescription.setText(null);
 	}
-
 }

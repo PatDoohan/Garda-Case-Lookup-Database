@@ -8,12 +8,13 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 
 public class EditForensics extends JPanel implements ActionListener{
 	
 	//instance variables and components for creating the form, includes all the components required to build the UI
 	JLabel forensicLabel, bioLabel, printsLabel, tracksLabel, digitalLabel, toolMarkLabel, narcoticLabel, firearmLabel;
-	JTextField forensicID;
+	private JFormattedTextField forensicID;
 	String[] confirmation = {"Not Present","Present"};
 	JComboBox bioBox, printsBox, tracksBox, digitalBox, toolMarkBox, narcoticBox, firearmBox;
 	JButton submit, cancel, caseSubmit, caseClear;
@@ -42,7 +43,8 @@ public class EditForensics extends JPanel implements ActionListener{
 		
 		//creates the panel, text field and buttons for the file selection panel.
 		forensicLabel = new JLabel("Forensic File to Edit:");
-		forensicID = new JTextField(null);
+		forensicID = new JFormattedTextField();
+		((AbstractDocument)forensicID.getDocument()).setDocumentFilter(new LetterFilter());
 		caseSubmit = new JButton("Submit");
 		caseClear = new JButton("Clear");
 		
@@ -265,5 +267,4 @@ public class EditForensics extends JPanel implements ActionListener{
 		firearmBox.setModel(model6);
 		
 	}
-
 }

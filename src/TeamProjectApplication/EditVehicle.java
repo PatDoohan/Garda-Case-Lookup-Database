@@ -4,16 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 
 public class EditVehicle extends JPanel implements ActionListener{
 	
 	//instance variables and components to build the GUI
-	private JTextField reg, type, make, model, colour, desc;
+	private JFormattedTextField reg, type, make, model, colour, desc;
 	private JLabel regLabel, typeLabel, makeLabel, modelLabel, colourLabel, descLabel;
 	protected JButton submit, cancel, caseSubmit, caseClear;
 	private JPanel container, form, buttons, caseSelection;
@@ -41,7 +41,8 @@ public class EditVehicle extends JPanel implements ActionListener{
 		
 		//creates the panel, text field and buttons for the file selection panel.
 		regLabel = new JLabel("vehicle regestration number To Update: ");
-		reg = new JTextField();
+		reg = new JFormattedTextField();
+		((AbstractDocument)reg.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		caseSubmit = new JButton("Submit");
 		caseClear = new JButton("Clear");
 		
@@ -94,31 +95,36 @@ public class EditVehicle extends JPanel implements ActionListener{
 		
 		//this is the label and text field for the vehicle type e.g. van, SuV, Saloon
 		typeLabel = new JLabel("Vehicle Type: ");
-		type = new JTextField();
+		type = new JFormattedTextField();
+		((AbstractDocument)type.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(typeLabel);
 		form.add(type);
 		
 		//this is the label and text field for the vehicle Make e.g. ford, toyota, hyundai
 		makeLabel = new JLabel("Vehicle Make: ");
-		make = new JTextField();
+		make = new JFormattedTextField();
+		((AbstractDocument)make.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(makeLabel);
 		form.add(make);
 		
 		//this is the label and text field for the vehicle model e.g. avensis, corolla, tucson
 		modelLabel = new JLabel("Vehicle Model: ");
-		model = new JTextField();
+		model = new JFormattedTextField();
+		((AbstractDocument)model.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(modelLabel);
 		form.add(model);
 		
 		//this is the label and text field for the vehicle colour
 		colourLabel = new JLabel("Vehicle Colour: ");
-		colour = new JTextField();
+		colour = new JFormattedTextField();
+		((AbstractDocument)colour.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(colourLabel);
 		form.add(colour);
 		
 		//this is the label and text field for the vehicle description e.g. broken tail light, modified body kit
 		descLabel = new JLabel("Vehicle Description: ");
-		desc = new JTextField();
+		desc = new JFormattedTextField();
+		((AbstractDocument)desc.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(descLabel);
 		form.add(desc);
 		

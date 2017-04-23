@@ -4,29 +4,37 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.MaskFormatter;
 
 public class AddForensicsForm extends JPanel implements ActionListener {
 	
 	//instance variables and components for creating the form, includes all the components required to build the UI
 	JLabel forensicLabel, bioLabel, printsLabel, tracksLabel, digitalLabel, toolMarkLabel, narcoticLabel, firearmLabel, evidenceLabel;
-	JTextField evidenceID, forensicID;
+	JFormattedTextField evidenceID, forensicID;
 	String[] confirmation = {"Not Present","Present"};
 	JComboBox bioBox, printsBox, tracksBox, digitalBox, toolMarkBox, narcoticBox, firearmBox;
 	JButton submit, cancel;
 	JPanel container, form, buttons;
 	//create instance of forensic to insert the data into the database.
 	Forensics f1 = new Forensics();
+	NumberFormat numForm;
 	
 	//main class file for AddForensicForm that builds a UI and implements the listener class
 	public AddForensicsForm()
 	{
 		//sets the layout to border layout as the default layout for a jpanel is flow.
 		this.setLayout(new BorderLayout());
+		
+		//creates the number format that stops letters being entered into certain textfields
+		numForm = NumberFormat.getIntegerInstance();
+		numForm.setGroupingUsed(false);
+		numForm.setMinimumIntegerDigits(0);
 		
 		/* Creates the form panel that will hold all the labels and text fields for the form.
 		 * It is given a grid layout so that each row will be a different section of the form e.g 
@@ -39,7 +47,7 @@ public class AddForensicsForm extends JPanel implements ActionListener {
 		 * done manually as new forensic files could be added for older cases as well as newer and there is no
 		 * way to predetermine what case the file is for. */
 		evidenceLabel = new JLabel("Forensic File for case: ");
-		evidenceID = new JTextField();
+		evidenceID = new JFormattedTextField(numForm);
 		form.add(evidenceLabel);
 		form.add(evidenceID);
 		
@@ -47,7 +55,7 @@ public class AddForensicsForm extends JPanel implements ActionListener {
 		 * as this is unique and assigned automatically the field is set to uneditable by default
 		 * the assignID method in the forensic class is used to assign a unique ID to the forensic file*/
 		forensicLabel = new JLabel("Forensics ID: ");
-		forensicID = new JTextField();
+		forensicID = new JFormattedTextField();
 		forensicID.setEditable(false);
 		f1.assignID();
 		forensicID.setText(String.valueOf(f1.getForensicID()));
@@ -203,5 +211,20 @@ public class AddForensicsForm extends JPanel implements ActionListener {
 		DefaultComboBoxModel model6 = new DefaultComboBoxModel(confirmation);
 		firearmBox.setModel(model6);
 		
+	}
+	
+	protected MaskFormatter TextFormatter(String s) 
+	{
+	    MaskFormatter formatter = null;
+	    try 
+	    {
+	        formatter = new MaskFormatter(s);
+	    } 
+	    catch (java.text.ParseException exc) 
+	    {
+	        System.err.println("formatter is bad: " + exc.getMessage());
+	        System.exit(-1);
+	    }
+	    return formatter;
 	}
 }

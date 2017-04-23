@@ -9,7 +9,7 @@ public class CaseMenu extends JPanel{
 	//instance variables and components for creating the form, includes all the components required to build the UI
 	private JLabel gardaLogo, pageTitle;
 	//these are made public as they are used by the window builder
-	protected JButton createCase, updateCase, deleteCase, viewCase ,back;
+	protected JButton createCase, updateCase, deleteCase, viewCase, addCrime ,back;
 	private JPanel buttons, header, container;
 	
 	public CaseMenu(boolean validation)
@@ -49,6 +49,10 @@ public class CaseMenu extends JPanel{
 		viewCase = new JButton("View an Existing Case");
 		viewCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(viewCase);
+		
+		addCrime = new JButton("Link Crimes");
+		addCrime.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(addCrime);
 		
 		//creates  the return button and adds it to the button panel
 		back = new JButton("Return to main menu");

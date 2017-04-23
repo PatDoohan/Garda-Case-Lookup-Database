@@ -2,6 +2,8 @@ package TeamProjectApplication;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
+
 import java.awt.*;
 
 public class LoginScreen extends JPanel{
@@ -32,6 +34,7 @@ public class LoginScreen extends JPanel{
 		usernameLabel.setFont(new Font("Sans-Serif", 0, 20));
 		userName = new JTextField(10);
 		userName.setPreferredSize(new Dimension(250,25));
+		((AbstractDocument)userName.getDocument()).setDocumentFilter(new NumberFilter());
 	
 		//adds the above label and textfield to the text container panel
 		TextContainer.add(usernameLabel);

@@ -4,8 +4,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import TeamProjectApplication.ActiveCase;
-
 public class ActiveCaseTester {
 	
 	public static void main(String [] args)
