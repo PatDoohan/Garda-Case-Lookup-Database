@@ -114,6 +114,8 @@ public class EditForensics extends JPanel implements ActionListener{
 					}
 				}
 				
+				submit.setEnabled(true);
+				
 			}	
 		});
 		
@@ -189,6 +191,7 @@ public class EditForensics extends JPanel implements ActionListener{
 		buttons = new JPanel();
 		submit = new JButton("Submit");
 		submit.addActionListener(this);
+		submit.setEnabled(false);
 		cancel = new JButton("Cancel");
 		buttons.add(submit);
 		buttons.add(cancel);
@@ -265,6 +268,8 @@ public class EditForensics extends JPanel implements ActionListener{
 		narcoticBox.setModel(model5);
 		DefaultComboBoxModel model6 = new DefaultComboBoxModel(confirmation);
 		firearmBox.setModel(model6);
+		
+		submit.setEnabled(false);
 		
 	}
 }

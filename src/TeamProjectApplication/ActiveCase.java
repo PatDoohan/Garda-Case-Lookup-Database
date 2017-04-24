@@ -7,7 +7,7 @@ import java.sql.Statement;
 public class ActiveCase implements DatabaseFunctionality{
 
 	//Instance Varibales for use in methods
-	private int caseID;
+	private int caseID = 0;
 	private String date, time, address, eirCode, activeStatus;
 	private String[] status = {"Open", "Active", "In Court", "Closed"};
 
@@ -28,6 +28,10 @@ public class ActiveCase implements DatabaseFunctionality{
 		this.date = date;
 	}
 	
+	/**
+	 * setter method for time
+	 * @param time
+	 */
 	public void setTime(String time)
 	{
 		this.time = time;
@@ -96,6 +100,10 @@ public class ActiveCase implements DatabaseFunctionality{
 		return this.activeStatus;
 	}
 	
+	/**
+	 * getter method for time
+	 * @return
+	 */
 	public String getTime()
 	{
 		return this.time;
@@ -207,6 +215,11 @@ public class ActiveCase implements DatabaseFunctionality{
 			{
 				caseID = rs.getInt(1)+1;
 			}
+			
+			if(caseID == 0)
+			{
+				caseID = 1;
+			}
 	
 			//closes result set and connection
 			rs.close();
@@ -219,6 +232,11 @@ public class ActiveCase implements DatabaseFunctionality{
 		}
 	}
 	
+	/**
+	 * method for retriving the case information from the database, used for editing and viewing information
+	 * @param identifier
+	 * @return
+	 */
 	public int GetCase(String identifier)
 	{
 		//instance variables for use with SQL connection
@@ -237,6 +255,7 @@ public class ActiveCase implements DatabaseFunctionality{
 			//create result set from statement, statement returns the row that is identified by the caseID entered by the user
 			rs = st.executeQuery("SELECT * FROM garda.activeCase WHERE caseID = " + "'" + identifier +"'");
 			
+			//count for handling if the result set is empty
 			int count = 0;
 			
 			//assigns the values from the result set to the class variables
@@ -251,6 +270,7 @@ public class ActiveCase implements DatabaseFunctionality{
 				count++;
 			}
 			
+			//if no data was retrived return 0 for error handling
 			if(count < 1)
 			{
 				return 0;
@@ -265,9 +285,14 @@ public class ActiveCase implements DatabaseFunctionality{
 		{
 			System.out.println("Error: " + f.getMessage());
 		}
+		//return -1 as default
 		return -1;
 	}
 	
+	/**
+	 * method for updating case in databse.
+	 * @param identifier
+	 */
 	public void updateDatabase(String identifier)
 	{
 		//instance variables for use with SQL connection

@@ -13,21 +13,30 @@ public class SpecialCharacterFilter extends DocumentFilter {
     @Override
     public void replace(FilterBypass filter, int offset, int length, String text, AttributeSet attributeSet) throws BadLocationException 
     {
-    	//For loop large strings being entered at once e.g copy pasted, loop iterates through the entire string starting from the last position and de-incrementing
-        for (int i = text.length(); i > 0; i--) 
-        {
-        	//gets the character at the last spot of the string
-            char c = text.charAt(i-1);
-            
-            /*
-             * checks if the character is a either alphabetic or whitespace or a number, if it is it calls the DocumentFilter replace method to replace it in the textfield.
-             * Where offset is the location in the original string, length is how much to delete and string.valueof(c) will be the replaces string
-             */
-            if (Character.isAlphabetic(c) || c == ' ' || Character.isDigit(c)|| c == '-') 
+    	if(text != null)
+    	{
+    		//For loop large strings being entered at once e.g copy pasted, loop iterates through the entire string starting from the last position and de-incrementing
+            for (int i = text.length(); i > 0; i--) 
             {
-                super.replace(filter, offset, length, String.valueOf(c), attributeSet);
-            } 
-        }
+            	//gets the character at the last spot of the string
+                char c = text.charAt(i-1);
+                
+                /*
+                 * checks if the character is a either alphabetic or whitespace or a number, if it is it calls the DocumentFilter replace method to replace it in the textfield.
+                 * Where offset is the location in the original string, length is how much to delete and string.valueof(c) will be the replaces string
+                 */
+                if (Character.isAlphabetic(c) || c == ' ' || Character.isDigit(c)|| c == '-') 
+                {
+                    super.replace(filter, offset, length, String.valueOf(c), attributeSet);
+                } 
+            }
+    	}
+    	
+    	else
+    	{
+    		super.replace(filter, offset, length, String.valueOf(""), attributeSet);
+    	}
+    	
     }
 
     @Override

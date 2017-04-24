@@ -34,7 +34,7 @@ public class LoginScreen extends JPanel{
 		usernameLabel.setFont(new Font("Sans-Serif", 0, 20));
 		userName = new JTextField(10);
 		userName.setPreferredSize(new Dimension(250,25));
-		((AbstractDocument)userName.getDocument()).setDocumentFilter(new NumberFilter());
+		((AbstractDocument)userName.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 	
 		//adds the above label and textfield to the text container panel
 		TextContainer.add(usernameLabel);

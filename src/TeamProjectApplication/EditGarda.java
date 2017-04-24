@@ -100,6 +100,7 @@ public class EditGarda extends JPanel implements ActionListener{
 						DefaultComboBoxModel cModel = new DefaultComboBoxModel(certified);
 						setCertification.setModel(cModel);
 					}
+					submit.setEnabled(true);
 				}
 			}
 		});
@@ -173,6 +174,7 @@ public class EditGarda extends JPanel implements ActionListener{
 		buttons = new JPanel();
 		submit = new JButton("Submit");
 		submit.addActionListener(this);
+		submit.setEnabled(false);
 		cancel = new JButton("Cancel");
 		buttons.add(submit);
 		buttons.add(cancel);
@@ -240,5 +242,6 @@ public class EditGarda extends JPanel implements ActionListener{
 		
 		DefaultComboBoxModel cmodel = new DefaultComboBoxModel(defaultCertified);
 		setCertification.setModel(model);
+		submit.setEnabled(false);
 	}
 }

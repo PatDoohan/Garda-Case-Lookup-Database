@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.MaskFormatter;
 
 public class CrimeStatisticsMenu extends JPanel{
@@ -32,7 +33,8 @@ public class CrimeStatisticsMenu extends JPanel{
 		yearpanel.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,700))));
 		
 		yearLabel = new JLabel("Enter Year to view crimes for that year: ");
-		year = new JFormattedTextField(TextFormatter("####"));
+		year = new JFormattedTextField();
+		((AbstractDocument)year.getDocument()).setDocumentFilter(new LetterFilter());
 		
 		yearpanel.add(yearLabel);
 		yearpanel.add(year);
@@ -42,8 +44,6 @@ public class CrimeStatisticsMenu extends JPanel{
 		
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
-		System.out.println(currentYear);
-		System.out.println(currentMonth);
 	
 		january = new JButton("January");
 		january.setPreferredSize(new Dimension(300, 60));

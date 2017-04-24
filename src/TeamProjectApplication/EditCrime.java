@@ -55,12 +55,22 @@ public class EditCrime extends JPanel implements ActionListener{
 			{
 				//sets the suspectID field to uneditable to stop it being accidently changed while in use.
 				crimeCode.setEditable(false);
+				submit.setEnabled(true);
 				
 				//sets the textfields to the appropriate values retrieved from the database.
-				crimeIn.getCrime(crimeCode.getText());
-				crimeName.setText(crimeIn.getCrimeName());
-				crimeDescription.setText(crimeIn.getCrimeDescription());
-			
+				int getCrimeCode = crimeIn.getCrime(crimeCode.getText());
+				
+				if(getCrimeCode == 0)
+				{
+					JOptionPane.showMessageDialog(null,"Crime Code Not Found, Please Enter a valid Crime Code", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
+					crimeCode.setEditable(true);
+				}
+				
+				else
+				{
+					crimeName.setText(crimeIn.getCrimeName());
+					crimeDescription.setText(crimeIn.getCrimeDescription());
+				}
 			}
 		});
 		
@@ -71,7 +81,6 @@ public class EditCrime extends JPanel implements ActionListener{
 			{
 				//calls the clearfields method to clear all the information
 				clearfields();
-				
 			}
 		});
 		
@@ -102,6 +111,7 @@ public class EditCrime extends JPanel implements ActionListener{
 		buttons = new JPanel();
 		submit = new JButton("Submit");
 		submit.addActionListener(this);
+		submit.setEnabled(false);
 		cancel = new JButton("Cancel");
 		buttons.add(submit);
 		buttons.add(cancel);
@@ -157,5 +167,6 @@ public class EditCrime extends JPanel implements ActionListener{
 			crimeCode.setText(null);
 			crimeName.setText(null);
 			crimeDescription.setText(null);
+			submit.setEnabled(false);
 		}
 }

@@ -121,7 +121,7 @@ public class Crime implements DatabaseFunctionality{
 		
 	}
 	
-	public void getCrime(String indentifier)
+	public int getCrime(String indentifier)
 	{
 		//instance variables for use with SQL connection
 		Statement st;
@@ -138,12 +138,21 @@ public class Crime implements DatabaseFunctionality{
 			st = con.createStatement();
 			rs = st.executeQuery("Select * from garda.crime where crimeCode = '" + indentifier + "';");
 			
+			
+			int count = 0;
 			//assigns the retrieved data to the class variables
 			while(rs.next())
 			{
 				this.crimeCode = rs.getInt(1);
 				this.crimeName = rs.getString(2);
 				this.crimeDescription = rs.getString(3);
+				count++;
+			}
+			
+
+			if(count < 1)
+			{
+				return 0;
 			}
 			
 			//closes the result set and connection
@@ -156,6 +165,7 @@ public class Crime implements DatabaseFunctionality{
 			System.out.println("Error: " + e.getMessage());
 		}
 		
+		return -1;
 	}
 	
 	public void updateCrime()
