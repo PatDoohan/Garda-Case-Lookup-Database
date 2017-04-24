@@ -133,9 +133,7 @@ public class CaseDisplay extends JPanel{
 		caseGuards.setLayout(new BorderLayout());
 		caseGuards.setBorder(b2);
 		caseGuards.add(caseCrimes);
-		
 
-		
 		//creates the evidence panel that will hold the labels and tables for forensic, suspect, witness and vehicle data.
 		evidence = new JPanel();
 		evidence.setLayout(new GridLayout(0,1, 0, 0));
@@ -148,9 +146,7 @@ public class CaseDisplay extends JPanel{
 		
 		//adds the label to the panel
 		evidence.add(labelEvidence);
-		
-		
-		
+
 		viewSuspects = new JButton("View Suspects");
 		viewSuspects.addActionListener(new ActionListener()
 		{
@@ -162,8 +158,7 @@ public class CaseDisplay extends JPanel{
 			    frame.setSize(900, 350);
 			    frame.setLocationRelativeTo(null);
 			    frame.setVisible(true);
-			}
-					
+			}	
 		});
 		
 		
@@ -178,8 +173,7 @@ public class CaseDisplay extends JPanel{
 			    frame.setSize(900, 350);
 			    frame.setLocationRelativeTo(null);
 			    frame.setVisible(true);
-			}
-					
+			}	
 		});
 		
 		viewForensics = new JButton("View Forensics");
@@ -193,8 +187,7 @@ public class CaseDisplay extends JPanel{
 			    frame.setSize(900, 350);
 			    frame.setLocationRelativeTo(null);
 			    frame.setVisible(true);
-			}
-					
+			}		
 		});
 		
 		viewVehicles = new JButton("View Vehicles");
@@ -208,8 +201,7 @@ public class CaseDisplay extends JPanel{
 			    frame.setSize(900, 400);
 			    frame.setLocationRelativeTo(null);
 			    frame.setVisible(true);
-			}
-					
+			}		
 		});
 		
 		viewSuspects.setSize(new Dimension(150, 100));
@@ -248,10 +240,9 @@ public class CaseDisplay extends JPanel{
 	{
 		//sets the entered case id as the class variable
 		this.caseIDEntered = caseIn;
-				
+			
 		try
 		{
-			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection for MYSQL workbench.
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
@@ -259,42 +250,115 @@ public class CaseDisplay extends JPanel{
 			st = con.createStatement();
 			//create result set from statement
 			rs = st.executeQuery("select * from garda.activecase Where caseID = " + caseIDEntered);
-					
-			//create a statement to be used in the statement object
-			caseIDTable.setModel(DbUtils.resultSetToTableModel(rs));
-			caseIDTable.setFont(new Font("Sans-Serif", 0, 14));
-					
-			//sql statement to collect the crime codes related to this case from the database.
-			sql = "SELECT crime.crimeCode, crimeName from crime, committedcrime where committedcrime.CaseID =  " + caseIDEntered  
-					+ " and committedcrime.CrimeCode = crime.crimeCode;";
 			
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			crimes.setModel(DbUtils.resultSetToTableModel(rs));
-			crimes.setFont(new Font("Sans-Serif", 0, 14));
-			//sql statement to collect the assigned garda related to this case from the database.
-			sql ="select garda.idNo, Fullname, barracksId, Status from garda.garda, assignedgarda where assignedgarda.caseID = " + caseIDEntered + " and assignedgarda.gardaID = garda.idNo; ";
+			if(!rs.next())
+			{
+				JOptionPane.showMessageDialog(null, "Case " + caseIDEntered + " could not be found, please check the ID and try again ", "Error", JOptionPane.ERROR_MESSAGE);
+				try
+				{
+					//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+					Class.forName("com.mysql.jdbc.Driver");
+					//connection for MYSQL workbench.
+					java.sql.Connection con1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+					//Create Statement object	
+					st = con1.createStatement();
+					//create result set from statement
+					rs = st.executeQuery("select * from garda.activecase Where caseID = " + caseIDEntered);
+							
+					//create a statement to be used in the statement object
+					caseIDTable.setModel(DbUtils.resultSetToTableModel(rs));
+					caseIDTable.setFont(new Font("Sans-Serif", 0, 14));
+							
+					//sql statement to collect the crime codes related to this case from the database.
+					sql = "SELECT crime.crimeCode, crimeName from crime, committedcrime where committedcrime.CaseID =  " + caseIDEntered  
+							+ " and committedcrime.CrimeCode = crime.crimeCode;";
+					
+					//creates a result set from the above sql statement
+					rs = st.executeQuery(sql);
+					
+					//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
+					crimes.setModel(DbUtils.resultSetToTableModel(rs));
+					crimes.setFont(new Font("Sans-Serif", 0, 14));
+					//sql statement to collect the assigned garda related to this case from the database.
+					sql ="select garda.idNo, Fullname, barracksId, Status from garda.garda, assignedgarda where assignedgarda.caseID = " + caseIDEntered + " and assignedgarda.gardaID = garda.idNo; ";
 
-			//creates a result set from the above sql statement
-			rs = st.executeQuery(sql);
-			
-			//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
-			garda.setModel(DbUtils.resultSetToTableModel(rs));
-			garda.setFont(new Font("Sans-Serif", 0, 14));
-			
-			//closes result set and connection
-			rs.close();
-			con.close();
+					//creates a result set from the above sql statement
+					rs = st.executeQuery(sql);
 					
+					//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
+					garda.setModel(DbUtils.resultSetToTableModel(rs));
+					garda.setFont(new Font("Sans-Serif", 0, 14));
+					
+					//closes result set and connection
+					rs.close();
+					con.close();
+							
+				}
+				//catches errors thrown by database
+				catch(Exception e)
+				{
+					System.out.println("Error: " + e.getMessage());
+				}
+			}
+			
+			else
+			{
+				try
+				{
+					//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
+					Class.forName("com.mysql.jdbc.Driver");
+					//connection for MYSQL workbench.
+					java.sql.Connection con1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
+					//Create Statement object	
+					st = con1.createStatement();
+					//create result set from statement
+					rs = st.executeQuery("select * from garda.activecase Where caseID = " + caseIDEntered);
+							
+					//create a statement to be used in the statement object
+					caseIDTable.setModel(DbUtils.resultSetToTableModel(rs));
+					caseIDTable.setFont(new Font("Sans-Serif", 0, 14));
+							
+					//sql statement to collect the crime codes related to this case from the database.
+					sql = "SELECT crime.crimeCode, crimeName from crime, committedcrime where committedcrime.CaseID =  " + caseIDEntered  
+							+ " and committedcrime.CrimeCode = crime.crimeCode;";
+					
+					//creates a result set from the above sql statement
+					rs = st.executeQuery(sql);
+					
+					//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
+					crimes.setModel(DbUtils.resultSetToTableModel(rs));
+					crimes.setFont(new Font("Sans-Serif", 0, 14));
+					//sql statement to collect the assigned garda related to this case from the database.
+					sql ="select garda.idNo, Fullname, barracksId, Status from garda.garda, assignedgarda where assignedgarda.caseID = " + caseIDEntered + " and assignedgarda.gardaID = garda.idNo; ";
+
+					//creates a result set from the above sql statement
+					rs = st.executeQuery(sql);
+					
+					//uses the rs2xml jar to build a table from the result set, this table will hold the values from the above result set
+					garda.setModel(DbUtils.resultSetToTableModel(rs));
+					garda.setFont(new Font("Sans-Serif", 0, 14));
+					
+					//closes result set and connection
+					rs.close();
+					con.close();
+							
+				}
+				//catches errors thrown by database
+				catch(Exception e)
+				{
+					System.out.println("Error: " + e.getMessage());
+				}
+			}
 		}
 		//catches errors thrown by database
 		catch(Exception e)
 		{
 			System.out.println("Error: " + e.getMessage());
 		}
-
+	}
+	
+	public void tables()
+	{
 	}
 	
 

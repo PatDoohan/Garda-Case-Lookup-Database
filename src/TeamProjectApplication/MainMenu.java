@@ -44,6 +44,7 @@ public class MainMenu extends JPanel{
 		EvidenceMenu.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(EvidenceMenu);
 		
+		//validation check to see if the menu's should be added to the panel
 		if(validation == true)
 		{
 			//Creates the Crime menu button and adds it to the button panel

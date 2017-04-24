@@ -180,7 +180,7 @@ public class AddSuspectForm extends JPanel implements ActionListener{
 		address.setText(null);
 		description.setText(null);
 		priorConvictions.setText(null);
-		//sets the text in the case link text field to null
+		//sets the text in the case link text field to nullz
 		caseNumber.setText(null);
 	}
 }

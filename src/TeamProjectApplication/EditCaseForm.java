@@ -80,7 +80,7 @@ public class EditCaseForm extends JPanel implements ActionListener{
 				
 				if(returnCase == 0)
 				{
-					JOptionPane.showMessageDialog(null,"Witness Not Found, Please Enter a valid Witness pps", "Witness Not Found",  JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Case "+ caseID.getText() + " Not Found, Please Enter a valid CaseID ", "Case Not Found",  JOptionPane.ERROR_MESSAGE);
 					caseID.setEditable(true);
 				}
 				
@@ -111,6 +111,9 @@ public class EditCaseForm extends JPanel implements ActionListener{
 					//the new array is then turned into a model and that model is set as the default for the status Combobox
 					DefaultComboBoxModel model = new DefaultComboBoxModel(status);
 					setStatus.setModel(model);
+					
+					
+					submit.setEnabled(true);
 				}
 			}
 			
@@ -177,6 +180,7 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		buttons = new JPanel();
 		submit = new JButton("Submit");
 		submit.addActionListener(this);
+		submit.setEnabled(false);
 		cancel = new JButton("Cancel");
 		buttons.add(submit);
 		buttons.add(cancel);
@@ -236,7 +240,7 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		caseID.setText(null);
 		
 		//sets all the text fields to blank
-		datePicker.getJFormattedTextField().setText("");
+		datePicker.getJFormattedTextField().setText(" ");
 		timepicker.resetTimer();
 		address.setText(null);
 		eircode.setText(null);		
@@ -244,5 +248,6 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		//uses a model a to set the combobox back to the default values with suspect being the default
 		DefaultComboBoxModel model = new DefaultComboBoxModel(defaultStatus);
 		setStatus.setModel(model);
+		submit.setEnabled(false);
 	}
 }

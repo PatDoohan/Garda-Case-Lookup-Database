@@ -37,6 +37,7 @@ public class AddCrimeForm extends JPanel implements ActionListener{
 		//this is the label and text field for the Crime code number
 		crimeCode = new JFormattedTextField();
 		crimeCodeLabel = new JLabel("Crime Code:");
+		//apply filter to stop letters or special characters being added into crimecode textfield
 		((AbstractDocument)crimeCode.getDocument()).setDocumentFilter(new LetterFilter());
 		form.add(crimeCodeLabel);
 		form.add(crimeCode);
@@ -44,6 +45,7 @@ public class AddCrimeForm extends JPanel implements ActionListener{
 		//this is the label and text field for the crime name
 		crimeName = new JTextField();
 		crimeNameLabel = new JLabel("Crime Name:");
+		//apply filter to stop Numbers or special characters being added into CrimeName textfield
 		((AbstractDocument)crimeName.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(crimeNameLabel);
 		form.add(crimeName);
@@ -51,6 +53,7 @@ public class AddCrimeForm extends JPanel implements ActionListener{
 		//this is the label and text field for the Crime Description
 		crimeDescription = new JTextField();
 		crimeDescriptionLabel = new JLabel("Crime Description:");
+		//apply filter to stop Numbers or special characters being added into CrimeName textfield
 		((AbstractDocument)crimeDescription.getDocument()).setDocumentFilter(new NumberFilter());
 		form.add(crimeDescriptionLabel);
 		form.add(crimeDescription);

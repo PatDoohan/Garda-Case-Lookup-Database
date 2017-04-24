@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Properties;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -52,8 +53,6 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		
 		dateLabel = new JLabel("Date of Crime: ");
 		UtilDateModel model = new UtilDateModel();
-		//model.setDate(20,04,2014);
-		// Need this...
 		Properties p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
@@ -135,6 +134,8 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to add the follwoing Information?\n" + dataConfirmation);
 		
 		int crimecheck1, crimecheck2, crimecheck3, crimecheck4, crimecheck5;
+	
+		
 		
 		crimecheck1 = crimeIn.checkCrime(crimecode1.getText());
 		crimecheck2 = crimeIn.checkCrime(crimecode2.getText());
@@ -174,6 +175,40 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(null,"Crime Code " + crimecode5.getText() + " Not Found, Please Enter Crime Code 5 and try again", "Crime Code Not Found",  JOptionPane.ERROR_MESSAGE);
 				allClear = false;
 			}
+		}
+		
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		int currendDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		String enteredDate = datePicker.getJFormattedTextField().getText();
+		String[] dateSplit = enteredDate.split("-");
+		
+		int enteredYear = Integer.valueOf(dateSplit[0]);
+		int enteredMonth = Integer.valueOf(dateSplit[0]);
+		int enteredDay = Integer.valueOf(dateSplit[0]);
+		
+		if(enteredYear > currentYear && enteredMonth > currentMonth && enteredDay > currendDate)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
+		}
+		
+		else if(enteredYear > currentYear && enteredMonth > currentMonth)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
+		}
+		
+		else if(enteredYear == currentYear && enteredMonth > currentMonth && enteredDay > currendDate)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
+		}
+		else if(enteredYear == currentYear && enteredMonth == currentMonth && enteredDay > currendDate)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
 		}
 		
 		if(confirmation == 0 && allClear == true)
@@ -226,13 +261,13 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		caseID.setText(String.valueOf(inputCase.getCaseID()));
 		timepicker.resetTimer();
 		datePicker.getJFormattedTextField().setText("");
-		address.setText(null);
+		address.setText(" ");
 		setStatus.setSelectedItem(0);
-		eircode.setText(null);		
-		crimecode1.setText(null);
-		crimecode2.setText(null);
-		crimecode3.setText(null);
-		crimecode4.setText(null);
-		crimecode5.setText(null);
+		eircode.setText(" ");		
+		crimecode1.setText(" ");
+		crimecode2.setText(" ");
+		crimecode3.setText(" ");
+		crimecode4.setText(" ");
+		crimecode5.setText(" ");
 	}
 }

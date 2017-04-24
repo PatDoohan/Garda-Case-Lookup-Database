@@ -43,7 +43,7 @@ public class EditSuspect extends JPanel implements ActionListener {
 		//creates the panel, text field and buttons for the file selection panel.
 		SuspectIDLabel = new JLabel("Suspect ID To Update: ");
 		SuspectID = new JFormattedTextField();
-		((AbstractDocument)pps.getDocument()).setDocumentFilter(new LetterFilter());
+		((AbstractDocument)SuspectID.getDocument()).setDocumentFilter(new LetterFilter());
 		caseSubmit = new JButton("Submit");
 		caseClear = new JButton("Clear");
 		

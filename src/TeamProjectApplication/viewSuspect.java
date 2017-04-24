@@ -49,6 +49,11 @@ public class viewSuspect extends JFrame{
 			//executes the above sql statement
 			rs = st.executeQuery(sql);
 			
+			if(!rs.next())
+			{
+				JOptionPane.showMessageDialog(null, "No Suspect File to display for this case", "No Suspects on file for case", JOptionPane.ERROR_MESSAGE);
+			}
+			rs.previous();
 			
 			suspects.setModel(DbUtils.resultSetToTableModel(rs));
 			suspects.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -90,40 +95,5 @@ public class viewSuspect extends JFrame{
 		
 		add(container);
 		
-	}
-	
-	public boolean isNull()
-	{
-		try
-		{
-			//Load the JDBC driver, Initialize a driver to open a communications channel with the database.
-			Class.forName("com.mysql.jdbc.Driver");
-			//connection for MYSQL workbench.
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
-			//Create Statement object	
-			st = con.createStatement();
-			
-			sql = "SELECT suspectPPS, name, address, description, priorConvictions, status from suspect s, caseevidence "
-			+ "where caseevidence.caseID = " + caseID + " and caseevidence.EvidenceID = s.EvidenceID;";
-			
-			//executes the above sql statement
-			rs = st.executeQuery(sql);
-			
-			
-			if(!rs.next())
-			{
-				return false;
-			}
-			
-			//closes the connection
-			con.close();
-		}
-		//catches errors thrown by database
-		catch(Exception e)
-		{
-			System.out.println("Error: " + e.getMessage());
-		}
-		
-		return true;
 	}
 }

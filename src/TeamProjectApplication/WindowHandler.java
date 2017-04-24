@@ -78,6 +78,7 @@ public class WindowHandler extends JFrame implements ActionListener{
 			}
 			
 		});
+		//validation check to see if additional menus crime and garda should be dis
 		if(validation == true)
 		{
 			mainMenu.crimeMenu.addActionListener(new ActionListener()

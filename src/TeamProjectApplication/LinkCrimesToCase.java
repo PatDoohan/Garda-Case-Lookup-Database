@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.text.MaskFormatter;
+import javax.swing.text.AbstractDocument;
 
 public class LinkCrimesToCase extends JFrame implements ActionListener{
 	
@@ -29,7 +29,8 @@ public class LinkCrimesToCase extends JFrame implements ActionListener{
 		search.setBorder(new CompoundBorder(new EmptyBorder(5,5,5,5), new CompoundBorder(new EtchedBorder(), new EmptyBorder(5,5,5,5))));
 		
 		crimeCodeLabel = new JLabel("CrimeCode To Search:");
-		crimeCode = new JFormattedTextField(TextFormatter("#####"));
+		crimeCode = new JFormattedTextField();
+		((AbstractDocument)crimeCode.getDocument()).setDocumentFilter(new LetterFilter());
 		submit = new JButton("Submit");
 		clear = new JButton("Clear");
 		submit.addActionListener(new ActionListener()
@@ -71,14 +72,16 @@ public class LinkCrimesToCase extends JFrame implements ActionListener{
 		
 		crimeName = new JFormattedTextField();
 		crimeNameLabel = new JLabel("Crime Name: ");
+		((AbstractDocument)crimeName.getDocument()).setDocumentFilter(new NumberFilter());
 		crimeName.setEditable(false);
 		
 		CrimeDescription = new JFormattedTextField();
 		CrimeDescLabel = new JLabel("Crime Description:");
+		((AbstractDocument)CrimeDescription.getDocument()).setDocumentFilter(new NumberFilter());
 		CrimeDescription.setEditable(false);
 		
 		CaseLabel = new JLabel("Case to add to: ");
-		CaseToLink = new JFormattedTextField(TextFormatter("#####"));		
+		CaseToLink = new JFormattedTextField();		
 		
 		container.add(crimeNameLabel);
 		container.add(crimeName);
@@ -133,20 +136,5 @@ public class LinkCrimesToCase extends JFrame implements ActionListener{
 		crimeName.setText(null);
 		CrimeDescription.setText(null);
 		CaseToLink.setText(null);
-	}
-	
-	protected MaskFormatter TextFormatter(String s) 
-	{
-	    MaskFormatter formatter = null;
-	    try 
-	    {
-	        formatter = new MaskFormatter(s);
-	    } 
-	    catch (java.text.ParseException exc) 
-	    {
-	        System.err.println("formatter is bad: " + exc.getMessage());
-	        System.exit(-1);
-	    }
-	    return formatter;
 	}
 }

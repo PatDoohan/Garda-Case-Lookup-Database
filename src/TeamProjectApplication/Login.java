@@ -88,7 +88,12 @@ public class Login extends JFrame implements ActionListener{
 				 * if the correct username and password is entered sets login to invisible and the main menu 
 				 * to visible.
 				*/
-				if(retrievedLogin.equals(enteredUsername) && retrievedPassword.equals(hashedPassword) && Status.equals("Active"))
+				if(Status == null)
+				{
+					JOptionPane.showMessageDialog(null, "Incorrect Username/Password Entered Please Try Again" , "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				else if(retrievedLogin.equals(enteredUsername) && retrievedPassword.equals(hashedPassword) && Status.equals("Active"))
 				{
 					if(Certified.equals("True"))
 					{
@@ -111,7 +116,6 @@ public class Login extends JFrame implements ActionListener{
 					    frame.setVisible(true);
 					    dispose();
 					}
-					
 				}
 				
 				else if(!Status.equals("Active"))
