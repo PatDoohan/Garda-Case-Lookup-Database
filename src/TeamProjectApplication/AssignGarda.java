@@ -212,17 +212,18 @@ public class AssignGarda extends JPanel implements ActionListener{
 			{
 				JOptionPane.showMessageDialog(null, "Garda " + gardaID.getText() +" is currently not active, Please Recheck Information and try again" , "Error", JOptionPane.ERROR_MESSAGE);
 			}
-			
+			//if the method returned 2 it means that the case does not exists
 			else if(assignToCase == 2)
 			{
 				JOptionPane.showMessageDialog(null, "Case " + caseNumber.getText() + " does not exist" , "Error", JOptionPane.ERROR_MESSAGE);
-				clearfields();
+				
 			}
 			
 			//if the insert was successful a message pops up to confirm that the garda has been assigned to the case.
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Garda " + gardaID.getText() + " Successfully assigned to case " + caseNumber.getText(), "Success", JOptionPane.INFORMATION_MESSAGE);
+				clearfields();
 			}
 		}
 	}

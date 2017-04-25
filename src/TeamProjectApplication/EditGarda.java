@@ -241,7 +241,7 @@ public class EditGarda extends JPanel implements ActionListener{
 		setStatus.setModel(model);
 		
 		DefaultComboBoxModel cmodel = new DefaultComboBoxModel(defaultCertified);
-		setCertification.setModel(model);
+		setCertification.setModel(cmodel);
 		submit.setEnabled(false);
 	}
 }
