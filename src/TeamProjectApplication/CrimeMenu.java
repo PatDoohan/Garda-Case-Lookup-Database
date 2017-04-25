@@ -44,11 +44,6 @@ public class CrimeMenu extends JPanel{
 		editCrime.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(editCrime);
 		
-		//Creates the view crime button and adds it to the button panel
-		viewCrime = new JButton("View Crime");
-		viewCrime.setFont(new Font("Sans-Serif", 0, 25));
-		buttons.add(viewCrime);
-		
 		//Creates the return to main menu button and adds it to the button panel
 		back = new JButton("Return to Main Menu");
 		back.setFont(new Font("Sans-Serif", 0, 25));
@@ -66,15 +61,5 @@ public class CrimeMenu extends JPanel{
 		//adds the container to the main panel
 		add(container,BorderLayout.CENTER);
 	}
-	
-//	public static void main (String [] args)
-//	{
-//		CrimeMenu frame = new CrimeMenu();
-//	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//	    frame.setTitle("Garda Case Tracking Database");
-//	    frame.setSize(1200,1000);
-//	    frame.setLocationRelativeTo(null);
-//	    frame.setVisible(true);
-//	}
 
 }

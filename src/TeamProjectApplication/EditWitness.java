@@ -106,7 +106,7 @@ public class EditWitness extends JPanel implements ActionListener{
 		//this is the label and text field for the witness contact information e.g. email/phone
 		contactInfo = new JFormattedTextField();
 		contactLabel = new JLabel("Witness Contact Information:");
-		((AbstractDocument)contactInfo.getDocument()).setDocumentFilter(new NumberFilter());
+		((AbstractDocument)contactInfo.getDocument()).setDocumentFilter(new SpecialCharacterFilter());
 		form.add(contactLabel);
 		form.add(contactInfo);
 		

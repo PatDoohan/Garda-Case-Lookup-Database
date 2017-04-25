@@ -312,9 +312,9 @@ public class ActiveCase implements DatabaseFunctionality{
 			/*sql statement that updates selected row with new values, values will be inputed to class by the appropriate
 			 * form in this case the edit case form will use the set methods of the class to add the values to the class*/
 			sql = "UPDATE garda.activecase SET " +
-			"',address = '" + this.address + 
-			"Date = '" + this.date +
-			"Time = '" + this.time +
+			"address = '" + this.address + 
+			"',Date = '" + this.date +
+			"',Time = '" + this.time +
 			"',status = '" + this.activeStatus +
 			"',eirCode = '" + this.eirCode + "' WHERE caseID = '" + identifier + "';";
 			

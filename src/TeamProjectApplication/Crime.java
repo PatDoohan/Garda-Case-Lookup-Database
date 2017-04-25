@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class Crime implements DatabaseFunctionality{
 	
 	//instance variables to be used in
@@ -268,8 +270,23 @@ public class Crime implements DatabaseFunctionality{
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
+			rs = st.executeQuery("Select * from garda.committedcrime where crimeCode = '" + this.crimeCode + " AND caseID = "+ Identifier +  "';");
+			int crimeretrieved = 0;
+			int caseidretrieved = 0;
+			
+			while(rs.next())
+			{
+				crimeretrieved = rs.getInt(1);
+				caseidretrieved = rs.getInt(2);
+			}
+			
 			if(Identifier.equals(null))
 			{
+			}
+			
+			else if(crimeretrieved == this.crimeCode && caseidretrieved == Integer.valueOf(Identifier))
+			{
+				JOptionPane.showMessageDialog(null,"Crime is already assigned to this case", "Crime already assigned to case",  JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else

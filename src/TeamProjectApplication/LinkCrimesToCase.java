@@ -117,7 +117,7 @@ public class LinkCrimesToCase extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		String information = "are you sure you wish to add crime code " + crimeCode.getText() + " To Case " + CaseLabel.getText() + "?";
+		String information = "are you sure you wish to add crime code " + crimeCode.getText() + " To Case " + CaseToLink.getText() + "?";
 		
 		int confirmation = JOptionPane.showConfirmDialog(null, information);
 		
