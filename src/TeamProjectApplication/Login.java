@@ -136,11 +136,12 @@ public class Login extends JFrame implements ActionListener{
 	public static void main(String [] args)
 	{
 		Login frame = new Login();
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setTitle("Garda Case Tracking Database");
 	    frame.setSize(1200,1000);
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
+	    frame.getRootPane().setDefaultButton(LoginScreen.login);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	}
 	@Override

@@ -203,19 +203,19 @@ public class AssignGarda extends JPanel implements ActionListener{
 			//if the method returned 0 it means that the garda has already been assigned to the case.
 			if(assignToCase == 0)
 			{
-				JOptionPane.showMessageDialog(null, "Garda" + gardaID.getText() + " Already Assigned to Case " + caseNumber.getText(), "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Garda" + gardaID.getText() + " Already Assigned to Case " + caseNumber.getText(), "Garda Already Assigned", JOptionPane.ERROR_MESSAGE);
 				clearfields();
 			}
 			
 			//if the method returned 1 it means that the garda is currently not active
 			else if(assignToCase == 1)
 			{
-				JOptionPane.showMessageDialog(null, "Garda " + gardaID.getText() +" is currently not active, Please Recheck Information and try again" , "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Garda " + gardaID.getText() +" is currently not active, Please Recheck Information and try again" , "Inactive Garda", JOptionPane.ERROR_MESSAGE);
 			}
 			//if the method returned 2 it means that the case does not exists
 			else if(assignToCase == 2)
 			{
-				JOptionPane.showMessageDialog(null, "Case " + caseNumber.getText() + " does not exist" , "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Case " + caseNumber.getText() + " does not exist" , "Case Not Found", JOptionPane.ERROR_MESSAGE);
 				
 			}
 			

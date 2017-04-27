@@ -270,35 +270,58 @@ public class Crime implements DatabaseFunctionality{
 			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/garda?autoReconnect=true&useSSL=false","root","password");
 			//Create Statement object	
 			st = con.createStatement();
-			rs = st.executeQuery("Select * from garda.committedcrime where crimeCode = '" + this.crimeCode + " AND caseID = "+ Identifier +  "';");
-			int crimeretrieved = 0;
-			int caseidretrieved = 0;
+			
+			rs = st.executeQuery("Select caseID from garda.activecase where caseID = "+ Identifier +  ";");
+			
+			int count = 0;
+			int returnedValue;
 			
 			while(rs.next())
 			{
-				crimeretrieved = rs.getInt(1);
-				caseidretrieved = rs.getInt(2);
+				returnedValue = rs.getInt(1);
+				count++;
 			}
 			
-			if(Identifier.equals(null))
+			if(count == 0)
 			{
-			}
-			
-			else if(crimeretrieved == this.crimeCode && caseidretrieved == Integer.valueOf(Identifier))
-			{
-				JOptionPane.showMessageDialog(null,"Crime is already assigned to this case", "Crime already assigned to case",  JOptionPane.ERROR_MESSAGE);
+				
+				return 0;
 			}
 			
 			else
 			{
-				sql = "Insert into garda.committedcrime Values('"+ this.crimeCode + "','" + Identifier + "');";
+				rs = st.executeQuery("Select * from garda.committedcrime where crimeCode = '" + this.crimeCode + " AND caseID = "+ Identifier +  "';");
+				int crimeretrieved = 0;
+				int caseidretrieved = 0;
 				
-				st.execute(sql);
+				while(rs.next())
+				{
+					crimeretrieved = rs.getInt(1);
+					caseidretrieved = rs.getInt(2);
+				}
 				
+				if(Identifier.equals(null))
+				{
+				}
 				
-				//closes the connection
-				con.close();
+				else if(crimeretrieved == this.crimeCode && caseidretrieved == Integer.valueOf(Identifier))
+				{
+					JOptionPane.showMessageDialog(null,"Crime is already assigned to this case", "Crime already assigned to case",  JOptionPane.ERROR_MESSAGE);
+				}
+				
+				else
+				{
+					sql = "Insert into garda.committedcrime Values('"+ this.crimeCode + "','" + Identifier + "');";
+					
+					st.execute(sql);
+					
+					
+					//closes the connection
+					con.close();
+				}
 			}
+			
+		
 	
 		}
 		//catches errors thrown by database

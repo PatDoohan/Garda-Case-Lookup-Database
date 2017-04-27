@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 public class EvidenceMenu extends JPanel {
 	
 	//instance variables and components for creating the form, includes all the components required to build the UI
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, MenuLabel;
 	private JPanel buttons, header, container;
 	//these are made public as they are used by the window builders
 	protected JButton witness, vehicle, forensics, suspect, back;
@@ -38,6 +38,11 @@ public class EvidenceMenu extends JPanel {
 		//creates the panel that holds the buttons
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
+		
+		//Creates the menu label
+		MenuLabel = new JLabel("Evidence Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
 		
 		//Creates the suspect menu button
 		suspect = new JButton("Suspect Menu");

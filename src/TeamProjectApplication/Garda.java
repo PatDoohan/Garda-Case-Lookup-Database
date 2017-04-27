@@ -308,6 +308,11 @@ public class Garda extends Person implements DatabaseFunctionality{
 				getCase = String.valueOf(rs.getInt(2));
 			}
 			
+			System.out.println(idNo);
+			System.out.println(getID);
+			System.out.println(CaseID);
+			System.out.println(getCase);
+			
 			//checks to see if the record is already in the table, if it is returns a 0, this is used by the assign class to signify that the garda is already assigned to this case
 			if(idNo.equals(getID) && CaseID.equals(getCase))
 			{
@@ -326,11 +331,11 @@ public class Garda extends Person implements DatabaseFunctionality{
 			rs = st.executeQuery(sql);
 	
 			//if the result set is empty it returns a 2, this is used by the assign class to signify that the case doesn't exist
-			if(!rs.next())
+			if(getID == null && getCase == null)
 			{
 				return 2;
 			}
-			
+		
 			//sql statement for assigning the garda to the case.
 			sql = "Insert into garda.assignedgarda values ('" + this.idNo + "','" + CaseID + "');";
 			//executes the above statement
@@ -348,6 +353,8 @@ public class Garda extends Person implements DatabaseFunctionality{
 		}
 		
 		//default return value
+		getCase = null;
+		getID = null;
 		return -1;
 	}
 }

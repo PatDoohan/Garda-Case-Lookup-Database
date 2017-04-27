@@ -123,9 +123,17 @@ public class LinkCrimesToCase extends JFrame implements ActionListener{
 		
 		if(confirmation == 0)
 		{
-			crimeIn.linkToCase(CaseToLink.getText());
-			clearfields();
-			JOptionPane.showMessageDialog(null, "Crime Sucessfully Added", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+			int check = crimeIn.linkToCase(CaseToLink.getText());
+			if(check == 0)
+			{
+				JOptionPane.showMessageDialog(null,"case "+ CaseToLink.getText() +" does not exist", "Case Not found",  JOptionPane.ERROR_MESSAGE);
+			}
+			else
+			{
+				clearfields();
+				JOptionPane.showMessageDialog(null, "Crime Sucessfully Added", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
 		}
 	}
 	

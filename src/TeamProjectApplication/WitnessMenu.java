@@ -8,12 +8,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class WitnessMenu extends JPanel {
 
 	//instance variables and components for creating the form, includes all the components required to build the UI
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, MenuLabel;
 	private JPanel buttons, header, container;
 	protected JButton addWitness, editWitness, deleteWitness, viewWitness, back;
 	
@@ -40,22 +41,25 @@ public class WitnessMenu extends JPanel {
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
+		//Creates the menu label
+		MenuLabel = new JLabel("Witness Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
+
 		//creates the add Witness button
-		addWitness = new JButton("Add a new Witness");
+		addWitness = new JButton("Add");
 		addWitness.setFont(new Font("Sans-Serif", 0, 25));
 		
 		if(validation == true)
 		{
 			//creates the edit Witness button
-			editWitness = new JButton("Update an existing Witness");
+			editWitness = new JButton("Update");
 			editWitness.setFont(new Font("Sans-Serif", 0, 25));
 			buttons.add(editWitness);
 		}
 		
-		
-		
 		//creates the view Witness button
-		viewWitness = new JButton("View an existing Witness");
+		viewWitness = new JButton("View");
 		viewWitness.setFont(new Font("Sans-Serif", 0, 25));
 
 		//creates the back button

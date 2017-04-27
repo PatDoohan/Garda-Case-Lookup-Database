@@ -7,7 +7,7 @@ import java.awt.*;
 public class MainMenu extends JPanel{
 	
 	protected JButton caseLookup, EvidenceMenu, suspectLookup, vehicleLookup, mapLookup, CrimeStatistics, crimeMenu, gardaMenu, Logout;
-	protected JLabel gardaLogo, pageTitle;
+	protected JLabel gardaLogo, pageTitle, MenuLabel;
 	protected JPanel buttons, header, container;
 	
 	
@@ -33,6 +33,11 @@ public class MainMenu extends JPanel{
 		//creates the panel that holds the buttons
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20, 20));
+		
+		//Creates the menu label
+		MenuLabel = new JLabel("Main Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
 		
 		//Creates the case menu button and adds it to the button panel
 		caseLookup = new JButton("Case Menu");
