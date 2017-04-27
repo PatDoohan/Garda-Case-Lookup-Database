@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Properties;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -210,8 +211,44 @@ public class EditCaseForm extends JPanel implements ActionListener{
 		 * the adding of the new case */
 		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to Update the follwoing Information?\n" + dataConfirmation);
 		
+		Boolean allClear = true;
+		
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		int currendDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		System.out.print(currentYear);
+		String enteredDate = datePicker.getJFormattedTextField().getText();
+		String[] dateSplit = enteredDate.split("-");
+		
+		int enteredYear = Integer.valueOf(dateSplit[0]);
+		int enteredMonth = Integer.valueOf(dateSplit[1]);
+		int enteredDay = Integer.valueOf(dateSplit[2]);
+		
+		if(enteredYear > currentYear && enteredMonth > currentMonth && enteredDay > currendDate)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
+		}
+		
+		else if(enteredYear > currentYear && enteredMonth > currentMonth)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
+		}
+		
+		else if(enteredYear == currentYear && enteredMonth > currentMonth && enteredDay > currendDate)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
+		}
+		else if(enteredYear == currentYear && enteredMonth == currentMonth && enteredDay > currendDate)
+		{
+			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
+			allClear = false;
+		}
 		//if the user confirms they want to add the information the following code is executed
-		if(confirmation == 0)
+		if(confirmation == 0 && allClear == true)
 		{
 			//All the information is retrieved from the text fields and inserted into the suspect class using the set methods
 			inputCase.setDate(datePicker.getJFormattedTextField().getText());

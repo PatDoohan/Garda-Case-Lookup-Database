@@ -8,13 +8,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class ForensicsMenu extends JPanel{
 
 
 	//instance variables and components for creating the form, includes all the components required to build the UI
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, MenuLabel;
 	private JPanel buttons, header, container;
 	//these are made public as they are used by the window builder
 	protected JButton addForensics, editForensics, deleteForensics, viewForensics, back;
@@ -43,30 +44,32 @@ public class ForensicsMenu extends JPanel{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
+		//Creates the menu label
+		MenuLabel = new JLabel("Forensics Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
+		
 		//Creates the add a new forensic file button 
-		addForensics = new JButton("Add a new Forensics Report");
+		addForensics = new JButton("Add Report");
 		addForensics.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(addForensics);
 		
 		if(validation== true)
 		{
 			//Creates the edit a forensic file button 
-			editForensics = new JButton("Update an existing Forensics Report");
+			editForensics = new JButton("Update Report");
 			editForensics.setFont(new Font("Sans-Serif", 0, 25));
 			buttons.add(editForensics);
 		}
 		
 		//Creates the view a forensic file button 
-		viewForensics = new JButton("View an existing Forensics Report");
+		viewForensics = new JButton("View Report");
 		viewForensics.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(viewForensics);
 		
 		//Creates the back button
 		back = new JButton("Return to Evidence Menu");
 		back.setFont(new Font("Sans-Serif", 0, 25));
-		
-		//adds the buttons to the button panel
-		buttons.add(addForensics);
-
-		buttons.add(viewForensics);
 		buttons.add(back);
 		
 		//creates the container that will hold the header and button panels

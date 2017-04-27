@@ -7,7 +7,7 @@ import java.awt.*;
 public class GardaMenu extends JPanel{
 
 	protected JButton addGarda, editGarda, assignGarda, back;
-	protected JLabel gardaLogo, pageTitle;
+	protected JLabel gardaLogo, pageTitle, MenuLabel;
 	protected JPanel buttons, header, container;
 	
 	public GardaMenu()
@@ -33,16 +33,21 @@ public class GardaMenu extends JPanel{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
+		//Creates the menu label
+		MenuLabel = new JLabel("Garda Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
+		
 		//creates the add suspect button
-		addGarda = new JButton("Add Garda");
+		addGarda = new JButton("Add");
 		addGarda.setFont(new Font("Sans-Serif", 0, 25));
 		
 		//creates the update suspect button
-		editGarda = new JButton("Update Garda");
+		editGarda = new JButton("Update");
 		editGarda.setFont(new Font("Sans-Serif", 0, 25));
 		
 		//creates the view suspect button
-		assignGarda = new JButton("Assign Garda To Case");
+		assignGarda = new JButton("Assign To Case");
 		assignGarda.setFont(new Font("Sans-Serif", 0, 25));
 		
 		//creates the return to evidence menu button

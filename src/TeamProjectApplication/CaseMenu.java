@@ -7,7 +7,7 @@ import java.awt.*;
 public class CaseMenu extends JPanel{
 	
 	//instance variables and components for creating the form, includes all the components required to build the UI
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, MenuLabel;
 	//these are made public as they are used by the window builder
 	protected JButton createCase, updateCase, deleteCase, viewCase, addCrime ,back;
 	private JPanel buttons, header, container;
@@ -32,21 +32,26 @@ public class CaseMenu extends JPanel{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
+		//Creates the menu label
+		MenuLabel = new JLabel("Case Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
+		
 		//Creates the add a new case button and adds it to the button panel
-		createCase  = new JButton("Create a new case");
+		createCase  = new JButton("Create");
 		createCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(createCase);
 		
 		if(validation == true)
 		{
 			//creates the edit case button and adds it to the button panel
-			updateCase = new JButton("Update an existing case");
+			updateCase = new JButton("Update");
 			updateCase.setFont(new Font("Sans-Serif", 0, 25));
 			buttons.add(updateCase);
 		}
 		
 		//creates the view case button and adds it to the button panel
-		viewCase = new JButton("View an Existing Case");
+		viewCase = new JButton("Overview");
 		viewCase.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(viewCase);
 		

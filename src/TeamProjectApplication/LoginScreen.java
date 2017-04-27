@@ -12,7 +12,7 @@ public class LoginScreen extends JPanel{
 	protected JPasswordField password;
 	protected JLabel gardaLogo, usernameLabel, passwordLabel;
 	protected JPanel container, TextContainer, buttonPane;
-	protected JButton login;
+	public static JButton login;
 		
 	public LoginScreen()
 	{

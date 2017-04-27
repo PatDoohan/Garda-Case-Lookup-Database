@@ -8,12 +8,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class VehicleMenu extends JPanel{
 
 	//instance variables and components for creating the form, includes all the components required to build the UI
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, MenuLabel;
 	private JPanel buttons, header, container;
 	protected JButton addVehicle, editVehicle, deleteVehicle, viewVehicle, back;
 	
@@ -40,9 +41,15 @@ public class VehicleMenu extends JPanel{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
+		//Creates the menu label
+		MenuLabel = new JLabel("Vehicle Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
+
 		//creates the add vehicle button
 		addVehicle = new JButton("Add a new Vehicle");
 		addVehicle.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(addVehicle);
 		
 		if(validation == true)
 		{
@@ -55,14 +62,11 @@ public class VehicleMenu extends JPanel{
 		//creates the view vehicle button
 		viewVehicle = new JButton("View an existing Vehicle");
 		viewVehicle.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(viewVehicle);
 		
 		//creates the back button
 		back = new JButton("Return to Evidence Menu");
 		back.setFont(new Font("Sans-Serif", 0, 25));
-		
-		//adds the above buttons the panel
-		buttons.add(addVehicle);
-		buttons.add(viewVehicle);
 		buttons.add(back);
 		
 		//creates the container that will hold the header and button panels

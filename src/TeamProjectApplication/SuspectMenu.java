@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 public class SuspectMenu extends JPanel{
 
 	//instance variables and components for creating the form, includes all the components required to build the UI
-	private JLabel gardaLogo, pageTitle;
+	private JLabel gardaLogo, pageTitle, MenuLabel;
 	private JPanel buttons, header, container;
 	protected JButton addSuspect, editSuspect, deleteSuspect, viewSuspect, back;
 	
@@ -38,9 +38,15 @@ public class SuspectMenu extends JPanel{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20,20));
 		
+		//Creates the menu label
+		MenuLabel = new JLabel("Suspect Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
+		
 		//creates the add suspect button
 		addSuspect = new JButton("Add a new suspect");
 		addSuspect.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(addSuspect);
 		
 		if(validation == true)
 		{
@@ -53,16 +59,12 @@ public class SuspectMenu extends JPanel{
 		//creates the view suspect button
 		viewSuspect = new JButton("View an existing suspect");
 		viewSuspect.setFont(new Font("Sans-Serif", 0, 25));
+		buttons.add(viewSuspect);
 		
 		//creates the return to evidence menu button
 		back = new JButton("Return to Evidence Menu");
 		back.setFont(new Font("Sans-Serif", 0, 25));
-		
-		//adds the above buttons the panel
-		buttons.add(addSuspect);
-
-		buttons.add(viewSuspect);
-		buttons.add(back);
+		buttons.add(back);	
 		
 		//creates the container that will hold the header and button panels
 		container = new JPanel();

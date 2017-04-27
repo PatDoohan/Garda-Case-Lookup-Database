@@ -42,7 +42,15 @@ public class MapMenu extends JPanel{
 		String enteredAddress = JOptionPane.showInputDialog("Please enter the address or eircode of the area you wish to view");
 		
 		//concatenates the location to the google maps string
-		googleMaps = googleMaps + enteredAddress;
+		if(enteredAddress == null)
+		{
+			googleMaps = "https://www.google.ie/maps";
+		}
+		
+		else
+		{
+			googleMaps = googleMaps + enteredAddress;
+		}
 		
 		//loads an instance of google maps with the entered address
 		browser.loadURL(googleMaps);

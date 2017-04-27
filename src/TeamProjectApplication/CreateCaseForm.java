@@ -180,24 +180,29 @@ public class CreateCaseForm extends JPanel implements ActionListener{
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		int currendDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		System.out.println(currentYear  + "-" + currentMonth + "-"+ currendDate);
+		
 		
 		String enteredDate = datePicker.getJFormattedTextField().getText();
 		String[] dateSplit = enteredDate.split("-");
 		
 		int enteredYear = Integer.valueOf(dateSplit[0]);
-		int enteredMonth = Integer.valueOf(dateSplit[0]);
-		int enteredDay = Integer.valueOf(dateSplit[0]);
+		int enteredMonth = Integer.valueOf(dateSplit[1]);
+		int enteredDay = Integer.valueOf(dateSplit[2]);
+		System.out.println(enteredYear  + "-" + enteredMonth + "-"+ enteredDay);
 		
 		if(enteredYear > currentYear && enteredMonth > currentMonth && enteredDay > currendDate)
 		{
 			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
 			allClear = false;
+			
 		}
 		
 		else if(enteredYear > currentYear && enteredMonth > currentMonth)
 		{
 			JOptionPane.showMessageDialog(null,"Invalid Date Entered, Date is in the future, please re-enter date and try again", "Future Date Entered",  JOptionPane.ERROR_MESSAGE);
 			allClear = false;
+			
 		}
 		
 		else if(enteredYear == currentYear && enteredMonth > currentMonth && enteredDay > currendDate)

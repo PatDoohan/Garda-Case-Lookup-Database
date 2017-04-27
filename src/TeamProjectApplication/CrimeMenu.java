@@ -1,13 +1,14 @@
 package TeamProjectApplication;
 
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class CrimeMenu extends JPanel{
 
 	protected JButton addCrime, editCrime, deleteCrime, viewCrime, back;
-	protected JLabel gardaLogo, pageTitle;
+	protected JLabel gardaLogo, pageTitle, MenuLabel;
 	protected JPanel buttons, header, container;
 	
 	
@@ -34,13 +35,18 @@ public class CrimeMenu extends JPanel{
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout (0,1, 20, 20));
 		
+		//Creates the menu label
+		MenuLabel = new JLabel("Crime Menu", SwingConstants.CENTER);
+		MenuLabel.setFont(new Font("Sans-Serif", 0, 30));
+		buttons.add(MenuLabel);
+		
 		//Creates the add crime button and adds it to the button panel
-		addCrime = new JButton("Add Crime");
+		addCrime = new JButton("Add");
 		addCrime.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(addCrime);
 		
 		//Creates the edit crime button and adds it to the button panel
-		editCrime = new JButton("Update Crime");
+		editCrime = new JButton("Update");
 		editCrime.setFont(new Font("Sans-Serif", 0, 25));
 		buttons.add(editCrime);
 		
